@@ -66,7 +66,7 @@ function generateUser() {
   //   </div>`;
   // document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
   //   welcomeMsg);
-    // find pantry info on load, could probably just create a new instance of pantry
+  // find pantry info on load, could probably just create a new instance of pantry
 }
 
 function findCheckedPantryBoxes() {
