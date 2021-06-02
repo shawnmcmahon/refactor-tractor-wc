@@ -11,6 +11,27 @@ class Recipe {
     //   ingredientData.find(ingredient => ingredient === i);
     // });
   }
+
+  //this should go in Recipe.js (returnIngredients)
+  generateIngredients(recipe) {
+    return recipe && recipe.ingredients.map(i => {
+      return `${capitalize(i.name)} (${i.quantity.amount} ${i.quantity.unit})`
+    }).join(", ");
+  }
+
+  generateInstructions(recipe) {
+    let instructionsList = "";
+    let instructions = recipe.instructions.map(i => {
+      return i.instruction
+    });
+    instructions.forEach(i => {
+      instructionsList += `<li>${i}</li>`
+    });
+    fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
+    fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
+  }
+
 }
 
-module.exports = Recipe;
+
+export default Recipe;
