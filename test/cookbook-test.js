@@ -19,7 +19,7 @@ describe('Cookbook', () => {
   });
 
   it('should have a property to hold recipe data', () => {
-    expect(testCookbook.cookbook).to.equal(testRecipes);
+    expect(testCookbook.cookbook).to.equal(allRecipes);
   });
 
   it('should have a way to store recipes that are filtered by tag', () => {
@@ -33,11 +33,23 @@ describe('Cookbook', () => {
   });
 
   it('Should have a method that retrieves recipes by a tag', () => {
-    testCookbook.filterByTag();
-    expect(testCookbook.filterByTag).to.be.a('function')
+    testCookbook.filterByTag(['snack']);
+    expect(testCookbook.filteredByTag).to.deep.equal(allRecipes)
   });
 
-  it.skip('Should have a method that retrieves recipes by multiple tags', () => {
+  it('Should be able to retrieve recipes by a different tag', () => {
+    testCookbook.filterByTag(['morning meal']);
+    expect(testCookbook.filteredByTag).to.deep.equal([recipe1, recipe3]);
+  });
+
+  it('Should have a method that retrieves recipes by multiple tags', () => {
+    testCookbook.filterByTag(['snack', 'appetizer']);
+    expect(testCookbook.filteredByTag).to.deep.equal(allRecipes);
+  });
+
+  it('Should be able to retrieve recipes by different tags', () => {
+    testCookbook.filterByTag(['morning meal', 'breakfast']);
+    expect(testCookbook.filteredByTag).to.deep.equal([recipe1, recipe3]);
   });
 
   it.skip('Should be able to filter recipes by any ingredient', () => {

@@ -8,31 +8,18 @@ class Cookbook {
   // this is called inside of findCheckedBoxes
   filterByTag(allCheckedTags) {
     let filteredRecipes = allCheckedTags.reduce((acc, tag) => {
-      let matchingRecipe = this.cookbook.filter(recipe =>
-        recipe.tags.includes(tag.id)
-      );
+      let matchingRecipes = this.cookbook.filter(recipe => {
+        return recipe.tags.includes(tag);
+      }).forEach(matchingRecipe => {
+        if (!acc.includes(matchingRecipe)) {
+          acc.push(matchingRecipe);
+        }
+      })
 
-      if (!acc.includes(matchingRecipe)) {
-        acc.push(matchingRecipe);
-      }
-
-      return acc;
+      return acc.flat();
     }, []);
-
-    // below is the previous logic, my refactor is above
-    // allCheckedTags.forEach(tag => {
-
-    //   let allRecipes = this.cookbook.filter(recipe => {
-    //     return recipe.tags.includes(tag.id);
-    //   });
-
-    //   allRecipes.forEach(recipe => {
-    //     if (!this.filteredByTag.includes(recipe)) {
-    //       this.filteredByTag.push(recipe);
-    //     }
-    //   });
-
-    // });
+    
+    this.filteredByTag = filteredRecipes 
   }
 
   filterByNameOrIngredient(inputs) {

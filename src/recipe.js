@@ -49,7 +49,6 @@ class Recipe {
         data => data.id === ingredient.id
       );
       const newObj = Object.assign(foundIngredient, ingredient);
-      console.log("obj", newObj)
       return newObj.name
     });
     return matchedIngredients;

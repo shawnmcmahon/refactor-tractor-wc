@@ -1,23 +1,12 @@
-import {
-  expect
-} from 'chai';
-
+import { expect } from 'chai';
 import Recipe from '../src/recipe';
+import { testRecipes, testIngredients } from '../test/test-data';
 
-import {
-  testRecipes,
-  testRecipeData,
-  testIngredients
-} from '../test/test-data';
-
-describe.only('Recipe', () => {
+describe('Recipe', () => {
   let recipe;
-  // let recipeInfo;
 
   beforeEach(function() {
-    // recipeInfo = data.recipeData[0];
     recipe = new Recipe(testRecipes[0], testIngredients);
-    // recipe =
 
   })
 
@@ -109,7 +98,6 @@ describe.only('Recipe', () => {
   //BUT i had to delete the API data name (ingData --> ingredientsData) because our test data doesn't match that, and we need it to match so that we can access the api
   it('should update the ingredient data', () => {
     const getData = recipe.updateIngredientData(testIngredients)
-    // console.log("test", recipe.ingredientsData)
     const ingredientInfo = [{
         id: 1,
         name: 'egg',
@@ -156,7 +144,6 @@ describe.only('Recipe', () => {
 
   it('should have a way to return all ingredient info needed', () => {
     const ingredients = recipe.getIngredients();
-    // console.log("Test1", ingredients)
     const answer = [{
         id: 0,
         name: "rice",
@@ -185,13 +172,11 @@ describe.only('Recipe', () => {
         }
       }
     ]
-    // console.log("Test2", ingredients)
     expect(ingredients).to.deep.equal(answer)
   })
 
   it('should be able to get the cost of the ingredients', () => {
     const cost = recipe.getRecipeCost();
-    // console.log("cost", cost)
     const answer = "$5.60"
 
     expect(cost).to.equal(answer)
@@ -199,8 +184,6 @@ describe.only('Recipe', () => {
 
   it('should be able to get the names of the ingredients', () => {
     const getNames = recipe.getIngredientNames();
-
-    // console.log(getNames)
     expect(getNames).to.deep.equal(['rice', 'egg', 'avocado'])
   })
 
