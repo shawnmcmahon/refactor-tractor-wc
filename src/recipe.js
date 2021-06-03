@@ -20,6 +20,41 @@ class Recipe {
     this.ingredientsData = getIngs
   }
 
+  getIngredients() {
+    const matchedIngredients = this.ingredients.map(ingredient => {
+      const foundIngredient = this.ingredientsData.find(
+        data => data.id === ingredient.id
+      );
+      const newObj = Object.assign(foundIngredient, ingredient);
+      return newObj
+    });
+    return matchedIngredients;
+  }
+
+  getRecipeCost() {
+    const ingredients = this.getIngredients();
+
+    const total = ingredients.reduce((acc, item) => {
+      acc += item.quantity.amount * item.estimatedCostInCents;
+      return acc;
+    }, 0);
+
+    const costInDollars = (total / 100).toFixed(2);
+    return `$${costInDollars}`;
+  }
+
+  getIngredientNames() {
+    const matchedIngredients = this.ingredients.map(ingredient => {
+      const foundIngredient = this.ingredientsData.find(
+        data => data.id === ingredient.id
+      );
+      const newObj = Object.assign(foundIngredient, ingredient);
+      console.log("obj", newObj)
+      return newObj.name
+    });
+    return matchedIngredients;
+  }
+
   returnInstructions() {
     return this.instructions;
   }
@@ -27,42 +62,6 @@ class Recipe {
   returnIngredients() {
     return this.ingredients
   }
-
-  getIngredients() {
-   const matchedIngredients = this.ingredients.map(ingredient => {
-     const foundIngredient = this.ingredientsData.find(
-       data => data.id === ingredient.id
-     );
-     const newObj = Object.assign(foundIngredient, ingredient);
-     return newObj
-   });
-   return matchedIngredients;
- }
-
- getRecipeCost() {
-     const ingredients = this.getIngredients();
-
-     const total = ingredients.reduce((acc, item) => {
-       acc += item.quantity.amount * item.estimatedCostInCents;
-       return acc;
-     }, 0);
-
-     const costInDollars = (total / 100).toFixed(2);
-     return `$${costInDollars}`;
-   }
-
-  getIngredientNames() {
-      const matchedIngredients = this.ingredients.map(ingredient => {
-        const foundIngredient = this.ingredientsData.find(
-          data => data.id === ingredient.id
-        );
-        const newObj = Object.assign(foundIngredient, ingredient);
-        console.log("obj", newObj)
-        return newObj.name
-      });
-      return matchedIngredients;
-    }
-
 
 
 }
