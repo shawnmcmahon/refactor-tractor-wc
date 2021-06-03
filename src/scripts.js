@@ -4,7 +4,7 @@ import recipeData from  './data/recipe-data';
 import ingredientData from './data/ingredient-data';
 import './css/base.scss';
 import './css/styles.scss';
-import './domUpdates';
+import domUpdates from './domUpdates';
 
 import User from './user';
 import Recipe from './recipe';
@@ -16,7 +16,7 @@ import './images/cookbook.png'
 import './images/green-apples.jpg'
 import './images/pancakes.jpg'
 import './images/search.png'
-import './seasoning.png'
+import './images/seasoning.png'
 
 // query selectors
 // prefer to getElementById instead of by class
@@ -57,15 +57,9 @@ searchForm.addEventListener("submit", pressEnterSearch);
 // function
 function generateUser() {
   user = new User(users[Math.floor(Math.random() * users.length)]);
-  let firstName = user.name.split(" ")[0];
   findPantryInfo();
-// Move to dom Updates
-  // let welcomeMsg = `
-  //   <div class="welcome-msg">
-  //     <h1>Welcome ${firstName}!</h1>
-  //   </div>`;
-  // document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
-  //   welcomeMsg);
+  domUpdates.updateWelcomeMessage(user);
+
     // find pantry info on load, could probably just create a new instance of pantry
 }
 
@@ -210,6 +204,15 @@ function findPantryInfo() {
 //     tagList.insertAdjacentHTML("beforeend", tagHtml);
 //   });
 // }
+
+// Move to dom Updates
+  // let welcomeMsg = `
+  //   <div class="welcome-msg">
+  //     <h1>Welcome ${firstName}!</h1>
+  //   </div>`;
+  // document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
+  //   welcomeMsg);
+
 
 //this is the filter by tags that should go in Cookbook.js
 //

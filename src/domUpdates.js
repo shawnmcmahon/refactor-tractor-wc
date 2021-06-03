@@ -1,11 +1,10 @@
 let domUpdates = {
-  updateWelcomeMessage() {
-    let welcomeMsg = `
-      <div class="welcome-msg">
+  updateWelcomeMessage(user) {
+    let welcomeDiv = document.querySelector('.welcome-msg')
+    let firstName = user.name.split(' ')[0];
+    welcomeDiv.innerHTML = `
         <h1>Welcome ${firstName}!</h1>
-      </div>`;
-    document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
-      welcomeMsg);
+    `;
   },
 
   displayPantryInfo(pantry) {
