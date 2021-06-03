@@ -4,7 +4,7 @@ import recipeData from  './data/recipe-data';
 import ingredientData from './data/ingredient-data';
 import './css/base.scss';
 import './css/styles.scss';
-import './domUpdates';
+import domUpdates from './domUpdates';
 
 import User from './user';
 import Recipe from './recipe';
@@ -16,23 +16,22 @@ import './images/cookbook.png'
 import './images/green-apples.jpg'
 import './images/pancakes.jpg'
 import './images/search.png'
-import './seasoning.png'
+import './images/seasoning.png'
 
 // query selectors
-// prefer to getElementById instead of by class
-let allRecipesBtn = document.querySelector(".show-all-btn");
-let filterBtn = document.querySelector(".filter-btn");
 let main = document.querySelector("main");
-let pantryBtn = document.querySelector(".my-pantry-btn");
-let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
-let searchBtn = document.querySelector(".search-btn");
-let searchForm = document.querySelector("#search");
-let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 
-// we aren't using these in scripts, may have moved to DOM updates
-let searchInput = document.querySelector("#search-input");
-let fullRecipeInfo = document.querySelector(".recipe-instructions");
-let tagList = document.querySelector(".tag-list");
+let allRecipesBtn = document.getElementById('showAllRecipesButton');
+let filterBtn = document.getElementById('filterRecipesButton');
+let pantryBtn = document.getElementById('myPantryButton');
+let savedRecipesBtn = document.getElementById('myFavRecipesButton');
+let searchBtn = document.getElementById('searchButton');
+let showPantryRecipes = document.getElementById('whatCanIMake');
+let searchForm = document.getElementById('searchBar');
+// these are now used in DOM only vvv
+let fullRecipeInfo = document.getElementById('fullRecipeInstructions');
+let searchInput = document.getElementById('searchInput');
+let tagList = document.getElementById('tagList');
 
 // variables
 //do we want to name our other instances here?
@@ -55,23 +54,18 @@ main.addEventListener("click", addToMyRecipes);
 pantryBtn.addEventListener("click", toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
+showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
+searchForm.addEventListener('submit', pressEnterSearch);
 
 // GENERATE A USER ON LOAD
 // Stay in Scripts.js. Generate the user when we call the promise in the startup
 // function
 function generateUser() {
   user = new User(users[Math.floor(Math.random() * users.length)]);
-  let firstName = user.name.split(" ")[0];
   findPantryInfo();
-// Move to dom Updates
-  // let welcomeMsg = `
-  //   <div class="welcome-msg">
-  //     <h1>Welcome ${firstName}!</h1>
-  //   </div>`;
-  // document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
-  //   welcomeMsg);
-  // find pantry info on load, could probably just create a new instance of pantry
-}
+  domUpdates.updateWelcomeMessage(user);
+
+    // find pantry info on load, could probably just create a new instance of pantry
 
  //findTags function runs on pageload
   //creates a list of all tags in the cookbook
@@ -252,6 +246,15 @@ function findPantryInfo() {
 //     tagList.insertAdjacentHTML("beforeend", tagHtml);
 //   });
 // }
+
+// Move to dom Updates
+  // let welcomeMsg = `
+  //   <div class="welcome-msg">
+  //     <h1>Welcome ${firstName}!</h1>
+  //   </div>`;
+  // document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
+  //   welcomeMsg);
+
 
 //this is the filter by tags that should go in Cookbook.js
 // renamed filterByTag!!!!
