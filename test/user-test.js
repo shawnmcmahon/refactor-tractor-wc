@@ -66,11 +66,13 @@ describe('User', function() {
 
   it('should be able to filter recipes by type', function() {
     user.saveRecipe(recipe);
-    expect(user.filterRecipes('breakfast')).to.deep.equal([recipe]);
+    const breakfastRecipes = user.filterRecipes('breakfast');
+    expect(breakfastRecipes).to.deep.equal([recipe]);
   });
 
   it('should be able to search recipes by name', function() {
     user.saveRecipe(recipe);
-    expect(user.searchForRecipe('Rice bowl with Fried Egg')).to.deep.equal([recipe]);
+    const recipeSearch = user.searchForRecipe('Rice bowl with Fried Egg');
+    expect(recipeSearch).to.deep.equal([recipe]);
   });
 });
