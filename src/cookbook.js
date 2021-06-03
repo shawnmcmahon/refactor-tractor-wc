@@ -8,14 +8,16 @@ class Cookbook {
   // this is called inside of findCheckedBoxes
   filterByTag(allCheckedTags) {
     let filteredRecipes = allCheckedTags.reduce((acc, tag) => {
-      let matchingRecipe = this.cookbook.filter(recipe => recipe.tags.includes(tag.id));
+      let matchingRecipe = this.cookbook.filter(recipe =>
+        recipe.tags.includes(tag.id)
+      );
 
       if (!acc.includes(matchingRecipe)) {
-        acc.push(matchingRecipe)
+        acc.push(matchingRecipe);
       }
-      
-      return acc
-    }, [])
+
+      return acc;
+    }, []);
 
     // below is the previous logic, my refactor is above
     // allCheckedTags.forEach(tag => {
@@ -33,24 +35,33 @@ class Cookbook {
     // });
   }
 
-  filterRecipes(filtered) {
-    let foundRecipes = this.cookbook.filter(recipe => {
-      return !filtered.includes(recipe);
-    });
-    //this should go to domUpdates
-    // hideUnselectedRecipes(foundRecipes)
+  filterByNameOrIngredient(inputs) {
+    // input is likely to be searchInput.value
+    // may need to add toLowerCase
+    const filteredRecipes = inputs.reduce((acc, item) => {
+      this.recipesData.forEach(recipe => {
+        const recipeNames = recipe.name.toLowerCase();
+        if (recipeNames.includes(item) && !acc.includes(recipe)) {
+          acc.push(recipe);
+        }
+      });
+
+      this.recipesData.forEach(recipe => {
+        const recipeIngredients = recipe.getIngredientNames();
+        const splitIngredients = recipeIngredients
+          .map(ingredient => ingredient.split(' '))
+          .flat();
+        if (splitIngredients.includes(item) && !acc.includes(recipe)) {
+          acc.push(recipe);
+        }
+      });
+
+      return acc;
+    }, []);
+
+    this.filteredByNameOrIngredient = filteredRecipes;
   }
 
-  //should be called filterByName
-  searchRecipes() {
-    showAllRecipes();
-    let searchedRecipes = recipeData.filter(recipe => {
-      return recipe.name
-        .toLowerCase()
-        .includes(searchInput.value.toLowerCase());
-    });
-    filterNonSearched(createRecipeObject(searchedRecipes));
-  }
 };
 
 export default Cookbook

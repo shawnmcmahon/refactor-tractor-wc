@@ -269,9 +269,7 @@ function findPantryInfo() {
 //   });
 
 
-//This should go in Cookbook.js
-//
-//
+// this used to be called by showAllRecipes(), it's probably not needed
 //
 // function filterRecipes(filtered) {
 //   let foundRecipes = recipes.filter(recipe => {
@@ -411,8 +409,9 @@ function findPantryInfo() {
 // }
 
 
+// This should go in the Cookbook class (filter by name)
+// this function really sucked, I made a new method in cookbook class called filterByNameOrIngredient
 
-//This should go in the Cookbook class (filter by name)
 // function searchRecipes() {
 //   showAllRecipes();
 //   let searchedRecipes = recipeData.filter(recipe => {

@@ -10,12 +10,6 @@ describe('Cookbook', () => {
     recipe1 = new Recipe(testRecipes[0], testIngredients);
     recipe2 = new Recipe(testRecipes[1], testIngredients);
     recipe3 = new Recipe(testRecipes[2], testIngredients);
-    recipe1.updateEachRecipeIngredients(testIngredients);
-    recipe2.updateEachRecipeIngredients(testIngredients);
-    recipe3.updateEachRecipeIngredients(testIngredients);
-    recipe1.returnIngredientNames(testIngredients);
-    recipe2.returnIngredientNames(testIngredients);
-    recipe3.returnIngredientNames(testIngredients);
     allRecipes = [recipe1, recipe2, recipe3];
     testCookbook = new Cookbook(allRecipes);
   });
