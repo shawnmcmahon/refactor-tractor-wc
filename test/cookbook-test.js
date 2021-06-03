@@ -52,10 +52,50 @@ describe('Cookbook', () => {
     expect(testCookbook.filteredByTag).to.deep.equal([recipe1, recipe3]);
   });
 
-  it.skip('Should be able to filter recipes by any ingredient', () => {
+  it('Should be able to filter recipes by ingredient', () => {
+    testCookbook.filterByNameOrIngredient(['egg']);
+    expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([
+      recipe1,
+      recipe3
+    ]);
   });
 
-  it.skip('Should be able to filter recipes by any name', () => {
+  it('Should be able to filter recipes by a different ingredient', () => {
+    testCookbook.filterByNameOrIngredient(['cilantro']);
+    expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([
+      recipe2
+    ]);
   });
+
+  it('Should be able to filter recipes by a different ingredient', () => {
+    testCookbook.filterByNameOrIngredient(['rice']);
+    expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([
+      recipe1,
+      recipe3
+    ]);
+  });
+
+  it('Should be able to filter recipes by name', () => {
+    testCookbook.filterByNameOrIngredient(['salsa']);
+    expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([recipe2]);
+  });
+
+  it('Should be able to filter recipes by a different name', () => {
+    testCookbook.filterByNameOrIngredient(['omelet']);
+    expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([recipe3]);
+  });
+
+  it('Should be able to filter recipes by a different name', () => {
+    testCookbook.filterByNameOrIngredient(['fried']);
+    expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([
+      recipe1
+    ]);
+  });
+
+  //should probably add some sad path testing here for: 
+  // uppercase inputs
+  // inputs with weird symbols in them
+  // inputs with double spaces between words
+  // anything else?
 
 });
