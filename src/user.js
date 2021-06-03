@@ -44,7 +44,7 @@ class User {
     }
   }
 
-   showSavedRecipes() {
+  showSavedRecipes() {
     let unsavedRecipes = recipes.filter(recipe => {
       return !user.favoriteRecipes.includes(recipe.id);
     });
