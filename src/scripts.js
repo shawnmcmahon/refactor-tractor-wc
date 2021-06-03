@@ -22,14 +22,16 @@ import './seasoning.png'
 // prefer to getElementById instead of by class
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
-let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let main = document.querySelector("main");
 let pantryBtn = document.querySelector(".my-pantry-btn");
 let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 let searchBtn = document.querySelector(".search-btn");
 let searchForm = document.querySelector("#search");
-let searchInput = document.querySelector("#search-input");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
+
+// we aren't using these in scripts, may have moved to DOM updates
+let searchInput = document.querySelector("#search-input");
+let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let tagList = document.querySelector(".tag-list");
 
 // variables
@@ -40,17 +42,19 @@ let recipes = [];
 let menuOpen = false;
 
 //event listeners
+window.addEventListener("load", generateUser);
+filterBtn.addEventListener("click", findCheckedBoxes);
+showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
+searchForm.addEventListener("submit", pressEnterSearch);
+
+// all functions below were moved into class files
 window.addEventListener("load", createCards);
 window.addEventListener("load", findTags);
-window.addEventListener("load", generateUser);
 allRecipesBtn.addEventListener("click", showAllRecipes);
-filterBtn.addEventListener("click", findCheckedBoxes);
 main.addEventListener("click", addToMyRecipes);
 pantryBtn.addEventListener("click", toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
-showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
-searchForm.addEventListener("submit", pressEnterSearch);
 
 // GENERATE A USER ON LOAD
 // Stay in Scripts.js. Generate the user when we call the promise in the startup
@@ -69,6 +73,22 @@ function generateUser() {
   // find pantry info on load, could probably just create a new instance of pantry
 }
 
+ //findTags function runs on pageload
+  //creates a list of all tags in the cookbook
+  //should maybe sort them
+  //then calls listTags and passes it the array of tags
+  // listTags renders all the tags to the DOM (inserting them into the <ul class="tag-list">)
+  findTags() {
+    this.cookbook.reduce((acc, recipe) => {
+      recipe.tags.forEach(tag => {
+        if (!recipe.tags.includes(tag)) {
+          acc.push(tag);
+        }
+      });
+      return acc;
+    }, []);
+  }
+
 function findCheckedPantryBoxes() {
   // pantry-checkbox is inner html
   let pantryCheckboxes = document.querySelectorAll(".pantry-checkbox");
@@ -83,6 +103,27 @@ function findCheckedPantryBoxes() {
   }
 }
 
+//this is for pantry class
+// this function is fired off inside of findCheckedPantryBoxes
+// selected is an array of pantryCheckboxes (whatever that means)
+function findRecipesWithCheckedIngredients(selected) {
+  let recipeChecker = (arr, target) => target.every(v => arr.includes(v));
+  let ingredientNames = selected.map(item => {
+    return item.id;
+  });
+  recipes.forEach(recipe => {
+    let allRecipeIngredients = [];
+    recipe.ingredients.forEach(ingredient => {
+      allRecipeIngredients.push(ingredient.name);
+    });
+    if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
+      let domRecipe = document.getElementById(`${recipe.id}`);
+      domRecipe.style.display = 'none';
+    }
+  });
+}
+
+
 // Capitalize?? Why not lowercase?
 function capitalize(words) {
   return words.split(" ").map(word => {
@@ -93,11 +134,12 @@ function capitalize(words) {
 //Stay in scripts
 function findCheckedBoxes() {
   let tagCheckboxes = document.querySelectorAll(".checked-tag");
-  let checkboxInfo = Array.from(tagCheckboxes)
-  let selectedTags = checkboxInfo.filter(box => {
+  // pretty sure we can delete Array.from() since querySelectorAll returns an array
+  //let checkboxInfo = Array.from(tagCheckboxes)
+  let selectedTags = tagCheckboxes.filter(box => {
     return box.checked;
   })
-  findTaggedRecipes(selectedTags);
+  cookbook.filterByTag(selectedTags);
 }
 
 // this will be scripts. However, there is a better way to do.
@@ -212,10 +254,8 @@ function findPantryInfo() {
 // }
 
 //this is the filter by tags that should go in Cookbook.js
-//
-//
-//
-// function findTaggedRecipes(selected) {
+// renamed filterByTag!!!!
+// function filterByTag(selected) {
 //   let filteredResults = [];
 //   selected.forEach(tag => {
 //     let allRecipes = recipes.filter(recipe => {

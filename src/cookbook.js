@@ -5,46 +5,32 @@ class Cookbook {
     this.filteredByNameOrIngredient = [];
   }
 
-  findTags() {
-    this.cookbook.reduce((acc, recipe) => {
-      recipe.tags.forEach(tag => {
-        if (!tags.includes(tag)) {
-          acc.push(tag);
-        }
-      });
-      return acc
-    }, []);
-  }
+  // this is called inside of findCheckedBoxes
+  filterByTag(allCheckedTags) {
+    let filteredRecipes = allCheckedTags.reduce((acc, tag) => {
+      let matchingRecipe = this.cookbook.filter(recipe => recipe.tags.includes(tag.id));
 
-  findRecipesWithCheckedIngredients(selected) {
-    let recipeChecker = (arr, target) => target.every(v => arr.includes(v));
-    let ingredientNames = selected.map(item => {
-      return item.id;
-    })
-    recipes.forEach(recipe => {
-      let allRecipeIngredients = [];
-      recipe.ingredients.forEach(ingredient => {
-        allRecipeIngredients.push(ingredient.name);
-      });
-      if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
-        let domRecipe = document.getElementById(`${recipe.id}`);
-        domRecipe.style.display = "none";
+      if (!acc.includes(matchingRecipe)) {
+        acc.push(matchingRecipe)
       }
-    })
-  }
+      
+      return acc
+    }, [])
 
-  findTaggedRecipes(selected) {
-    let filteredResults = [];
-    selected.forEach(tag => {
-      let allRecipes = this.cookbook.filter(recipe => {
-        return recipe.tags.includes(tag.id);
-      });
-      allRecipes.forEach(recipe => {
-        if (!filteredResults.includes(recipe)) {
-          filteredResults.push(recipe);
-        }
-      })
-    })
+    // below is the previous logic, my refactor is above
+    // allCheckedTags.forEach(tag => {
+
+    //   let allRecipes = this.cookbook.filter(recipe => {
+    //     return recipe.tags.includes(tag.id);
+    //   });
+
+    //   allRecipes.forEach(recipe => {
+    //     if (!this.filteredByTag.includes(recipe)) {
+    //       this.filteredByTag.push(recipe);
+    //     }
+    //   });
+
+    // });
   }
 
   filterRecipes(filtered) {
@@ -55,15 +41,16 @@ class Cookbook {
     // hideUnselectedRecipes(foundRecipes)
   }
 
-//should be called filterByName
+  //should be called filterByName
   searchRecipes() {
     showAllRecipes();
     let searchedRecipes = recipeData.filter(recipe => {
-      return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase());
+      return recipe.name
+        .toLowerCase()
+        .includes(searchInput.value.toLowerCase());
     });
     filterNonSearched(createRecipeObject(searchedRecipes));
   }
-
 };
 
 export default Cookbook
