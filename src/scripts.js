@@ -23,13 +23,14 @@ let main = document.querySelector("main");
 
 let allRecipesBtn = document.getElementById('showAllRecipesButton');
 let filterBtn = document.getElementById('filterRecipesButton');
-let fullRecipeInfo = document.getElementById('fullRecipeInstructions');
 let pantryBtn = document.getElementById('myPantryButton');
 let savedRecipesBtn = document.getElementById('myFavRecipesButton');
 let searchBtn = document.getElementById('searchButton');
-let searchForm = document.getElementById('searchBar');
-let searchInput = document.getElementById('searchInput');
 let showPantryRecipes = document.getElementById('whatCanIMake');
+let searchForm = document.getElementById('searchBar');
+// these are now used in DOM only vvv
+let fullRecipeInfo = document.getElementById('fullRecipeInstructions');
+let searchInput = document.getElementById('searchInput');
 let tagList = document.getElementById('tagList');
 
 // variables
@@ -53,11 +54,8 @@ main.addEventListener("click", addToMyRecipes);
 pantryBtn.addEventListener("click", toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
-<<<<<<< HEAD
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener('submit', pressEnterSearch);
-=======
->>>>>>> main
 
 // GENERATE A USER ON LOAD
 // Stay in Scripts.js. Generate the user when we call the promise in the startup
