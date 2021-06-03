@@ -24,7 +24,7 @@ let domUpdates = {
     showWelcomeBanner();
   },
 
-   hideUnselectedRecipes(foundRecipes) {
+  hideUnselectedRecipes(foundRecipes) {
     foundRecipes.forEach(recipe => {
       let domRecipe = document.getElementById(`${recipe.id}`);
       domRecipe.style.display = "none";
@@ -34,8 +34,8 @@ let domUpdates = {
   createCards() {
     recipeData.forEach(recipe => {
       let recipeInfo = new Recipe(recipe);
-  // Why are they shortening the name of the recipe? Is this necessary? Probably not
-  //
+      // Why are they shortening the name of the recipe? Is this necessary? Probably not
+      //
       let shortRecipeName = recipeInfo.name;
       recipes.push(recipeInfo);
       if (recipeInfo.name.length > 40) {
@@ -58,7 +58,7 @@ let domUpdates = {
         <h4>${recipeInfo.tags[0]}</h4>
         <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
       </div>`
-  // Should NEVER be inserting html into Main. Find another, better HTML tag to insert into
+    // Should NEVER be inserting html into Main. Find another, better HTML tag to insert into
     main.insertAdjacentHTML("beforeend", cardHtml);
   },
 
@@ -133,7 +133,9 @@ let domUpdates = {
 
   exitRecipe() {
     while (fullRecipeInfo.firstChild &&
-      fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
+      fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)) {
+
+    }
     fullRecipeInfo.style.display = "none";
     document.getElementById("overlay").remove();
   },
