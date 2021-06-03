@@ -19,18 +19,18 @@ import './images/search.png'
 import './images/seasoning.png'
 
 // query selectors
-// prefer to getElementById instead of by class
-let allRecipesBtn = document.querySelector(".show-all-btn");
-let filterBtn = document.querySelector(".filter-btn");
-let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let main = document.querySelector("main");
-let pantryBtn = document.querySelector(".my-pantry-btn");
-let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
-let searchBtn = document.querySelector(".search-btn");
-let searchForm = document.querySelector("#search");
-let searchInput = document.querySelector("#search-input");
-let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
-let tagList = document.querySelector(".tag-list");
+
+let allRecipesBtn = document.getElementById('showAllRecipesButton');
+let filterBtn = document.getElementById('filterRecipesButton');
+let fullRecipeInfo = document.getElementById('fullRecipeInstructions');
+let pantryBtn = document.getElementById('myPantryButton');
+let savedRecipesBtn = document.getElementById('myFavRecipesButton');
+let searchBtn = document.getElementById('searchButton');
+let searchForm = document.getElementById('searchBar');
+let searchInput = document.getElementById('searchInput');
+let showPantryRecipes = document.getElementById('whatCanIMake');
+let tagList = document.getElementById('tagList');
 
 // variables
 //do we want to name our other instances here?
@@ -50,7 +50,7 @@ pantryBtn.addEventListener("click", toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
-searchForm.addEventListener("submit", pressEnterSearch);
+searchForm.addEventListener('submit', pressEnterSearch);
 
 // GENERATE A USER ON LOAD
 // Stay in Scripts.js. Generate the user when we call the promise in the startup
