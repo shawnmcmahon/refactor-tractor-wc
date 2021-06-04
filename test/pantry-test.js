@@ -39,9 +39,12 @@ describe.only('Pantry', () => {
 
   it('should determine whether a pantry has the ingredients to cook a recipe', function() {
 
-    const canICook = pantry.canCookRecipe(recipe);
-    console.log("test", canICook)
-    expect(canICook).to.equal('yes!');
+    const canICook = pantry.canICookRecipe(recipe);
+    // console.log("test", canICook)
+    expect(canICook).to.equal('You have the ingredients in your pantry to cook this recipe!');
+    const iCantCook = pantry2.canICookRecipe(recipe)
+    // console.log("cant", iCantCook)
+    expect(iCantCook).to.equal('Sorry, you do not have the ingredients in your pantry to cook this recipe.');
   });
 
 
