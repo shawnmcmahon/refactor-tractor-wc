@@ -1,12 +1,9 @@
+/* eslint-disable max-len */
 //imports
-import users from './data/users-data';
-import recipeData from  './data/recipe-data';
-import ingredientData from './data/ingredient-data';
 import './css/base.scss';
 import './css/styles.scss';
 import domUpdates from './domUpdates';
 import apiCalls from './apiCalls'
-
 import User from './user';
 import Recipe from './recipe';
 import Cookbook from './cookbook';
@@ -21,21 +18,18 @@ import './images/seasoning.png'
 
 // query selectors
 let main = document.querySelector("main");
-
-let allRecipesBtn = document.getElementById('showAllRecipesButton');
-let filterBtn = document.getElementById('filterRecipesButton');
 let pantryBtn = document.getElementById('myPantryButton');
 let savedRecipesBtn = document.getElementById('myFavRecipesButton');
 let searchBtn = document.getElementById('searchButton');
-let showPantryRecipes = document.getElementById('whatCanIMake');
-let searchForm = document.getElementById('searchBar');
-// these are now used in DOM only vvv
 let fullRecipeInfo = document.getElementById('fullRecipeInstructions');
 let searchInput = document.getElementById('searchInput');
-let tagList = document.getElementById('tagList');
+let allRecipesBtn = document.getElementById('showAllRecipesButton');
+
+let filterBtn = document.getElementById('filterRecipesButton');
+let showPantryRecipes = document.getElementById('whatCanIMake');
+let searchForm = document.getElementById('searchBar');
 
 // variables
-//do we want to name our other instances here?
 let user, cookbook;
 let globalIngredientsData = {};
 let pantryInfo = [];
@@ -65,43 +59,40 @@ searchForm.addEventListener("submit", pressEnterSearch);
 function startUp() {
   apiCalls.retrieveData()
     .then((promise) => {
-
-      user = new User(promise[0]['usersData'][0])
-      cookbook = new Cookbook(promise[1].recipeData)
+      makeUserInstance(promise[0].usersData);
+      const allRecipes = makeRecipeInstances(promise[1].recipeData, promise[2].ingredientsData);
+      cookbook = new Cookbook(allRecipes);
       globalIngredientsData = promise[2].ingredientsData
-      //dom updates function that greets the user
+      domUpdates.updateWelcomeMessage(user);
+      getTagsFromRecipeData()
+    
       //dom updates function that will load the cards to the home page
-      console.log('user', user);
+      //dom updates function to load pantry
+      //dom updates function to load tags (findTags)
     })
-
 }
 
+function makeUserInstance(apiUserData) {
+  let randomNumber = Math.floor(Math.random() * apiUserData.length);
+  user = new User(apiUserData[randomNumber]);
+}
 
-// GENERATE A USER ON LOAD
-// Stay in Scripts.js. Generate the user when we call the promise in the startup
-// function
-// function generateUser() {
-//   user = new User(users[Math.floor(Math.random() * users.length)]);
-//   findPantryInfo();
-//   domUpdates.updateWelcomeMessage(user);
-// }
-    // find pantry info on load, could probably just create a new instance of pantry
+function makeRecipeInstances(apiRecipeData, apiIngredientData) {
+  const newRecipes = apiRecipeData.map(recipe => new Recipe(recipe, apiIngredientData));
+  return newRecipes
+}
 
- //findTags function runs on pageload
-  //creates a list of all tags in the cookbook
-  //should maybe sort them
-  //then calls listTags and passes it the array of tags
-  // listTags renders all the tags to the DOM (inserting them into the <ul class="tag-list">)
-  function findTags() {
-    this.cookbook.reduce((acc, recipe) => {
-      recipe.tags.forEach(tag => {
-        if (!recipe.tags.includes(tag)) {
-          acc.push(tag);
-        }
-      });
-      return acc;
-    }, []);
-  }
+function getTagsFromRecipeData() {
+  const tags = cookbook.cookbook.reduce((allTags, recipe) => {
+    recipe.tags.forEach(tag => {
+      if (!allTags.includes(tag)) {
+        allTags.push(tag);
+      }
+    });
+    return allTags.sort();
+  }, []);
+  domUpdates.listTags(tags);
+}
 
 function findCheckedPantryBoxes() {
   // pantry-checkbox is inner html
