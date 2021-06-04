@@ -47,18 +47,20 @@ let domUpdates = {
     }
   },
 
-  ///////////// everything above this line is not total garbage /////////////
   togglePantryMenu() {
-    //menuOpen is a very lazy way to do this. we should just makethe thing a button with a .disabledproperty
-    
-    let menuOpen = false;
     var menuDropdown = document.querySelector('.drop-menu');
-    if (!menuOpen) {
-      menuDropdown.style.display = 'none';
-    } else {
+    let pantryBtn = document.getElementById('myPantryButton');
+    let attr = pantryBtn.getAttribute('aria-expanded');
+    if (attr === 'true') {
+      pantryBtn.setAttribute('aria-expanded', false);
       menuDropdown.style.display = 'block';
+    } else {
+      pantryBtn.setAttribute('aria-expanded', true);
+      menuDropdown.style.display = 'none';
     }
   },
+
+  ///////////// everything above this line is not total garbage /////////////
 
   displayPantryInfo(pantry) {
     pantry.forEach(ingredient => {

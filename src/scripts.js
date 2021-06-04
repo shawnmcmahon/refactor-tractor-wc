@@ -41,6 +41,8 @@ filterBtn.addEventListener("click", findCheckedBoxes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
 
+pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
+
 // all functions below were moved into class files
 // allRecipesBtn.addEventListener("click", showAllRecipes);
 // main.addEventListener("click", addToMyRecipes);
