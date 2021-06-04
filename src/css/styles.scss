@@ -157,10 +157,12 @@ span {
   padding: 2px 0px;
 }
 
+//not in html
 .saved-ingredients-btn {
   border-left: 3px solid #C4EB67;
 }
 
+// not in html
 .ing-pan-btn {
   margin: 1% 0%;
   padding: 1px 6px 5px 0px;
@@ -168,6 +170,7 @@ span {
 
 
 /* BANNER IMAGE*/
+// not in html
 .banner-image {
   background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),url("../images/green-apples.jpg");
   grid-area: image;
@@ -175,6 +178,7 @@ span {
   overflow: hidden;
   width: 100%;
 }
+
 
 .my-recipes-banner,
 .welcome-msg {
