@@ -270,7 +270,7 @@ const testUserData = [{
 ]
 
 
-export {
+export default {
   testIngredients,
   testRecipes,
   testUserData

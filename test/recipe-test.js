@@ -2,7 +2,9 @@ import { expect } from 'chai';
 import Recipe from '../src/recipe';
 import { testRecipes, testIngredients } from '../test/test-data';
 
+
 describe('Recipe', () => {
+
   let recipe;
 
   beforeEach(function() {
@@ -94,9 +96,9 @@ describe('Recipe', () => {
     ]);
   })
 
-  //This currently works, but i had to edit the this.ingredientData property and 
+  //This currently works, but i had to edit the this.ingredientData property and
   //moved the methods of matching into a new function.
-  //BUT i had to delete the API data name (ingData --> ingredientsData) 
+  //BUT i had to delete the API data name (ingData --> ingredientsData)
   //because our test data doesn't match that, and we need it to match so that we can access the api
   it('should update the ingredient data', () => {
     const getData = recipe.updateIngredientData(testIngredients)
