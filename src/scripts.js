@@ -34,22 +34,17 @@ let user, cookbook;
 let globalIngredientsData = {};
 let pantryInfo = [];
 let recipes = [];
-let menuOpen = false;
-
-window.onload = startUp()
 
 //event listeners
-window.addEventListener("load", generateUser);
+window.onload = startUp()
 filterBtn.addEventListener("click", findCheckedBoxes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
 
 // all functions below were moved into class files
-// window.addEventListener("load", createCards);
-// window.addEventListener("load", findTags);
 // allRecipesBtn.addEventListener("click", showAllRecipes);
 // main.addEventListener("click", addToMyRecipes);
-// pantryBtn.addEventListener("click", toggleMenu);
+pantryBtn.addEventListener("click", domUpdates.togglePantryMenu);
 // savedRecipesBtn.addEventListener("click", showSavedRecipes);
 // searchBtn.addEventListener("click", searchRecipes);
 // showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
@@ -65,10 +60,9 @@ function startUp() {
       globalIngredientsData = promise[2].ingredientsData
       domUpdates.updateWelcomeMessage(user);
       getTagsFromRecipeData()
-    
-      //dom updates function that will load the cards to the home page
+      domUpdates.renderRecipeCards(cookbook)
+      // need to create a pantry on load
       //dom updates function to load pantry
-      //dom updates function to load tags (findTags)
     })
 }
 
@@ -94,6 +88,12 @@ function getTagsFromRecipeData() {
   domUpdates.listTags(tags);
 }
 
+
+
+
+
+
+///////////// everything above this line is not total garbage /////////////
 function findCheckedPantryBoxes() {
   // pantry-checkbox is inner html
   let pantryCheckboxes = document.querySelectorAll(".pantry-checkbox");
@@ -129,13 +129,6 @@ function findRecipesWithCheckedIngredients(selected) {
 }
 
 
-// Capitalize?? Why not lowercase?
-function capitalize(words) {
-  return words.split(" ").map(word => {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  }).join(" ");
-}
-
 //Stay in scripts
 function findCheckedBoxes() {
   let tagCheckboxes = document.querySelectorAll(".checked-tag");
@@ -146,6 +139,7 @@ function findCheckedBoxes() {
   })
   cookbook.filterByTag(selectedTags);
 }
+
 
 // this will be scripts. However, there is a better way to do.
 function pressEnterSearch(event) {
@@ -162,11 +156,6 @@ function filterNonSearched(filtered) {
   hideUnselectedRecipes(found);
 }
 
-//This stays in scripts, though it could be adjusted to be called on laod ?
-function createRecipeObject(recipes) {
-  recipes = recipes.map(recipe => new Recipe(recipe));
-  return recipes
-}
 
 //dont think this is fully necessary, could probably just instantiate a pantry on load
 // seems like a really convoluted way to
@@ -198,40 +187,6 @@ function createRecipeObject(recipes) {
 
 
 ///////////////// OLD GARBAGE HERE vvv
-// CREATE RECIPE CARDS
-// Belongs inside domUpdates
-// function createCards() {
-//   recipeData.forEach(recipe => {
-//     let recipeInfo = new Recipe(recipe);
-// // Why are they shortening the name of the recipe? Is this necessary? Probably not
-// //
-//     let shortRecipeName = recipeInfo.name;
-//     recipes.push(recipeInfo);
-//     if (recipeInfo.name.length > 40) {
-//       shortRecipeName = recipeInfo.name.substring(0, 40) + "...";
-//     }
-// // Neeed to move addToDom to domUpdates
-//     addToDom(recipeInfo, shortRecipeName)
-//   });
-// }
-
-// Belongs in domUpdates
-// function addToDom(recipeInfo, shortRecipeName) {
-//   let cardHtml = `
-//     <div class="recipe-card" id=${recipeInfo.id}>
-//       <h3 maxlength="40">${shortRecipeName}</h3>
-//       <div class="card-photo-container">
-//         <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
-//         <div class="text">
-//           <div>Click for Instructions</div>
-//         </div>
-//       </div>
-//       <h4>${recipeInfo.tags[0]}</h4>
-//       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
-//     </div>`
-// // Should NEVER be inserting html into Main. Find another, better HTML tag to insert into
-//   main.insertAdjacentHTML("beforeend", cardHtml);
-// }
 
 // FILTER BY RECIPE TAGS
 // Belongs in CookBook.
@@ -249,14 +204,7 @@ function createRecipeObject(recipes) {
 //   listTags(tags);
 // }
 
-//Belongs in domUpdates
-// function listTags(allTags) {
-//   allTags.forEach(tag => {
-//     let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
-//       <label for="${tag}">${capitalize(tag)}</label></li>`;
-//     tagList.insertAdjacentHTML("beforeend", tagHtml);
-//   });
-// }
+
 
 // Move to dom Updates
   // let welcomeMsg = `

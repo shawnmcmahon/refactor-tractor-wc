@@ -16,6 +16,50 @@ let domUpdates = {
     });
   },
 
+  renderRecipeCards(cookbook) {
+    let allRecipeCards = document.getElementById('allRecipeCards');
+    let recipes = cookbook.cookbook;
+    recipes.forEach(recipe => {
+      let name = domUpdates.shortenNames(recipe);
+
+      let cardHtml = `
+        <div class="recipe-card" id=${recipe.id}>
+          <h3>${name}</h3>
+          <div class="card-photo-container">
+            <img src=${recipe.image} class="card-photo-preview" alt="${recipe.name} recipe" title="${recipe.name} recipe">
+            <div class="text">
+              <div>Click for Instructions</div>
+            </div>
+          </div>
+          <h4>${recipe.tags[0]}</h4>
+          <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+        </div>`;
+      allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
+    });
+  },
+
+  // we could potentially delete this function, I refactored it but I assume it had something to do with styling.
+  shortenNames(recipe) {
+    if (recipe.name.length > 40) {
+      return recipe.name.substring(0, 40) + '...';
+    } else {
+      return recipe.name;
+    }
+  },
+
+  ///////////// everything above this line is not total garbage /////////////
+  togglePantryMenu() {
+    //menuOpen is a very lazy way to do this. we should just makethe thing a button with a .disabledproperty
+    
+    let menuOpen = false;
+    var menuDropdown = document.querySelector('.drop-menu');
+    if (!menuOpen) {
+      menuDropdown.style.display = 'none';
+    } else {
+      menuDropdown.style.display = 'block';
+    }
+  },
+
   displayPantryInfo(pantry) {
     pantry.forEach(ingredient => {
       let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
@@ -39,47 +83,6 @@ let domUpdates = {
       let domRecipe = document.getElementById(`${recipe.id}`);
       domRecipe.style.display = 'none';
     });
-  },
-
-  createCards() {
-    recipeData.forEach(recipe => {
-      let recipeInfo = new Recipe(recipe);
-      // Why are they shortening the name of the recipe? Is this necessary? Probably not
-      //
-      let shortRecipeName = recipeInfo.name;
-      recipes.push(recipeInfo);
-      if (recipeInfo.name.length > 40) {
-        shortRecipeName = recipeInfo.name.substring(0, 40) + '...';
-      }
-      addToDom(recipeInfo, shortRecipeName);
-    });
-  },
-
-  addToDom(recipeInfo, shortRecipeName) {
-    let cardHtml = `
-      <div class="recipe-card" id=${recipeInfo.id}>
-        <h3 maxlength="40">${shortRecipeName}</h3>
-        <div class="card-photo-container">
-          <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
-          <div class="text">
-            <div>Click for Instructions</div>
-          </div>
-        </div>
-        <h4>${recipeInfo.tags[0]}</h4>
-        <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
-      </div>`;
-    // Should NEVER be inserting html into Main. Find another, better HTML tag to insert into
-    main.insertAdjacentHTML('beforeend', cardHtml);
-  },
-
-  toggleMenu() {
-    var menuDropdown = document.querySelector('.drop-menu');
-    menuOpen = !menuOpen;
-    if (menuOpen) {
-      menuDropdown.style.display = 'block';
-    } else {
-      menuDropdown.style.display = 'none';
-    }
   },
 
   //Is this domUpdates?
