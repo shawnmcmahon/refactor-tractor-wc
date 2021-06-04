@@ -17,11 +17,10 @@ import './images/search.png'
 import './images/seasoning.png'
 
 // query selectors
-let main = document.querySelector("main");
+let main = document.querySelector('main');
 let pantryBtn = document.getElementById('myPantryButton');
 let savedRecipesBtn = document.getElementById('myFavRecipesButton');
 let searchBtn = document.getElementById('searchButton');
-let fullRecipeInfo = document.getElementById('fullRecipeInstructions');
 let searchInput = document.getElementById('searchInput');
 let allRecipesBtn = document.getElementById('showAllRecipesButton');
 
@@ -32,24 +31,22 @@ let searchForm = document.getElementById('searchBar');
 // variables
 let user, cookbook;
 let globalIngredientsData = {};
-let pantryInfo = [];
-let recipes = [];
+
 
 //event listeners
 window.onload = startUp()
-filterBtn.addEventListener("click", findCheckedBoxes);
-showPantryRecipes.addEventListener("click", domUpdates.findCheckedPantryBoxes);
-searchForm.addEventListener("submit", pressEnterSearch);
+filterBtn.addEventListener('click', findCheckedBoxes);
+showPantryRecipes.addEventListener('click', domUpdates.findCheckedPantryBoxes);
+searchForm.addEventListener('submit', pressEnterSearch);
 pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
-
-// all functions below were moved into class files
-// allRecipesBtn.addEventListener("click", showAllRecipes);
-// main.addEventListener("click", addToMyRecipes);
 savedRecipesBtn.addEventListener('click', domUpdates.toggleBannerText);
-// searchBtn.addEventListener("click", searchRecipes);
-// showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
-// searchForm.addEventListener('submit', pressEnterSearch);
+window.addEventListener('click', () => clickRecipeCard(event));
 
+// main.addEventListener('click', addToMyRecipes);
+// allRecipesBtn.addEventListener('click', showAllRecipes);
+// searchBtn.addEventListener('click', searchRecipes);
+// showPantryRecipes.addEventListener('click', findCheckedPantryBoxes);
+// searchForm.addEventListener('submit', pressEnterSearch);
 
 function startUp() {
   apiCalls.retrieveData()
@@ -62,8 +59,8 @@ function startUp() {
       getTagsFromRecipeData()
       domUpdates.renderRecipeCards(cookbook)
       domUpdates.displayPantryInfo(user.pantry)
-      matchPantryIdsToIngredients(user.pantry, promise[2].ingredientsData);
-      //dom updates function to load pantry
+      //need to instantiate a new pantry on load
+      // need to pass the ingredients (with names) to domUpdates.displayPantryInfo
     })
 
 }
@@ -90,17 +87,15 @@ function getTagsFromRecipeData() {
   domUpdates.listTags(tags);
 }
 
-//// this doesn't actually match names the way I thought it would, maybe it's because 
-// we had an ingredients class? 
-// in any case, need a way to get all of the ids matched to names
-// was thinking i would do this and then pass the info to displayPantryInfo()
-
-function matchPantryIdsToIngredients(pantry, ingredientData) {
-  const matchedIngredients = pantry.map(ingredient => {
-    const foundIngredient = ingredientData.find(item => item.id === ingredient.id);
-    const newObj = Object.assign(foundIngredient, ingredient);
-  });
-  return matchedIngredients;
+function clickRecipeCard(event) {
+  let eventTarget = event.target.closest('.recipe-card');
+  if (eventTarget) {
+    const targetId = parseInt(eventTarget.id);
+    const foundRecipe = cookbook.cookbook.find(
+      recipe => targetId === recipe.id
+    );
+    domUpdates.openRecipeInfo(foundRecipe)
+  }
 }
 
 
@@ -132,7 +127,7 @@ function findRecipesWithCheckedIngredients(selected) {
 
 //Stay in scripts
 function findCheckedBoxes() {
-  let tagCheckboxes = document.querySelectorAll(".checked-tag");
+  let tagCheckboxes = document.querySelectorAll('.checked-tag');
   // pretty sure we can delete Array.from() since querySelectorAll returns an array
   //let checkboxInfo = Array.from(tagCheckboxes)
   let selectedTags = tagCheckboxes.filter(box => {
@@ -209,10 +204,10 @@ function filterNonSearched(filtered) {
 
 // Move to dom Updates
   // let welcomeMsg = `
-  //   <div class="welcome-msg">
+  //   <div class='welcome-msg'>
   //     <h1>Welcome ${firstName}!</h1>
   //   </div>`;
-  // document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
+  // document.querySelector('.banner-image').insertAdjacentHTML('afterbegin',
   //   welcomeMsg);
 
 
@@ -248,7 +243,7 @@ function filterNonSearched(filtered) {
 // function hideUnselectedRecipes(foundRecipes) {
 //   foundRecipes.forEach(recipe => {
 //     let domRecipe = document.getElementById(`${recipe.id}`);
-//     domRecipe.style.display = "none";
+//     domRecipe.style.display = 'none';
 //   });
 // }
 
@@ -256,22 +251,24 @@ function filterNonSearched(filtered) {
 
 //This should go in the User class method (add to my favorites)
 //This could definitely be broken down for more SRP code
-// function addToMyRecipes() {
-//   if (event.target.className === "card-apple-icon") {
-//     let cardId = parseInt(event.target.closest(".recipe-card").id)
-//     if (!user.favoriteRecipes.includes(cardId)) {
-//       event.target.src = "../images/apple-logo.png";
-//       user.saveRecipe(cardId);
-//     } else {
-//       event.target.src = "../images/apple-logo-outline.png";
-//       user.removeRecipe(cardId);
-//     }
-//   } else if (event.target.id === "exit-recipe-btn") {
-//     exitRecipe();
-//   } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
-//     openRecipeInfo(event);
-//   }
-// }
+function addToMyRecipes() {
+  if (event.target.className === 'card-apple-icon') {
+    let cardId = parseInt(event.target.closest('.recipe-card').id)
+    if (!user.favoriteRecipes.includes(cardId)) {
+      event.target.src = '../images/apple-logo.png';
+      user.saveRecipe(cardId);
+    } else {
+      event.target.src = '../images/apple-logo-outline.png';
+      user.removeRecipe(cardId);
+    }
+  } 
+  
+  else if (event.target.id === 'exit-recipe-btn') {
+    exitRecipe();
+  } else if (isDescendant(event.target.closest('.recipe-card'), event.target)) {
+    openRecipeInfo(event);
+  }
+}
 
 //Is this domUpdates?
 //delete this?? It is used in addToMyRecipes which is in User
@@ -293,7 +290,7 @@ function filterNonSearched(filtered) {
 //   });
 //   unsavedRecipes.forEach(recipe => {
 //     let domRecipe = document.getElementById(`${recipe.id}`);
-//     domRecipe.style.display = "none";
+//     domRecipe.style.display = 'none';
 //   });
 //   showMyRecipesBanner();
 // }
@@ -303,28 +300,28 @@ function filterNonSearched(filtered) {
 //Remove CSS styling from JS?
 //domUpdates function
 // function openRecipeInfo(event) {
-//   fullRecipeInfo.style.display = "inline";
+//   fullRecipeInfo.style.display = 'inline';
 //   let recipeId = event.path.find(e => e.id).id;
 //   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
 //   generateRecipeTitle(recipe, generateIngredients(recipe));
 //   addRecipeImage(recipe);
 //   generateInstructions(recipe);
-//   fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
+//   fullRecipeInfo.insertAdjacentHTML('beforebegin', '<section id='overlay'></div>');
 // }
 
 //This should go in the domUpdates
 // function generateRecipeTitle(recipe, ingredients) {
 //   let recipeTitle = `
-//     <button id="exit-recipe-btn">X</button>
-//     <h3 id="recipe-title">${recipe.name}</h3>
+//     <button id='exit-recipe-btn'>X</button>
+//     <h3 id='recipe-title'>${recipe.name}</h3>
 //     <h4>Ingredients</h4>
 //     <p>${ingredients}</p>`
-//   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+//   fullRecipeInfo.insertAdjacentHTML('beforeend', recipeTitle);
 // }
 
 //This should go in the domUpdates
 // function addRecipeImage(recipe) {
-//   document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
+//   document.getElementById('recipe-title').style.backgroundImage = `url(${recipe.image})`;
 // }
 
 
@@ -332,43 +329,43 @@ function filterNonSearched(filtered) {
 // function generateIngredients(recipe) {
 //   return recipe && recipe.ingredients.map(i => {
 //     return `${capitalize(i.name)} (${i.quantity.amount} ${i.quantity.unit})`
-//   }).join(", ");
+//   }).join(', ');
 // }
 
 //This should go in Recipe.js (return Instructions) for the first half
 //This bottom part should be in domUpdates
 // function generateInstructions(recipe) {
-//   let instructionsList = "";
+//   let instructionsList = '';
 //   let instructions = recipe.instructions.map(i => {
 //     return i.instruction
 //   });
 //   instructions.forEach(i => {
 //     instructionsList += `<li>${i}</li>`
 //   });
-//   fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
-//   fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
+//   fullRecipeInfo.insertAdjacentHTML('beforeend', '<h4>Instructions</h4>');
+//   fullRecipeInfo.insertAdjacentHTML('beforeend', `<ol>${instructionsList}</ol>`);
 // }
 
 //This should go to domUpdates
 // function exitRecipe() {
 //   while (fullRecipeInfo.firstChild &&
 //     fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
-//   fullRecipeInfo.style.display = "none";
-//   document.getElementById("overlay").remove();
+//   fullRecipeInfo.style.display = 'none';
+//   document.getElementById('overlay').remove();
 // }
 
 // TOGGLE DISPLAYS
 
 // //This goes in domUpdates
 // function showMyRecipesBanner() {
-//   document.querySelector(".welcome-msg").style.display = "none";
-//   document.querySelector(".my-recipes-banner").style.display = "block";
+//   document.querySelector('.welcome-msg').style.display = 'none';
+//   document.querySelector('.my-recipes-banner').style.display = 'block';
 // }
 //
 // // Belongs in domUpdates
 // function showWelcomeBanner() {
-//   document.querySelector(".welcome-msg").style.display = "flex";
-//   document.querySelector(".my-recipes-banner").style.display = "none";
+//   document.querySelector('.welcome-msg').style.display = 'flex';
+//   document.querySelector('.my-recipes-banner').style.display = 'none';
 // }
 
 
@@ -388,12 +385,12 @@ function filterNonSearched(filtered) {
 // Belongs in domUpdates
 //  Is this needed? Is there a better way to do this?
 // function toggleMenu() {
-//   var menuDropdown = document.querySelector(".drop-menu");
+//   var menuDropdown = document.querySelector('.drop-menu');
 //   menuOpen = !menuOpen;
 //   if (menuOpen) {
-//     menuDropdown.style.display = "block";
+//     menuDropdown.style.display = 'block';
 //   } else {
-//     menuDropdown.style.display = "none";
+//     menuDropdown.style.display = 'none';
 //   }
 // }
 
@@ -402,7 +399,7 @@ function filterNonSearched(filtered) {
 // function showAllRecipes() {
 //   recipes.forEach(recipe => {
 //     let domRecipe = document.getElementById(`${recipe.id}`);
-//     domRecipe.style.display = "block";
+//     domRecipe.style.display = 'block';
 //   });
 //   showWelcomeBanner();
 // }
@@ -413,9 +410,9 @@ function filterNonSearched(filtered) {
 // Belongs in domUpdates
 // function displayPantryInfo(pantry) {
 //   pantry.forEach(ingredient => {
-//     let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
-//       <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
-//     document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
+//     let ingredientHtml = `<li><input type='checkbox' class='pantry-checkbox' id='${ingredient.name}'>
+//       <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.count}</label></li>`;
+//     document.querySelector('.pantry-list').insertAdjacentHTML('beforeend',
 //       ingredientHtml);
 //   });
 // }
@@ -435,7 +432,7 @@ function filterNonSearched(filtered) {
 //     });
 //     if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
 //       let domRecipe = document.getElementById(`${recipe.id}`);
-//       domRecipe.style.display = "none";
+//       domRecipe.style.display = 'none';
 //     }
 //   })
 // }

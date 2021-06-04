@@ -10,8 +10,8 @@ let domUpdates = {
   listTags(allTags) {
     let tagList = document.getElementById('tagList');
     allTags.forEach(tag => {
-      let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
-        <label for="${tag}">${tag.toUpperCase()}</label></li>`;
+      let tagHtml = `<li><input type='checkbox' class='checked-tag' id='${tag}'>
+        <label for='${tag}'>${tag.toUpperCase()}</label></li>`;
       tagList.insertAdjacentHTML('beforeend', tagHtml);
     });
   },
@@ -23,16 +23,16 @@ let domUpdates = {
       let name = domUpdates.shortenNames(recipe);
 
       let cardHtml = `
-        <div class="recipe-card" id=${recipe.id}>
+        <div class='recipe-card' id=${recipe.id}>
           <h3>${name}</h3>
-          <div class="card-photo-container">
-            <img src=${recipe.image} class="card-photo-preview" alt="${recipe.name} recipe" title="${recipe.name} recipe">
-            <div class="text">
+          <div class='card-photo-container'>
+            <img src=${recipe.image} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
+            <div class='text'>
               <div>Click for Instructions</div>
             </div>
           </div>
           <h4>${recipe.tags[0]}</h4>
-          <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+          <img src='../images/apple-logo-outline.png' alt='unfilled apple icon' class='card-apple-icon'>
         </div>`;
       allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
     });
@@ -60,14 +60,14 @@ let domUpdates = {
     }
   },
 
-  // this function needs some info out of the pantry class to match ids to names
+  // this function needs info out of pantry class
   // once we have the names, we can render the pantry the DOM with all the items in our pantry
   // add a + and - button next to each one to do the post request 
-
+  // we don't actually want a checkbox, we want a plus and minus and the amount ex: " - 2 + "
   displayPantryInfo(pantry) {
     pantry.forEach(ingredient => {
-      let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
-          <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
+      let ingredientHtml = `<li><input type='checkbox' class='pantry-checkbox' id='${ingredient.name}'>
+          <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.count}</label></li>`;
       document
         .querySelector('.pantry-list')
         .insertAdjacentHTML('beforeend', ingredientHtml);
@@ -89,35 +89,35 @@ let domUpdates = {
     myRecipesBanner.classList.toggle('block')
   },
   
-  ///////////// everything above this line is not total garbage /////////////
-
-
-
-  //there shouldn't be any css in our scripts...
-  showWelcomeBanner() {
-    document.querySelector('.welcome-msg').style.display = 'flex';
-    document.querySelector('.my-recipes-banner').style.display = 'none';
-  },
-
-  //Remove CSS styling from JS?
-  //domUpdates function
-  openRecipeInfo(event) {
+  // this is still pretty much garbage... but it needs to basically show all the recipe details
+  // some functions from my previous project vvv
+      // showRecipeView();
+      // recipeDetails(foundRecipe);
+      // checkIfInQueue(foundRecipe);
+      // showHeart(foundRecipe);
+  openRecipeInfo(recipe) {
+    let fullRecipeInfo = document.getElementById('fullRecipeInstructions');
     fullRecipeInfo.style.display = 'inline';
-    let recipeId = event.path.find(e => e.id).id;
-    let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-    generateRecipeTitle(recipe, generateIngredients(recipe));
-    addRecipeImage(recipe);
-    generateInstructions(recipe);
+    domUpdates.generateRecipeTitle(
+      recipe,
+      domUpdates.generateIngredients(recipe)
+    );
+    domUpdates.addRecipeImage(recipe);
+    domUpdates.generateInstructions(recipe);
     fullRecipeInfo.insertAdjacentHTML(
       'beforebegin',
-      "<section id='overlay'></div>"
+      '<section id="overlay"></div>'
     );
   },
 
+
+  
+  ///////////// everything above this line is not total garbage /////////////
+
   generateRecipeTitle(recipe, ingredients) {
     let recipeTitle = `
-      <button id="exit-recipe-btn">X</button>
-      <h3 id="recipe-title">${recipe.name}</h3>
+      <button id='exit-recipe-btn'>X</button>
+      <h3 id='recipe-title'>${recipe.name}</h3>
       <h4>Ingredients</h4>
       <p>${ingredients}</p>`;
     fullRecipeInfo.insertAdjacentHTML('beforeend', recipeTitle);
