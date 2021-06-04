@@ -1,0 +1,23 @@
+body {
+  background-color: #5B7894;
+  display: grid;
+  font-family: "Quicksand", sans-serif;
+  grid-template-columns: 1fr 5fr;
+  grid-template-areas:
+    "header header"
+    "image image"
+    "aside main";
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: auto;
+}
+
+main {
+  grid-area: main;
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
