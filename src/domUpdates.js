@@ -139,6 +139,35 @@ let domUpdates = {
     document.getElementById("overlay").remove();
   },
 
+  //This could definitely be broken down for more SRP code
+  addToMyRecipes() {
+    if (event.target.className === "card-apple-icon") {
+      let cardId = parseInt(event.target.closest(".recipe-card").id)
+      if (!user.favoriteRecipes.includes(cardId)) {
+        event.target.src = "../images/apple-logo.png";
+        user.saveRecipe(cardId);
+      } else {
+        event.target.src = "../images/apple-logo-outline.png";
+        user.removeRecipe(cardId);
+      }
+    } else if (event.target.id === "exit-recipe-btn") {
+      exitRecipe();
+    } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
+      openRecipeInfo(event);
+    }
+  },
+
+  showSavedRecipes() {
+   let unsavedRecipes = recipes.filter(recipe => {
+     return !user.favoriteRecipes.includes(recipe.id);
+   });
+   unsavedRecipes.forEach(recipe => {
+     let domRecipe = document.getElementById(`${recipe.id}`);
+     domRecipe.style.display = "none";
+   });
+   showMyRecipesBanner();
+ }
+
 
 
 

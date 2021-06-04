@@ -12,7 +12,6 @@ describe('User', function() {
 
   beforeEach(function() {
 
-    //console.log('the user', testUserData)
     user = new User(testUserData[0]);
     recipe = testRecipes[0];
 
@@ -21,6 +20,10 @@ describe('User', function() {
   it('should be a function', function() {
     expect(User).to.be.a('function');
   });
+
+  it('should be an instance of User', function() {
+    expect(user).to.be.an.instanceof(User);
+  })
 
   it('should initialize with an id', function() {
     expect(user.id).to.eq(1);
