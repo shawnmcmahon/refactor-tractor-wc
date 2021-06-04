@@ -5,6 +5,7 @@ import ingredientData from './data/ingredient-data';
 import './css/base.scss';
 import './css/styles.scss';
 import domUpdates from './domUpdates';
+import apiCalls from './apiCalls'
 
 import User from './user';
 import Recipe from './recipe';
@@ -35,10 +36,13 @@ let tagList = document.getElementById('tagList');
 
 // variables
 //do we want to name our other instances here?
-let user;
+let user, cookbook;
+let globalIngredientsData = {};
 let pantryInfo = [];
 let recipes = [];
 let menuOpen = false;
+
+window.onload = startUp()
 
 //event listeners
 window.addEventListener("load", generateUser);
@@ -47,24 +51,40 @@ showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
 
 // all functions below were moved into class files
-window.addEventListener("load", createCards);
-window.addEventListener("load", findTags);
-allRecipesBtn.addEventListener("click", showAllRecipes);
-main.addEventListener("click", addToMyRecipes);
-pantryBtn.addEventListener("click", toggleMenu);
-savedRecipesBtn.addEventListener("click", showSavedRecipes);
-searchBtn.addEventListener("click", searchRecipes);
-showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
-searchForm.addEventListener('submit', pressEnterSearch);
+// window.addEventListener("load", createCards);
+// window.addEventListener("load", findTags);
+// allRecipesBtn.addEventListener("click", showAllRecipes);
+// main.addEventListener("click", addToMyRecipes);
+// pantryBtn.addEventListener("click", toggleMenu);
+// savedRecipesBtn.addEventListener("click", showSavedRecipes);
+// searchBtn.addEventListener("click", searchRecipes);
+// showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
+// searchForm.addEventListener('submit', pressEnterSearch);
+
+
+function startUp() {
+  apiCalls.retrieveData()
+    .then((promise) => {
+
+      user = new User(promise[0]['usersData'][0])
+      cookbook = new Cookbook(promise[1].recipeData)
+      globalIngredientsData = promise[2].ingredientsData
+      //dom updates function that greets the user
+      //dom updates function that will load the cards to the home page
+      console.log('user', user);
+    })
+
+}
+
 
 // GENERATE A USER ON LOAD
 // Stay in Scripts.js. Generate the user when we call the promise in the startup
 // function
-function generateUser() {
-  user = new User(users[Math.floor(Math.random() * users.length)]);
-  findPantryInfo();
-  domUpdates.updateWelcomeMessage(user);
-
+// function generateUser() {
+//   user = new User(users[Math.floor(Math.random() * users.length)]);
+//   findPantryInfo();
+//   domUpdates.updateWelcomeMessage(user);
+// }
     // find pantry info on load, could probably just create a new instance of pantry
 
  //findTags function runs on pageload
@@ -72,7 +92,7 @@ function generateUser() {
   //should maybe sort them
   //then calls listTags and passes it the array of tags
   // listTags renders all the tags to the DOM (inserting them into the <ul class="tag-list">)
-  findTags() {
+  function findTags() {
     this.cookbook.reduce((acc, recipe) => {
       recipe.tags.forEach(tag => {
         if (!recipe.tags.includes(tag)) {
@@ -159,28 +179,28 @@ function createRecipeObject(recipes) {
 
 //dont think this is fully necessary, could probably just instantiate a pantry on load
 // seems like a really convoluted way to
-function findPantryInfo() {
-  //seems like a weird way to match ids and ingredients, should go in recipe class maybe?
-  // in any case, ingredientsData is hardcoded atm and we will fetch
-  user.pantry.forEach(item => {
-    let itemInfo = ingredientsData.find(ingredient => {
-      return ingredient.id === item.ingredient;
-    });
-    let originalIngredient = pantryInfo.find(ingredient => {
-      if (itemInfo) {
-        return ingredient.name === itemInfo.name;
-      }
-    });
-    if (itemInfo && originalIngredient) {
-      originalIngredient.count += item.amount;
-    } else if (itemInfo) {
-      pantryInfo.push({name: itemInfo.name, count: item.amount});
-    }
-  });
-  // wtf is localeCompare
-  // why would we need to sort pantry
-  displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
-}
+// function findPantryInfo() {
+//   //seems like a weird way to match ids and ingredients, should go in recipe class maybe?
+//   // in any case, ingredientsData is hardcoded atm and we will fetch
+//   user.pantry.forEach(item => {
+//     let itemInfo = ingredientsData.find(ingredient => {
+//       return ingredient.id === item.ingredient;
+//     });
+//     let originalIngredient = pantryInfo.find(ingredient => {
+//       if (itemInfo) {
+//         return ingredient.name === itemInfo.name;
+//       }
+//     });
+//     if (itemInfo && originalIngredient) {
+//       originalIngredient.count += item.amount;
+//     } else if (itemInfo) {
+//       pantryInfo.push({name: itemInfo.name, count: item.amount});
+//     }
+//   });
+//   // wtf is localeCompare
+//   // why would we need to sort pantry
+//   displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
+// }
 
 
 
