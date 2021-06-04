@@ -1,26 +1,89 @@
 class Pantry {
-  constructor(user) {
-    this.contents = user.pantry
+  constructor(user, ingredients) {
+    this.contents = user.pantry;
+    this.hasIngredients = false;
+    this.hasIngredientAmounts = false;
+    this.ingredientsData = ingredients;
+  }
 
-
+  returnPantryIngredients() {
+    const matchedIngredients = this.contents.map(ingredient => {
+      const foundIngredient = this.ingredientsData.find(
+        data => {
+          return data.id === ingredient.ingredient
+        }
+      );
+      const newObj = Object.assign(foundIngredient, ingredient);
+      return newObj
+    });
+    return matchedIngredients;
   }
 
 
 
-  // Determine whether a user’s pantry has enough ingredients to cook a given meal.
+canICookRecipe (recipe) {
+  let findIngs = recipe.ingredients.every((ingredient, i)  =>
+   this.contents[i].ingredient === ingredient.id)
+
+   if(findIngs) {
+     this.hasIngredients = true
+     return "You have the ingredients in your pantry to cook this recipe!"
+   } else {
+     this.whatDoIStillNeed(recipe)
+   }
+ }
+
+ whatDoIStillNeed(recipe) {
+   let missing = this.contents.filter(ingredient => {
+     recipe.ingredients.filter(ing => {
+       return parseInt(ingredient.ingredient) !== parseInt(ing.id)
+     })
+   })
+
+  //  console.log('recipe ingredients', recipe.ingredients)
+  // let missingIngs = recipe.ingredients.filter((ingredient, i) => {
+  //    this.contents[i].ingredient !== ingredient.id
+  //  }).map(ingredient => ingredient.id)
+  //  return missingIngs
+ }
 
 
-  // Determine the amount of missing ingredients still needed to cook a given meal, based on what’s in the user’s pantry.
+//    let missingIngs = recipe.ingredients.filter((ingredient, i) => {
+//      return this.contents[i].ingredient !== ingredient.id
+//
+//    })
+//
+   // if(!findIngs) {
+   //   return missingIngs
+   // }
 
-canCookRecipe (recipe) {
+ //   let missingIngs;
+ //   let ingsMissing = recipe.ingredients.find((ingredient, i) => (this.contents[i].ingredient !== ingredient.id))
 
-  let findIngs = recipe.ingredients.forEach((ingredient, i) => {
-    if(this.contents[i].ingredient === ingredient.id) {
-     }
-  })
 
+
+ haveAmountsPerRecipe(recipe) {
+  let hasIngs = this.canICookRecipe(recipe);
+  let findAmounts;
+
+  if(this.hasIngredients === true) {
+     findAmounts = recipe.ingredients.every((ingredient, i) => {
+     return this.contents[i].amount >= ingredient.quantity.amount})
+  } else {
+  return "Sorry, you do not have the ingredients in your pantry to cook this recipe."
+  }
+
+  if(findAmounts) {
+    this.hasIngredientAmounts
+    return "You have enough of each ingredient to cook this recipe."
+  }
+   // else {
+  //   return "Sorry, you do not have the ingredients in your pantry to cook this recipe."
+  // }
 
 }
+
+
 
 
 
