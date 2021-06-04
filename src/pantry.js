@@ -21,82 +21,60 @@ class Pantry {
 
 
 
-canICookRecipe (recipe) {
-  let findIngs = recipe.ingredients.every((ingredient, i)  =>
-   this.contents[i].ingredient === ingredient.id)
+  canICookRecipe(recipe) {
+    let findIngs = recipe.ingredients.every((ingredient, i) =>
+      this.contents[i].ingredient === ingredient.id)
 
-   if(findIngs) {
-     this.hasIngredients = true
-     return "You have the ingredients in your pantry to cook this recipe!"
-   } else {
-     this.whatDoIStillNeed(recipe)
-   }
- }
-
- whatDoIStillNeed(recipe) {
-   let missing = this.contents.filter(ingredient => {
-     recipe.ingredients.filter(ing => {
-       return parseInt(ingredient.ingredient) !== parseInt(ing.id)
-     })
-   })
-
-  //  console.log('recipe ingredients', recipe.ingredients)
-  // let missingIngs = recipe.ingredients.filter((ingredient, i) => {
-  //    this.contents[i].ingredient !== ingredient.id
-  //  }).map(ingredient => ingredient.id)
-  //  return missingIngs
- }
-
-
-//    let missingIngs = recipe.ingredients.filter((ingredient, i) => {
-//      return this.contents[i].ingredient !== ingredient.id
-//
-//    })
-//
-   // if(!findIngs) {
-   //   return missingIngs
-   // }
-
- //   let missingIngs;
- //   let ingsMissing = recipe.ingredients.find((ingredient, i) => (this.contents[i].ingredient !== ingredient.id))
-
-
-
- haveAmountsPerRecipe(recipe) {
-  let hasIngs = this.canICookRecipe(recipe);
-  let findAmounts;
-
-  if(this.hasIngredients === true) {
-     findAmounts = recipe.ingredients.every((ingredient, i) => {
-     return this.contents[i].amount >= ingredient.quantity.amount})
-  } else {
-  return "Sorry, you do not have the ingredients in your pantry to cook this recipe."
+    if (findIngs) {
+      this.hasIngredients = true
+      return "You have the ingredients in your pantry to cook this recipe!"
+    } else {
+      this.whatDoIStillNeed(recipe)
+    }
   }
 
-  if(findAmounts) {
-    this.hasIngredientAmounts
-    return "You have enough of each ingredient to cook this recipe."
+  whatDoIStillNeed(recipe) {
+    let missing = this.contents.filter(ingredient => {
+      recipe.ingredients.filter(ing => {
+        return parseInt(ingredient.ingredient) !== parseInt(ing.id)
+      })
+    })
   }
-   // else {
-  //   return "Sorry, you do not have the ingredients in your pantry to cook this recipe."
-  // }
+
+  haveAmountsPerRecipe(recipe) {
+    let hasIngs = this.canICookRecipe(recipe);
+    let findAmounts;
+
+    if (this.hasIngredients === true) {
+      findAmounts = recipe.ingredients.every((ingredient, i) => {
+        return this.contents[i].amount >= ingredient.quantity.amount
+      })
+    } else {
+      return "Sorry, you do not have the ingredients in your pantry to cook this recipe."
+    }
+
+    if (findAmounts) {
+      this.hasIngredientAmounts
+      return "You have enough of each ingredient to cook this recipe."
+    }
+    // else {
+    //   return "Sorry, you do not have the ingredients in your pantry to cook this recipe."
+    // }
+  }
 
 }
 
 
-
-
-
-
+export default Pantry;
 
 //
-//
+//THIS IS ALL THE CODE FROM THE ORIGINAL FILE
+
 //   let findIngs = recipe.ingredients.forEach((ingredient, i) => {
 //     // console.log("allll", this.contents[i].ingredient)
 //     if(ingredient.id === this.contents[i].ingredient){
 //       return "Your pantry has all the recipe ingredients!"
 //     }
-//
 //
 //   })
 // console.log("find", findIngs)
@@ -104,15 +82,9 @@ canICookRecipe (recipe) {
 //
 // }
 
-}
-
-//
 //   this.pantry.forEach(ingredientItem => {
 //     if(ingredientItem.id === )
 //   }
-//
-//
-//
 //
 //     item => {
 //     let itemInfo = ingredientsData.find(ingredient => {
@@ -130,14 +102,10 @@ canICookRecipe (recipe) {
 //     }
 //   });
 // }
-//
-//
-//
-//
+
 //
 // }
 //
-export default Pantry;
 //
 // let pantryCheckboxes = document.querySelectorAll(".pantry-checkbox");
 //
@@ -224,11 +192,3 @@ export default Pantry;
 //       ingredientHtml);
 //   });
 // }
-
-
-
-
-// User Stories
-// As a user, I should be able to view what ingredients exist inside of my pantry.
-// As a user, I should be able to check my list of recipes to cook and see if my pantry has enough ingredients to cook a meal.
-// As a user, I should be told what ingredients are still needed if I don’t have enough ingredients in my pantry to cook the recipe.
