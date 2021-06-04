@@ -38,14 +38,14 @@ let recipes = [];
 //event listeners
 window.onload = startUp()
 filterBtn.addEventListener("click", findCheckedBoxes);
-showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
+showPantryRecipes.addEventListener("click", domUpdates.findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
 pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
 
 // all functions below were moved into class files
 // allRecipesBtn.addEventListener("click", showAllRecipes);
 // main.addEventListener("click", addToMyRecipes);
-// savedRecipesBtn.addEventListener("click", showSavedRecipes);
+savedRecipesBtn.addEventListener('click', domUpdates.toggleBannerText);
 // searchBtn.addEventListener("click", searchRecipes);
 // showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 // searchForm.addEventListener('submit', pressEnterSearch);
@@ -65,6 +65,7 @@ function startUp() {
       matchPantryIdsToIngredients(user.pantry, promise[2].ingredientsData);
       //dom updates function to load pantry
     })
+
 }
 
 function makeUserInstance(apiUserData) {
@@ -105,21 +106,8 @@ function matchPantryIdsToIngredients(pantry, ingredientData) {
 
 
 
-
 ///////////// everything above this line is not total garbage /////////////
-function findCheckedPantryBoxes() {
-  // pantry-checkbox is inner html
-  let pantryCheckboxes = document.querySelectorAll(".pantry-checkbox");
-  let pantryCheckboxInfo = Array.from(pantryCheckboxes)
-  let selectedIngredients = pantryCheckboxInfo.filter(box => {
-    return box.checked;
-  })
 
-  showAllRecipes();
-  if (selectedIngredients.length > 0) {
-    findRecipesWithCheckedIngredients(selectedIngredients);
-  }
-}
 
 //this is for pantry class
 // this function is fired off inside of findCheckedPantryBoxes

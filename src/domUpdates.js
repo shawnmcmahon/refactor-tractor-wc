@@ -60,6 +60,10 @@ let domUpdates = {
     }
   },
 
+  // this function needs some info out of the pantry class to match ids to names
+  // once we have the names, we can render the pantry the DOM with all the items in our pantry
+  // add a + and - button next to each one to do the post request 
+
   displayPantryInfo(pantry) {
     pantry.forEach(ingredient => {
       let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
@@ -68,44 +72,26 @@ let domUpdates = {
         .querySelector('.pantry-list')
         .insertAdjacentHTML('beforeend', ingredientHtml);
     });
+
+    // this can be modified into the post request 
+    let pantryCheckboxes = document.querySelectorAll('.pantry-checkbox');
+    pantryCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('click', () => {
+        domUpdates.findCheckedPantryBoxes('click')
+      })
+    });
   },
 
+  toggleBannerText() {
+    let welcomeMessage = document.getElementById('welcomeMessage');
+    let myRecipesBanner = document.getElementById('myRecipesBanner');
+    welcomeMessage.classList.toggle('hidden');
+    myRecipesBanner.classList.toggle('block')
+  },
+  
   ///////////// everything above this line is not total garbage /////////////
 
 
-  showAllRecipes() {
-    recipes.forEach(recipe => {
-      let domRecipe = document.getElementById(`${recipe.id}`);
-      domRecipe.style.display = 'block';
-    });
-    showWelcomeBanner();
-  },
-
-  hideUnselectedRecipes(foundRecipes) {
-    foundRecipes.forEach(recipe => {
-      let domRecipe = document.getElementById(`${recipe.id}`);
-      domRecipe.style.display = 'none';
-    });
-  },
-
-  //Is this domUpdates?
-  //delete this?? It is used in addToMyRecipes which is in User
-  isDescendant(parent, child) {
-    let node = child;
-    while (node !== null) {
-      if (node === parent) {
-        return true;
-      }
-      node = node.parentNode;
-    }
-    return false;
-  },
-
-  //there shouldn't be any css in our scripts...
-  showMyRecipesBanner() {
-    document.querySelector('.welcome-msg').style.display = 'none';
-    document.querySelector('.my-recipes-banner').style.display = 'block';
-  },
 
   //there shouldn't be any css in our scripts...
   showWelcomeBanner() {
