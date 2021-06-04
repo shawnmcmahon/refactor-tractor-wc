@@ -1,12 +1,9 @@
+/* eslint-disable max-len */
 //imports
-import users from './data/users-data';
-import recipeData from  './data/recipe-data';
-import ingredientData from './data/ingredient-data';
 import './css/base.scss';
 import './css/styles.scss';
 import domUpdates from './domUpdates';
 import apiCalls from './apiCalls'
-
 import User from './user';
 import Recipe from './recipe';
 import Cookbook from './cookbook';
@@ -21,41 +18,33 @@ import './images/seasoning.png'
 
 // query selectors
 let main = document.querySelector("main");
-
-let allRecipesBtn = document.getElementById('showAllRecipesButton');
-let filterBtn = document.getElementById('filterRecipesButton');
 let pantryBtn = document.getElementById('myPantryButton');
 let savedRecipesBtn = document.getElementById('myFavRecipesButton');
 let searchBtn = document.getElementById('searchButton');
-let showPantryRecipes = document.getElementById('whatCanIMake');
-let searchForm = document.getElementById('searchBar');
-// these are now used in DOM only vvv
 let fullRecipeInfo = document.getElementById('fullRecipeInstructions');
 let searchInput = document.getElementById('searchInput');
-let tagList = document.getElementById('tagList');
+let allRecipesBtn = document.getElementById('showAllRecipesButton');
+
+let filterBtn = document.getElementById('filterRecipesButton');
+let showPantryRecipes = document.getElementById('whatCanIMake');
+let searchForm = document.getElementById('searchBar');
 
 // variables
-//do we want to name our other instances here?
 let user, cookbook;
 let globalIngredientsData = {};
 let pantryInfo = [];
 let recipes = [];
-let menuOpen = false;
-
-window.onload = startUp()
 
 //event listeners
-window.addEventListener("load", generateUser);
+window.onload = startUp()
 filterBtn.addEventListener("click", findCheckedBoxes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
+pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
 
 // all functions below were moved into class files
-// window.addEventListener("load", createCards);
-// window.addEventListener("load", findTags);
 // allRecipesBtn.addEventListener("click", showAllRecipes);
 // main.addEventListener("click", addToMyRecipes);
-// pantryBtn.addEventListener("click", toggleMenu);
 // savedRecipesBtn.addEventListener("click", showSavedRecipes);
 // searchBtn.addEventListener("click", searchRecipes);
 // showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
@@ -65,44 +54,59 @@ searchForm.addEventListener("submit", pressEnterSearch);
 function startUp() {
   apiCalls.retrieveData()
     .then((promise) => {
-
-      user = new User(promise[0]['usersData'][0])
-      cookbook = new Cookbook(promise[1].recipeData)
+      makeUserInstance(promise[0].usersData);
+      const allRecipes = makeRecipeInstances(promise[1].recipeData, promise[2].ingredientsData);
+      cookbook = new Cookbook(allRecipes);
       globalIngredientsData = promise[2].ingredientsData
-      //dom updates function that greets the user
-      //dom updates function that will load the cards to the home page
-      console.log('user', user);
+      domUpdates.updateWelcomeMessage(user);
+      getTagsFromRecipeData()
+      domUpdates.renderRecipeCards(cookbook)
+      domUpdates.displayPantryInfo(user.pantry)
+      matchPantryIdsToIngredients(user.pantry, promise[2].ingredientsData);
+      //dom updates function to load pantry
     })
+}
 
+function makeUserInstance(apiUserData) {
+  let randomNumber = Math.floor(Math.random() * apiUserData.length);
+  user = new User(apiUserData[randomNumber]);
+}
+
+function makeRecipeInstances(apiRecipeData, apiIngredientData) {
+  const newRecipes = apiRecipeData.map(recipe => new Recipe(recipe, apiIngredientData));
+  return newRecipes
+}
+
+function getTagsFromRecipeData() {
+  const tags = cookbook.cookbook.reduce((allTags, recipe) => {
+    recipe.tags.forEach(tag => {
+      if (!allTags.includes(tag)) {
+        allTags.push(tag);
+      }
+    });
+    return allTags.sort();
+  }, []);
+  domUpdates.listTags(tags);
+}
+
+//// this doesn't actually match names the way I thought it would, maybe it's because 
+// we had an ingredients class? 
+// in any case, need a way to get all of the ids matched to names
+// was thinking i would do this and then pass the info to displayPantryInfo()
+
+function matchPantryIdsToIngredients(pantry, ingredientData) {
+  const matchedIngredients = pantry.map(ingredient => {
+    const foundIngredient = ingredientData.find(item => item.id === ingredient.id);
+    const newObj = Object.assign(foundIngredient, ingredient);
+  });
+  return matchedIngredients;
 }
 
 
-// GENERATE A USER ON LOAD
-// Stay in Scripts.js. Generate the user when we call the promise in the startup
-// function
-// function generateUser() {
-//   user = new User(users[Math.floor(Math.random() * users.length)]);
-//   findPantryInfo();
-//   domUpdates.updateWelcomeMessage(user);
-// }
-    // find pantry info on load, could probably just create a new instance of pantry
 
- //findTags function runs on pageload
-  //creates a list of all tags in the cookbook
-  //should maybe sort them
-  //then calls listTags and passes it the array of tags
-  // listTags renders all the tags to the DOM (inserting them into the <ul class="tag-list">)
-  function findTags() {
-    this.cookbook.reduce((acc, recipe) => {
-      recipe.tags.forEach(tag => {
-        if (!recipe.tags.includes(tag)) {
-          acc.push(tag);
-        }
-      });
-      return acc;
-    }, []);
-  }
 
+
+///////////// everything above this line is not total garbage /////////////
 function findCheckedPantryBoxes() {
   // pantry-checkbox is inner html
   let pantryCheckboxes = document.querySelectorAll(".pantry-checkbox");
@@ -138,13 +142,6 @@ function findRecipesWithCheckedIngredients(selected) {
 }
 
 
-// Capitalize?? Why not lowercase?
-function capitalize(words) {
-  return words.split(" ").map(word => {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  }).join(" ");
-}
-
 //Stay in scripts
 function findCheckedBoxes() {
   let tagCheckboxes = document.querySelectorAll(".checked-tag");
@@ -155,6 +152,7 @@ function findCheckedBoxes() {
   })
   cookbook.filterByTag(selectedTags);
 }
+
 
 // this will be scripts. However, there is a better way to do.
 function pressEnterSearch(event) {
@@ -171,11 +169,6 @@ function filterNonSearched(filtered) {
   hideUnselectedRecipes(found);
 }
 
-//This stays in scripts, though it could be adjusted to be called on laod ?
-function createRecipeObject(recipes) {
-  recipes = recipes.map(recipe => new Recipe(recipe));
-  return recipes
-}
 
 //dont think this is fully necessary, could probably just instantiate a pantry on load
 // seems like a really convoluted way to
@@ -207,40 +200,6 @@ function createRecipeObject(recipes) {
 
 
 ///////////////// OLD GARBAGE HERE vvv
-// CREATE RECIPE CARDS
-// Belongs inside domUpdates
-// function createCards() {
-//   recipeData.forEach(recipe => {
-//     let recipeInfo = new Recipe(recipe);
-// // Why are they shortening the name of the recipe? Is this necessary? Probably not
-// //
-//     let shortRecipeName = recipeInfo.name;
-//     recipes.push(recipeInfo);
-//     if (recipeInfo.name.length > 40) {
-//       shortRecipeName = recipeInfo.name.substring(0, 40) + "...";
-//     }
-// // Neeed to move addToDom to domUpdates
-//     addToDom(recipeInfo, shortRecipeName)
-//   });
-// }
-
-// Belongs in domUpdates
-// function addToDom(recipeInfo, shortRecipeName) {
-//   let cardHtml = `
-//     <div class="recipe-card" id=${recipeInfo.id}>
-//       <h3 maxlength="40">${shortRecipeName}</h3>
-//       <div class="card-photo-container">
-//         <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
-//         <div class="text">
-//           <div>Click for Instructions</div>
-//         </div>
-//       </div>
-//       <h4>${recipeInfo.tags[0]}</h4>
-//       <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
-//     </div>`
-// // Should NEVER be inserting html into Main. Find another, better HTML tag to insert into
-//   main.insertAdjacentHTML("beforeend", cardHtml);
-// }
 
 // FILTER BY RECIPE TAGS
 // Belongs in CookBook.
@@ -258,14 +217,7 @@ function createRecipeObject(recipes) {
 //   listTags(tags);
 // }
 
-//Belongs in domUpdates
-// function listTags(allTags) {
-//   allTags.forEach(tag => {
-//     let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
-//       <label for="${tag}">${capitalize(tag)}</label></li>`;
-//     tagList.insertAdjacentHTML("beforeend", tagHtml);
-//   });
-// }
+
 
 // Move to dom Updates
   // let welcomeMsg = `
