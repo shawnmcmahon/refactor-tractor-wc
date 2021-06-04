@@ -60,8 +60,6 @@ let domUpdates = {
     }
   },
 
-  ///////////// everything above this line is not total garbage /////////////
-
   displayPantryInfo(pantry) {
     pantry.forEach(ingredient => {
       let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
@@ -71,6 +69,9 @@ let domUpdates = {
         .insertAdjacentHTML('beforeend', ingredientHtml);
     });
   },
+
+  ///////////// everything above this line is not total garbage /////////////
+
 
   showAllRecipes() {
     recipes.forEach(recipe => {

@@ -40,13 +40,11 @@ window.onload = startUp()
 filterBtn.addEventListener("click", findCheckedBoxes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
-
 pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
 
 // all functions below were moved into class files
 // allRecipesBtn.addEventListener("click", showAllRecipes);
 // main.addEventListener("click", addToMyRecipes);
-pantryBtn.addEventListener("click", domUpdates.togglePantryMenu);
 // savedRecipesBtn.addEventListener("click", showSavedRecipes);
 // searchBtn.addEventListener("click", searchRecipes);
 // showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
@@ -63,7 +61,8 @@ function startUp() {
       domUpdates.updateWelcomeMessage(user);
       getTagsFromRecipeData()
       domUpdates.renderRecipeCards(cookbook)
-      // need to create a pantry on load
+      domUpdates.displayPantryInfo(user.pantry)
+      matchPantryIdsToIngredients(user.pantry, promise[2].ingredientsData);
       //dom updates function to load pantry
     })
 }
@@ -90,6 +89,18 @@ function getTagsFromRecipeData() {
   domUpdates.listTags(tags);
 }
 
+//// this doesn't actually match names the way I thought it would, maybe it's because 
+// we had an ingredients class? 
+// in any case, need a way to get all of the ids matched to names
+// was thinking i would do this and then pass the info to displayPantryInfo()
+
+function matchPantryIdsToIngredients(pantry, ingredientData) {
+  const matchedIngredients = pantry.map(ingredient => {
+    const foundIngredient = ingredientData.find(item => item.id === ingredient.id);
+    const newObj = Object.assign(foundIngredient, ingredient);
+  });
+  return matchedIngredients;
+}
 
 
 
