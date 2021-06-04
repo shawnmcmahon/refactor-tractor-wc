@@ -64,7 +64,8 @@ describe('User', function() {
 
   it('should be able to decide to cook a recipe', function() {
     user.decideToCook(recipe);
-    expect(user.recipesToCook[0].name).to.equal('Rice bowl with Fried Egg');
+    user.removeFromRecipesToCook(recipe);
+    expect(user.recipesToCook).to.eql([]);
   });
 
   it('should be able to filter recipes by type', function() {

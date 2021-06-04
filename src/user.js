@@ -18,7 +18,12 @@ class User {
   decideToCook(recipe) {
     this.recipesToCook.push(recipe);
   }
-  
+
+  removeFromRecipesToCook(recipe) {
+    const index = this.recipesToCook.indexOf(recipe);
+    this.recipesToCook.splice(index, 1);
+  }
+
   filterRecipes(type) {
     return this.favoriteRecipes.filter(recipe => recipe.tags.includes(type));
   }
