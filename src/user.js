@@ -1,3 +1,5 @@
+import Cookbook from './cookbook';
+
 class User {
   constructor(user) {
     this.id = user.id;
@@ -24,12 +26,15 @@ class User {
     this.recipesToCook.splice(index, 1);
   }
 
-  filterRecipes(type) {
-    return this.favoriteRecipes.filter(recipe => recipe.tags.includes(type));
+  filterRecipes(...tag) {
+    let favoriteRecipes = new Cookbook(this.favoriteRecipes);
+    return favoriteRecipes.filterByTag(...tag);
+
   }
 
-  searchForRecipe(keyword) {
-    return this.favoriteRecipes.filter(recipe => recipe.name.includes(keyword) || recipe.ingredients.includes(keyword));
+  searchForRecipe(ingredientsData, ...keyword) {
+    let favoriteRecipes = new Cookbook(this.favoriteRecipes);
+    return favoriteRecipes.filterByNameOrIngredient(ingredientsData, ...keyword);
   }
 
 

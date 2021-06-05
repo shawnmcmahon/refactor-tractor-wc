@@ -17,7 +17,7 @@ class Recipe {
 
   updateIngredientData() {
     const getIngs = this.ingredientsData.filter(ingredient => ingredient.name && ingredient.id);
-    this.ingredientsData = getIngs
+    this.ingredientsData = getIngs;
   }
 
   getIngredients() {
