@@ -23,12 +23,9 @@ class Cookbook {
   }
 
   filterByNameOrIngredient(ingredientsData, ...keywords) {
-    console.log('the keywords', ...keywords)
     const seperatedKeywords = keywords.map(keyword => {
-      console.log('the single keyword', keyword)
       return keyword.split(' ');
     }).flat();
-
     const lowerCaseKeyWords = seperatedKeywords.map(keyword => keyword.toLowerCase());
     const results = lowerCaseKeyWords.reduce((matchingRecipes, keyword) => {
     let foundIds = [];

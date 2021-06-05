@@ -63,11 +63,8 @@ describe('Cookbook', () => {
   })
 
 
-
-
-
   it.only('Should be able to filter recipes by ingredient', () => {
-    testCookbook.filterByNameOrIngredient(testIngredients, ['egg', 'pineapple']);
+    testCookbook.filterByNameOrIngredient(testIngredients, 'egg', 'pineapple');
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([
       recipe1,
       recipe3
@@ -75,14 +72,14 @@ describe('Cookbook', () => {
   });
 
   it('Should be able to filter recipes by a different ingredient', () => {
-    testCookbook.filterByNameOrIngredient(testIngredients, ['cilantro']);
+    testCookbook.filterByNameOrIngredient(testIngredients, 'cilantro');
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([
       recipe2
     ]);
   });
 
   it('Should be able to filter recipes by a different ingredient', () => {
-    testCookbook.filterByNameOrIngredient(testIngredients, ['rice']);
+    testCookbook.filterByNameOrIngredient(testIngredients, 'rice');
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([
       recipe1,
       recipe3
@@ -90,17 +87,17 @@ describe('Cookbook', () => {
   });
 
   it('Should be able to filter recipes by name', () => {
-    testCookbook.filterByNameOrIngredient(testIngredients, ['salsa']);
+    testCookbook.filterByNameOrIngredient(testIngredients, 'salsa');
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([recipe2]);
   });
 
   it('Should be able to filter recipes by a different name', () => {
-    testCookbook.filterByNameOrIngredient(testIngredients, ['omelet']);
+    testCookbook.filterByNameOrIngredient(testIngredients, 'omelet');
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([recipe3]);
   });
 
   it('Should be able to filter recipes by a different name', () => {
-    testCookbook.filterByNameOrIngredient(testIngredients, ['fried']);
+    testCookbook.filterByNameOrIngredient(testIngredients, 'fried');
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([
       recipe1
     ]);
