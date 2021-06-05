@@ -32,7 +32,6 @@ let searchForm = document.getElementById('searchBar');
 let user, cookbook;
 let globalIngredientsData = {};
 
-
 //event listeners
 window.onload = startUp()
 filterBtn.addEventListener('click', findCheckedBoxes);
@@ -65,13 +64,17 @@ function startUp() {
 
 }
 
+
+
 function makeUserInstance(apiUserData) {
   let randomNumber = Math.floor(Math.random() * apiUserData.length);
   user = new User(apiUserData[randomNumber]);
 }
 
 function makeRecipeInstances(apiRecipeData, apiIngredientData) {
-  const newRecipes = apiRecipeData.map(recipe => new Recipe(recipe, apiIngredientData));
+  const newRecipes = apiRecipeData.map(recipe => {
+    return new Recipe(recipe, apiIngredientData)
+  })  
   return newRecipes
 }
 
