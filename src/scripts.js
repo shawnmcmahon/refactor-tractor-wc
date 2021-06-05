@@ -27,6 +27,8 @@ let allRecipesBtn = document.getElementById('showAllRecipesButton');
 let filterBtn = document.getElementById('filterRecipesButton');
 let showPantryRecipes = document.getElementById('whatCanIMake');
 let searchForm = document.getElementById('searchBar');
+// let exitBtn = document.getElementById('exit-recipe-btn')
+let recipeSection = document.getElementById('fullRecipeInstructions')
 
 // variables
 let user, cookbook;
@@ -40,6 +42,10 @@ searchForm.addEventListener('submit', pressEnterSearch);
 pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
 savedRecipesBtn.addEventListener('click', domUpdates.toggleBannerText);
 window.addEventListener('click', () => clickRecipeCard(event));
+
+recipeSection.addEventListener('click', domUpdates.exitRecipe)
+
+// exitBtn.addEventListener('click', domUpdates.exitRecipe)
 
 // main.addEventListener('click', addToMyRecipes);
 // allRecipesBtn.addEventListener('click', showAllRecipes);
