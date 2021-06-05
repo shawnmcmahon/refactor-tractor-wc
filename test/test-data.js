@@ -220,54 +220,78 @@ const testRecipes = [{
 }
 ]
 
-const testUserData = [{
-  "name": "Saige O'Kon",
-  "id": 1,
-  "pantry": [{
-    "ingredient": 0,
-    "amount": 4
+const testUserData = [
+  {
+    name: "Saige O'Kon",
+    id: 1,
+    pantry: [
+      {
+        ingredient: 0,
+        amount: 4
+      },
+      {
+        ingredient: 1,
+        amount: 10
+      },
+      {
+        ingredient: 2,
+        amount: 5
+      }
+    ]
   },
   {
-    "ingredient": 1,
-    "amount": 10
+    name: 'Ephraim Goyette',
+    id: 2,
+    pantry: [
+      {
+        ingredient: 1,
+        amount: 3
+      },
+      {
+        ingredient: 2,
+        amount: 7
+      },
+      {
+        ingredient: 3,
+        amount: 8
+      },
+      {
+        ingredient: 4,
+        amount: 6
+      },
+      {
+        ingredient: 6,
+        amount: 10
+      },
+      {
+        ingredient: 8,
+        amount: 13
+      }
+    ]
   },
   {
-    "ingredient": 2,
-    "amount": 5
+    name: 'Claire Fields',
+    id: 3,
+    pantry: [
+      {
+        ingredient: 0,
+        amount: 1
+      },
+      {
+        ingredient: 1,
+        amount: 10
+      },
+      {
+        ingredient: 2,
+        amount: 5
+      },
+      {
+        ingredient: 5,
+        amount: 5
+      }
+    ]
   }
-  ]
-},
-{
-  "name": "Ephraim Goyette",
-  "id": 2,
-  "pantry": [{
-    "ingredient": 1,
-    "amount": 3
-  },
-  {
-    "ingredient": 2,
-    "amount": 7
-  },
-  {
-    "ingredient": 3,
-    "amount": 8
-  },
-  {
-    "ingredient": 4,
-    "amount": 6
-  },
-  {
-    "ingredient": 6,
-    "amount": 10
-  },
-  {
-    "ingredient": 8,
-    "amount": 13
-  }
-  ]
-}
-
-]
+];
 
 
 export {
