@@ -67,6 +67,9 @@ let domUpdates = {
   // add a + and - button next to each one to do the post request 
   // we don't actually want a checkbox, we want a plus and minus and the amount ex: " - 2 + "
   displayPantryInfo(pantry) {
+    // console.log("pantry", pantry)
+    // let updatePantryIngs = pantry.returnPantryIngredients()
+    // console.log("updated", updatePantryIngs)
     pantry.forEach(ingredient => {
       let ingredientHtml = `<li><input type='checkbox' class='pantry-checkbox' id='${ingredient.name}'>
           <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.count}</label></li>`;
@@ -161,12 +164,6 @@ let domUpdates = {
   },
 
 
-
-
-  
-  ///////////// everything above this line is not total garbage /////////////
-
-
   exitRecipe(event) {
     let overlay = document.getElementById('overlay')
 
@@ -180,6 +177,10 @@ let domUpdates = {
     }
   }
   },
+
+  
+  ///////////// everything above this line is not total garbage /////////////
+
 
   //This could definitely be broken down for more SRP code
   addToMyRecipes() {

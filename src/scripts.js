@@ -32,7 +32,7 @@ let searchForm = document.getElementById('searchBar');
 let recipeSection = document.getElementById('fullRecipeInstructions')
 
 // variables
-let user, cookbook;
+let user, cookbook, pantry;
 let globalIngredientsData = {};
 
 //event listeners
@@ -57,7 +57,7 @@ recipeSection.addEventListener('click', domUpdates.exitRecipe)
 function startUp() {
   apiCalls.retrieveData()
     .then((promise) => {
-      makeUserInstance(promise[0].usersData);
+      makeUserInstance(promise[0].usersData, promise[2].ingredientsData);
       const allRecipes = makeRecipeInstances(promise[1].recipeData, promise[2].ingredientsData);
       cookbook = new Cookbook(allRecipes);
       globalIngredientsData = promise[2].ingredientsData
@@ -71,13 +71,16 @@ function startUp() {
 
 }
 
-
-
-function makeUserInstance(apiUserData) {
+function makeUserInstance(apiUserData, apiIngredientData) {
   let randomNumber = Math.floor(Math.random() * apiUserData.length);
   user = new User(apiUserData[randomNumber]);
-  console.log("user", user)
+  makePantryInstance(user, apiIngredientData)
 }
+
+function makePantryInstance(user, apiIngredientData) {
+  let newPantry = new Pantry(user, apiIngredientData)
+}
+
 
 function makeRecipeInstances(apiRecipeData, apiIngredientData) {
   const newRecipes = apiRecipeData.map(recipe => {
