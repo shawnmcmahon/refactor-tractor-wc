@@ -6,7 +6,7 @@ import { testUserData, testRecipes, testIngredients} from '../test/test-data';
 import Recipe from '../src/recipe';
 
 
-describe.only('Pantry', () => {
+describe('Pantry', () => {
 
   let pantry, pantry2, recipe1, recipe2, saige, ephraim;
 
@@ -32,32 +32,31 @@ describe.only('Pantry', () => {
     //expect(pantry2.contents).to.eq(ephraim.pantry)
   });
 
-  it('should return ALL information about pantry ingredients including name', function () {
+  it('should return ALL information about pantry ingredients including name', () => {
     let answer = [
       {
         id: 0,
         name: 'rice',
         estimatedCostInCents: 150,
-        ingredient: 0,
-        amount: 4
+        quantity: { amount: 2, unit: 'c' }
       },
       {
         id: 1,
         name: 'egg',
         estimatedCostInCents: 10,
-        ingredient: 1,
-        amount: 10
+        quantity: { amount: 3, unit: 'large' }
       },
       {
         id: 2,
         name: 'avocado',
         estimatedCostInCents: 250,
-        ingredient: 2,
-        amount: 5
+        quantity: { amount: 2, unit: 'large' }
       }
     ];
 
-    expect(pantry.returnPantryIngredients()).to.deep.eq(answer);
+    let ingredients = pantry.returnPantryIngredients();
+
+    expect(ingredients).to.deep.equal(answer);
   });
 
   it('should determine whether the user has the ingredients to cook a recipe', () => {
@@ -67,22 +66,39 @@ describe.only('Pantry', () => {
 
   it('should tell the user what ingredients they still need if they cannot cook the recipe', () => {
     const canICook = pantry.canICookRecipe(recipe2);
-    const stillNeed = [
-      { id: 3, quantity: { amount: 3, unit: 'large' } },
-      { id: 4, quantity: { amount: 1, unit: 'small' } },
-      { id: 5, quantity: { amount: 5, unit: 'large' } },
-      { id: 6, quantity: { amount: 1, unit: 'bunch' } }
+    const ingredients = [
+      {
+        id: 3,
+        name: 'tomatillo',
+        estimatedCostInCents: 50,
+        quantity: { amount: 3, unit: 'large' }
+      },
+      {
+        id: 4,
+        name: 'garlic',
+        estimatedCostInCents: 25,
+        quantity: { amount: 1, unit: 'small' }
+      },
+      {
+        id: 5,
+        name: 'jalapeno',
+        estimatedCostInCents: 10,
+        quantity: { amount: 5, unit: 'large' }
+      },
+      {
+        id: 6,
+        name: 'cilantro',
+        estimatedCostInCents: 50,
+        quantity: { amount: 1, unit: 'bunch' }
+      }
     ];
-    
-    expect(canICook).to.deep.equal(stillNeed);
-
+    expect(canICook).to.deep.equal(ingredients)
   })
 
 
   it.skip('should determine whether a pantry has enough ingredients to cook a recipe', function() {
 
     const canICook = pantry.haveAmountsPerRecipe(updatedRecipe);
-    // console.log("test", canICook)
     expect(canICook).to.equal('You have enough of each ingredient to cook this recipe.');
     const iCantCook = pantry2.haveAmountsPerRecipe(updatedRecipe)
     console.log("cant", iCantCook)

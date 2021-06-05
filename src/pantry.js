@@ -8,32 +8,32 @@ class Pantry {
 
   returnPantryIngredients() {
     const matchedIngredients = this.contents.map(ingredient => {
-      const foundIngredient = this.ingredientsData.find(
-        data => {
-          return data.id === ingredient.ingredient
-        }
-      );
-      const newObj = Object.assign(foundIngredient, ingredient);
-      return newObj
+      const foundIngredient = this.ingredientsData.find(data => {
+        return data.id === ingredient.ingredient;
+      });
+      return foundIngredient
     });
     return matchedIngredients;
   }
 
   canICookRecipe(recipe) {
     let findIngs = recipe.ingredients.every((ingredient, i) => {
-      return this.contents[i].ingredient === ingredient.id})
+      return this.contents[i].ingredient === ingredient.id;
+    });
 
     if (findIngs) {
-      this.hasIngredients = true
-      return "You have the ingredients in your pantry to cook this recipe!"
+      this.hasIngredients = true;
+      return 'You have the ingredients in your pantry to cook this recipe!';
     } else {
-      return this.whatDoIStillNeed(recipe)
+      return this.whatDoIStillNeed(recipe);
     }
   }
 
-  whatDoIStillNeed(recipe) {    
-    let pantryIngredientsById = this.contents.map(ingredient => ingredient.ingredient)
-    
+  whatDoIStillNeed(recipe) {
+    let pantryIngredientsById = this.contents.map(
+      ingredient => ingredient.ingredient
+    );
+
     let ingredientsINeed = recipe.ingredients.reduce((acc, ingredient) => {
       let ingredientsIHave = pantryIngredientsById.filter(
         id => id === ingredient.id
@@ -43,8 +43,22 @@ class Pantry {
       }
       return acc;
     }, []);
-    return ingredientsINeed;
+
+    const matchedIngredients = ingredientsINeed.map(ingredient => {
+      const foundIngredient = this.ingredientsData.find(data => {
+        return data.id === ingredient.id;
+      });
+      return foundIngredient
+    });
+    return matchedIngredients;
+  
   }
+ 
+
+  //need to be able to match an id with an ingredient name
+  // i have id and quantity
+  // i need name and quantity
+  // this.ingredientsData has the names and the ids
 
   haveAmountsPerRecipe(recipe) {
     let hasIngs = this.canICookRecipe(recipe);
@@ -52,21 +66,20 @@ class Pantry {
 
     if (this.hasIngredients === true) {
       findAmounts = recipe.ingredients.every((ingredient, i) => {
-        return this.contents[i].amount >= ingredient.quantity.amount
-      })
+        return this.contents[i].amount >= ingredient.quantity.amount;
+      });
     } else {
-      return "Sorry, you do not have the ingredients in your pantry to cook this recipe."
+      return 'Sorry, you do not have the ingredients in your pantry to cook this recipe.';
     }
 
     if (findAmounts) {
-      this.hasIngredientAmounts
-      return "You have enough of each ingredient to cook this recipe."
+      this.hasIngredientAmounts;
+      return 'You have enough of each ingredient to cook this recipe.';
     }
     // else {
     //   return "Sorry, you do not have the ingredients in your pantry to cook this recipe."
     // }
   }
-
 }
 
 
