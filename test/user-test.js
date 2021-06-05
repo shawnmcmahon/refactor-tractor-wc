@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 
 import User from '../src/user';
+import Recipe from '../src/Recipe'
 import data from '../src/data/users-data';
 //import { testIngredients, testRecipes, testUserData} from './test-data'
 import testUserData from './sampleUserData';
@@ -80,4 +81,18 @@ describe('User', function() {
     const recipeSearch = user.searchForRecipe(testIngredients, 'Egg', 'Rice');
     expect(recipeSearch).to.deep.equal([recipe]);
   });
+
+  //Sad path testing
+  it('Should not filter recipes that are missing a name', () => {
+    const brokenRecipe = new Recipe(testRecipes[3], testIngredients)
+    user.searchForRecipe(testIngredients, "banana")
+    expect(user.favoriteRecipes).to.deep.equal([])
+  })
+
+  it('Should not filter recipes that are missing an id', () => {
+    const brokenRecipe = new Recipe(testRecipes[3], testIngredients)
+    user.searchForRecipe(testIngredients, "banana")
+    expect(user.favoriteRecipes).to.deep.equal([])
+  })
+
 });

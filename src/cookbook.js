@@ -39,13 +39,13 @@ class Cookbook {
     })
     this.cookbook.forEach(recipe => {
     let splitWords = recipe.name.toLowerCase().split(' ');
-      if (splitWords.includes(keyword) && !matchingRecipes.includes(recipe)) {
+      if (splitWords.includes(keyword) && !matchingRecipes.includes(recipe) && recipe.name && recipe.id) {
         matchingRecipes.push(recipe);
       }
 
       recipe.ingredients.forEach(ingredient => {
         foundIds.forEach(id => {
-          if (id === ingredient.id && !matchingRecipes.includes(recipe)) {
+          if (id === ingredient.id && !matchingRecipes.includes(recipe) && recipe.name && recipe.id) {
             matchingRecipes.push(recipe);
           }
 
@@ -55,7 +55,6 @@ class Cookbook {
 
     return matchingRecipes;
   }, [])
-  //console.log('the result', results)
   this.filteredByNameOrIngredient = results;
   return results;
   }

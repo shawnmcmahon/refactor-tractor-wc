@@ -10,14 +10,14 @@ import testUserData from './sampleUserData'
 describe('Cookbook', () => {
   let recipe1, recipe2, recipe3, testCookbook, allRecipes;
 
-  beforeEach(() => {
-    recipe1 = new Recipe(testRecipes[0], testIngredients);
-    recipe2 = new Recipe(testRecipes[1], testIngredients);
-    recipe3 = new Recipe(testRecipes[2], testIngredients);
-    brokenRecipe = new Recipe(testRecipes[3], testIngredients);
-    allRecipes = [recipe1, recipe2, recipe3];
-    testCookbook = new Cookbook(allRecipes);
-  });
+    beforeEach(() => {
+      recipe1 = new Recipe(testRecipes[0], testIngredients);
+      recipe2 = new Recipe(testRecipes[1], testIngredients);
+      recipe3 = new Recipe(testRecipes[2], testIngredients);
+
+      allRecipes = [recipe1, recipe2, recipe3];
+      testCookbook = new Cookbook(allRecipes);
+    });
 
   it('Should be a function', () => {
     expect(Cookbook).to.be.a('function');
@@ -102,6 +102,20 @@ describe('Cookbook', () => {
       recipe1
     ]);
   });
+
+  //Sad Path Testing
+  it('Should not filter recipes that are missing a name', () => {
+    const brokenRecipe = new Recipe(testRecipes[3], testIngredients)
+    testCookbook.filterByNameOrIngredient(testIngredients, "banana")
+    expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([])
+  })
+
+  it('Should not filter recipes that are missing an id', () => {
+    const brokenRecipe = new Recipe(testRecipes[3], testIngredients)
+    testCookbook.filterByNameOrIngredient(testIngredients, "banana")
+    expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([])
+  })
+
 
   //should probably add some sad path testing here for:
   // uppercase inputs
