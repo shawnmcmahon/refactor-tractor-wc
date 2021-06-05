@@ -7,6 +7,7 @@ import apiCalls from './apiCalls'
 import User from './user';
 import Recipe from './recipe';
 import Cookbook from './cookbook';
+import Pantry from './pantry';
 import './images/apple-logo-outline.png'
 import './images/apple-logo.png'
 import './images/chicken-parm.jpg'
@@ -27,11 +28,12 @@ let allRecipesBtn = document.getElementById('showAllRecipesButton');
 let filterBtn = document.getElementById('filterRecipesButton');
 let showPantryRecipes = document.getElementById('whatCanIMake');
 let searchForm = document.getElementById('searchBar');
+// let exitBtn = document.getElementById('exit-recipe-btn')
+let recipeSection = document.getElementById('fullRecipeInstructions')
 
 // variables
-let user, cookbook;
+let user, cookbook, pantry;
 let globalIngredientsData = {};
-
 
 //event listeners
 window.onload = startUp()
@@ -42,6 +44,10 @@ pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
 savedRecipesBtn.addEventListener('click', domUpdates.toggleBannerText);
 window.addEventListener('click', () => clickRecipeCard(event));
 
+recipeSection.addEventListener('click', domUpdates.exitRecipe)
+
+// exitBtn.addEventListener('click', domUpdates.exitRecipe)
+
 // main.addEventListener('click', addToMyRecipes);
 // allRecipesBtn.addEventListener('click', showAllRecipes);
 // searchBtn.addEventListener('click', searchRecipes);
@@ -51,27 +57,35 @@ window.addEventListener('click', () => clickRecipeCard(event));
 function startUp() {
   apiCalls.retrieveData()
     .then((promise) => {
-      makeUserInstance(promise[0].usersData);
+      makeUserInstance(promise[0].usersData, promise[2].ingredientsData);
       const allRecipes = makeRecipeInstances(promise[1].recipeData, promise[2].ingredientsData);
       cookbook = new Cookbook(allRecipes);
       globalIngredientsData = promise[2].ingredientsData
       domUpdates.updateWelcomeMessage(user);
       getTagsFromRecipeData()
       domUpdates.renderRecipeCards(cookbook)
-      domUpdates.displayPantryInfo(user.pantry)
+      domUpdates.displayPantryInfo(pantry)
       //need to instantiate a new pantry on load
       // need to pass the ingredients (with names) to domUpdates.displayPantryInfo
     })
 
 }
 
-function makeUserInstance(apiUserData) {
+function makeUserInstance(apiUserData, apiIngredientData) {
   let randomNumber = Math.floor(Math.random() * apiUserData.length);
   user = new User(apiUserData[randomNumber]);
+  makePantryInstance(user, apiIngredientData)
 }
 
+function makePantryInstance(user, apiIngredientData) {
+  pantry = new Pantry(user, apiIngredientData)
+}
+
+
 function makeRecipeInstances(apiRecipeData, apiIngredientData) {
-  const newRecipes = apiRecipeData.map(recipe => new Recipe(recipe, apiIngredientData));
+  const newRecipes = apiRecipeData.map(recipe => {
+    return new Recipe(recipe, apiIngredientData)
+  })  
   return newRecipes
 }
 

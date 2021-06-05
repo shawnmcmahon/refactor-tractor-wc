@@ -1,3 +1,5 @@
+let fullRecipeInfo;
+
 let domUpdates = {
   updateWelcomeMessage(user) {
     let welcomeDiv = document.querySelector('.welcome-msg');
@@ -65,9 +67,13 @@ let domUpdates = {
   // add a + and - button next to each one to do the post request 
   // we don't actually want a checkbox, we want a plus and minus and the amount ex: " - 2 + "
   displayPantryInfo(pantry) {
-    pantry.forEach(ingredient => {
+    // console.log("pantry", pantry.contents)
+    let updatePantryIngs = pantry.returnPantryIngredients()
+    console.log("updated", updatePantryIngs)
+    updatePantryIngs.forEach(ingredient => {
+      console.log("ingreeeeeed", ingredient)
       let ingredientHtml = `<li><input type='checkbox' class='pantry-checkbox' id='${ingredient.name}'>
-          <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.count}</label></li>`;
+          <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.amount}</label></li>`;
       document
         .querySelector('.pantry-list')
         .insertAdjacentHTML('beforeend', ingredientHtml);
@@ -95,13 +101,17 @@ let domUpdates = {
       // recipeDetails(foundRecipe);
       // checkIfInQueue(foundRecipe);
       // showHeart(foundRecipe);
+
+
   openRecipeInfo(recipe) {
-    let fullRecipeInfo = document.getElementById('fullRecipeInstructions');
+
+    fullRecipeInfo = document.getElementById('fullRecipeInstructions');
     fullRecipeInfo.style.display = 'inline';
     domUpdates.generateRecipeTitle(
-      recipe,
-      domUpdates.generateIngredients(recipe)
-    );
+      recipe);
+     
+      domUpdates.generateIngredients(recipe);
+    // );
     domUpdates.addRecipeImage(recipe);
     domUpdates.generateInstructions(recipe);
     fullRecipeInfo.insertAdjacentHTML(
@@ -110,17 +120,30 @@ let domUpdates = {
     );
   },
 
-
-  
-  ///////////// everything above this line is not total garbage /////////////
-
-  generateRecipeTitle(recipe, ingredients) {
+  generateRecipeTitle(recipe) {
     let recipeTitle = `
       <button id='exit-recipe-btn'>X</button>
       <h3 id='recipe-title'>${recipe.name}</h3>
       <h4>Ingredients</h4>
-      <p>${ingredients}</p>`;
+      <p id="ingredientsSection"></p>
+     `
     fullRecipeInfo.insertAdjacentHTML('beforeend', recipeTitle);
+  },
+
+   generateIngredients(recipe) {
+     let ingSection  = document.getElementById('ingredientsSection')
+
+    let allIngredientInfo = recipe.getIngredients();
+    allIngredientInfo.forEach(ingredient => {
+    
+      let ingName = ingredient.name 
+      let ingAmount = ingredient.quantity.amount
+      let ingUnit = ingredient.quantity.unit
+
+      ingSection.innerText += `
+       ${ingName}, ${ingAmount}, ${ingUnit}
+    `
+    });
   },
 
   addRecipeImage(recipe) {
@@ -128,15 +151,37 @@ let domUpdates = {
       'recipe-title'
     ).style.backgroundImage = `url(${recipe.image})`;
   },
+  
+  generateInstructions(recipe) {
+    let instructionsList = '';
+    let instructions = recipe.instructions.map(i => {
+      return i.instruction
+    });
+    instructions.forEach(i => {
+      instructionsList += `<li>${i}</li>`
+    });
+    fullRecipeInfo.insertAdjacentHTML('beforeend', '<h4>Instructions</h4>');
+    fullRecipeInfo.insertAdjacentHTML('beforeend', `<ol>${instructionsList}</ol>`);
+  },
 
-  exitRecipe() {
+
+  exitRecipe(event) {
+    let overlay = document.getElementById('overlay')
+
+    if(event.target.id === 'exit-recipe-btn') {
     while (
       fullRecipeInfo.firstChild &&
       fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)
-    ) {}
-    fullRecipeInfo.style.display = 'none';
-    document.getElementById('overlay').remove();
+    ) {
+      fullRecipeInfo.style.display = 'none';
+      overlay.remove();
+    }
+  }
   },
+
+  
+  ///////////// everything above this line is not total garbage /////////////
+
 
   //This could definitely be broken down for more SRP code
   addToMyRecipes() {
