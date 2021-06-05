@@ -1,3 +1,5 @@
+let fullRecipeInfo;
+
 let domUpdates = {
   updateWelcomeMessage(user) {
     let welcomeDiv = document.querySelector('.welcome-msg');
@@ -95,13 +97,17 @@ let domUpdates = {
       // recipeDetails(foundRecipe);
       // checkIfInQueue(foundRecipe);
       // showHeart(foundRecipe);
+
+
   openRecipeInfo(recipe) {
-    let fullRecipeInfo = document.getElementById('fullRecipeInstructions');
+
+    fullRecipeInfo = document.getElementById('fullRecipeInstructions');
     fullRecipeInfo.style.display = 'inline';
     domUpdates.generateRecipeTitle(
-      recipe,
-      domUpdates.generateIngredients(recipe)
-    );
+      recipe);
+     
+      domUpdates.generateIngredients(recipe);
+    // );
     domUpdates.addRecipeImage(recipe);
     domUpdates.generateInstructions(recipe);
     fullRecipeInfo.insertAdjacentHTML(
@@ -110,17 +116,30 @@ let domUpdates = {
     );
   },
 
-
-  
-  ///////////// everything above this line is not total garbage /////////////
-
-  generateRecipeTitle(recipe, ingredients) {
+  generateRecipeTitle(recipe) {
     let recipeTitle = `
       <button id='exit-recipe-btn'>X</button>
       <h3 id='recipe-title'>${recipe.name}</h3>
       <h4>Ingredients</h4>
-      <p>${ingredients}</p>`;
+      <p id="ingredientsSection"></p>
+     `
     fullRecipeInfo.insertAdjacentHTML('beforeend', recipeTitle);
+  },
+
+   generateIngredients(recipe) {
+     let ingSection  = document.getElementById('ingredientsSection')
+
+    let allIngredientInfo = recipe.getIngredients();
+    allIngredientInfo.forEach(ingredient => {
+    
+      let ingName = ingredient.name 
+      let ingAmount = ingredient.quantity.amount
+      let ingUnit = ingredient.quantity.unit
+
+      ingSection.innerText += `
+       ${ingName}, ${ingAmount}, ${ingUnit}
+    `
+    });
   },
 
   addRecipeImage(recipe) {
@@ -128,6 +147,25 @@ let domUpdates = {
       'recipe-title'
     ).style.backgroundImage = `url(${recipe.image})`;
   },
+  
+  generateInstructions(recipe) {
+    let instructionsList = '';
+    let instructions = recipe.instructions.map(i => {
+      return i.instruction
+    });
+    instructions.forEach(i => {
+      instructionsList += `<li>${i}</li>`
+    });
+    fullRecipeInfo.insertAdjacentHTML('beforeend', '<h4>Instructions</h4>');
+    fullRecipeInfo.insertAdjacentHTML('beforeend', `<ol>${instructionsList}</ol>`);
+  },
+
+
+
+
+  
+  ///////////// everything above this line is not total garbage /////////////
+
 
   exitRecipe() {
     while (
