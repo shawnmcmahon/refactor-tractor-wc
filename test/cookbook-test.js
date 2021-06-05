@@ -14,6 +14,7 @@ describe('Cookbook', () => {
     recipe1 = new Recipe(testRecipes[0], testIngredients);
     recipe2 = new Recipe(testRecipes[1], testIngredients);
     recipe3 = new Recipe(testRecipes[2], testIngredients);
+    brokenRecipe = new Recipe(testRecipes[3], testIngredients);
     allRecipes = [recipe1, recipe2, recipe3];
     testCookbook = new Cookbook(allRecipes);
   });

@@ -60,32 +60,6 @@ class Cookbook {
   return results;
   }
 
-  // filterByNameOrIngredient(inputs) {
-  //   // input will likely be searchInput.value (searchBar.value?)
-  //   // it will need to be an array of lowercase strings
-  //   const filteredRecipes = inputs.reduce((acc, input) => {
-  //     this.cookbook.forEach(recipe => {
-  //       const recipeNames = recipe.name.toLowerCase();
-  //       if (recipeNames.includes(input) && !acc.includes(recipe)) {
-  //         acc.push(recipe);
-  //       }
-  //     });
-  //
-  //     this.cookbook.forEach(recipe => {
-  //       const recipeIngredients = recipe.getIngredientNames();
-  //       const splitIngredients = recipeIngredients
-  //         .map(ingredient => ingredient.split(' '))
-  //         .flat();
-  //       if (splitIngredients.includes(input) && !acc.includes(recipe)) {
-  //         acc.push(recipe);
-  //       }
-  //     });
-  //
-  //     return acc;
-  //   }, []);
-  //
-  //   this.filteredByNameOrIngredient = filteredRecipes;
-  // }
 
 };
 
