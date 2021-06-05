@@ -115,7 +115,7 @@ describe('Pantry', () => {
   });
 
 
-  it.only("should return what amount of an ingredient the user needs if they don't have *enough* of an ingredient", () => {
+  it("should return what amount of an ingredient the user needs if they don't have *enough* of an ingredient", () => {
     claire = new User(testUserData[2]);
     pantry3 = new Pantry(claire, testIngredients)
     let event = pantry3.canICookRecipe(recipe1)
@@ -129,11 +129,9 @@ describe('Pantry', () => {
       }
     ];
 
-    const whatINeed1 = [{ id: 0, quantity: { amount: 1, unit: 'c' }}];
-
     expect(pantry3.hasIngredients).to.equal(true);
     expect(pantry3.hasIngredientAmounts).to.equal(false)
-    expect(event).to.deep.equal(whatINeed1)
+    expect(event).to.deep.equal(whatINeed)
   
   });
 

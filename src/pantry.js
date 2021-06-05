@@ -83,16 +83,23 @@ class Pantry {
           }
         })
       })
-      return whatINeed;
 
+      const matchedIDs = whatINeed.map(ingredient => {
+        const foundIngredient = this.ingredientsData.find(data => {
+          return data.id === ingredient.id;
+        });
+        let newObj = Object.assign(foundIngredient, ingredient)
+        return newObj;
+      });
+      return matchedIDs;
     }
   }
 }
+
+export default Pantry;
 
 //haveAmountsPerRecipe
 //render to the DOM!!!
 // let howMuch = hasIngs.map(ing => {
 //   return `Sorry, you need ${ing.quantity.amount} ${ing.quantity.unit} of ${ing.name}.`;
 // });
-
-export default Pantry;
