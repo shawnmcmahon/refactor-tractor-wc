@@ -167,13 +167,18 @@ let domUpdates = {
   ///////////// everything above this line is not total garbage /////////////
 
 
-  exitRecipe() {
+  exitRecipe(event) {
+    let overlay = document.getElementById('overlay')
+
+    if(event.target.id === 'exit-recipe-btn') {
     while (
       fullRecipeInfo.firstChild &&
       fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)
-    ) {}
-    fullRecipeInfo.style.display = 'none';
-    document.getElementById('overlay').remove();
+    ) {
+      fullRecipeInfo.style.display = 'none';
+      overlay.remove();
+    }
+  }
   },
 
   //This could definitely be broken down for more SRP code
