@@ -26,7 +26,7 @@ class User {
     this.recipesToCook.splice(index, 1);
   }
 
-  filterRecipes(type) {
+  filterRecipes(...tag) {
     let favoriteRecipes = new Cookbook(this.favoriteRecipes);
     return favoriteRecipes.filterByTag(...tag);
     // return this.favoriteRecipes.filter(recipe => recipe.tags.includes(type));

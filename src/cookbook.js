@@ -6,20 +6,21 @@ class Cookbook {
   }
 
   // this is called inside of findCheckedBoxes
-  filterByTag(allCheckedTags) {
-    let filteredRecipes = allCheckedTags.reduce((acc, tag) => {
-      let matchingRecipes = this.cookbook.filter(recipe => {
-        return recipe.tags.includes(tag);
-      }).forEach(matchingRecipe => {
-        if (!acc.includes(matchingRecipe)) {
-          acc.push(matchingRecipe);
-        }
+  filterByTag(...tags) {
+    const lowerCaseTags = tags.map(tag => tag.toLowerCase());
+    let results =  lowerCaseTags.reduce((matchingRecipes, tag) => {
+      this.cookbook.forEach(recipe => {
+        recipe.tags.forEach(currentTag => {
+          if(tag === currentTag && !matchingRecipes.includes(recipe)) {
+            matchingRecipes.push(recipe);
+          }
+
+        })
       })
-
-      return acc.flat();
-    }, []);
-
-    this.filteredByTag = filteredRecipes
+      return matchingRecipes
+    }, [])
+    this.filteredByTag = results;
+    return results
   }
 
   filterByNameOrIngredient(ingredientsData, ...keywords) {

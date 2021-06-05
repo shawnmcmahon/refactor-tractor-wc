@@ -75,9 +75,8 @@ describe('User', function() {
     expect(breakfastRecipes).to.deep.equal([recipe]);
   });
 
-  it.only('should be able to search recipes by name', function() {
+  it('should be able to search recipes by name', function() {
     user.saveRecipe(recipe);
-    console.log('any favorites?', user.favoriteRecipes)
     const recipeSearch = user.searchForRecipe(testIngredients, 'Egg', 'Rice');
     expect(recipeSearch).to.deep.equal([recipe]);
   });

@@ -37,22 +37,22 @@ describe('Cookbook', () => {
   });
 
   it('Should have a method that retrieves recipes by a tag', () => {
-    testCookbook.filterByTag(['snack']);
+    testCookbook.filterByTag('snack');
     expect(testCookbook.filteredByTag).to.deep.equal(allRecipes)
   });
 
   it('Should be able to retrieve recipes by a different tag', () => {
-    testCookbook.filterByTag(['morning meal']);
+    testCookbook.filterByTag('morning meal');
     expect(testCookbook.filteredByTag).to.deep.equal([recipe1, recipe3]);
   });
 
   it('Should have a method that retrieves recipes by multiple tags', () => {
-    testCookbook.filterByTag(['snack', 'appetizer']);
+    testCookbook.filterByTag('snack', 'appetizer');
     expect(testCookbook.filteredByTag).to.deep.equal(allRecipes);
   });
 
   it('Should be able to retrieve recipes by different tags', () => {
-    testCookbook.filterByTag(['morning meal', 'breakfast']);
+    testCookbook.filterByTag('morning meal', 'breakfast');
     expect(testCookbook.filteredByTag).to.deep.equal([recipe1, recipe3]);
   });
 
