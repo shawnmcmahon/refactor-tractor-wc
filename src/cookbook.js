@@ -6,48 +6,59 @@ class Cookbook {
   }
 
   // this is called inside of findCheckedBoxes
-  filterByTag(allCheckedTags) {
-    let filteredRecipes = allCheckedTags.reduce((acc, tag) => {
-      let matchingRecipes = this.cookbook.filter(recipe => {
-        return recipe.tags.includes(tag);
-      }).forEach(matchingRecipe => {
-        if (!acc.includes(matchingRecipe)) {
-          acc.push(matchingRecipe);
-        }
+  filterByTag(...tags) {
+    const lowerCaseTags = tags.map(tag => tag.toLowerCase());
+    let results =  lowerCaseTags.reduce((matchingRecipes, tag) => {
+      this.cookbook.forEach(recipe => {
+        recipe.tags.forEach(currentTag => {
+          if(tag === currentTag && !matchingRecipes.includes(recipe)) {
+            matchingRecipes.push(recipe);
+          }
+
+        })
       })
-
-      return acc.flat();
-    }, []);
-    
-    this.filteredByTag = filteredRecipes 
+      return matchingRecipes
+    }, [])
+    this.filteredByTag = results;
+    return results
   }
 
-  filterByNameOrIngredient(inputs) {
-    // input will likely be searchInput.value (searchBar.value?)
-    // it will need to be an array of lowercase strings 
-    const filteredRecipes = inputs.reduce((acc, input) => {
-      this.cookbook.forEach(recipe => {
-        const recipeNames = recipe.name.toLowerCase();
-        if (recipeNames.includes(input) && !acc.includes(recipe)) {
-          acc.push(recipe);
+  filterByNameOrIngredient(ingredientsData, ...keywords) {
+    const seperatedKeywords = keywords.map(keyword => {
+      return keyword.split(' ');
+    }).flat();
+    const lowerCaseKeyWords = seperatedKeywords.map(keyword => keyword.toLowerCase());
+    const results = lowerCaseKeyWords.reduce((matchingRecipes, keyword) => {
+    let foundIds = [];
+    ingredientsData.forEach(ingredient => {
+      if (ingredient.name) {
+        if (ingredient.name.split(' ').includes(keyword)) {
+          foundIds.push(ingredient.id)
         }
-      });
+      }
+    })
+    this.cookbook.forEach(recipe => {
+    let splitWords = recipe.name.toLowerCase().split(' ');
+      if (splitWords.includes(keyword) && !matchingRecipes.includes(recipe) && recipe.name && recipe.id) {
+        matchingRecipes.push(recipe);
+      }
 
-      this.cookbook.forEach(recipe => {
-        const recipeIngredients = recipe.getIngredientNames();
-        const splitIngredients = recipeIngredients
-          .map(ingredient => ingredient.split(' '))
-          .flat();
-        if (splitIngredients.includes(input) && !acc.includes(recipe)) {
-          acc.push(recipe);
-        }
-      });
+      recipe.ingredients.forEach(ingredient => {
+        foundIds.forEach(id => {
+          if (id === ingredient.id && !matchingRecipes.includes(recipe) && recipe.name && recipe.id) {
+            matchingRecipes.push(recipe);
+          }
 
-      return acc;
-    }, []);
+        })
+      })
+    })
 
-    this.filteredByNameOrIngredient = filteredRecipes;
+    return matchingRecipes;
+  }, [])
+  this.filteredByNameOrIngredient = results;
+  return results;
   }
+
 
 };
 

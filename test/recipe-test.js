@@ -1,7 +1,9 @@
 import { expect } from 'chai';
 import Recipe from '../src/recipe';
-import { testRecipes, testIngredients } from '../test/test-data';
-
+// import { testRecipes, testIngredients } from '../test/test-data';
+import testIngredients from './sampleIngredientsData'
+import testRecipes from './sampleRecipesData'
+import testUserData from './sampleUserData'
 
 describe('Recipe', () => {
 
