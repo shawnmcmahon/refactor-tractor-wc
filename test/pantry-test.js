@@ -51,19 +51,22 @@ describe('Pantry', () => {
         id: 0,
         name: 'rice',
         estimatedCostInCents: 150,
-        quantity: { amount: 2, unit: 'c' }
+        ingredient: 0,
+        amount: 4
       },
       {
         id: 1,
         name: 'egg',
         estimatedCostInCents: 10,
-        quantity: { amount: 3, unit: 'large' }
+        ingredient: 1,
+        amount: 10
       },
       {
         id: 2,
         name: 'avocado',
         estimatedCostInCents: 250,
-        quantity: { amount: 2, unit: 'large' }
+        ingredient: 2,
+        amount: 5
       }
     ];
 
@@ -125,7 +128,9 @@ describe('Pantry', () => {
         id: 0,
         name: 'rice',
         estimatedCostInCents: 150,
-        quantity: { amount: 1, unit: 'c' }
+        ingredient: 0,
+        amount: 1,
+        unit: 'c'
       }
     ];
 

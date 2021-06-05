@@ -7,11 +7,14 @@ class Pantry {
   }
 
   returnPantryIngredients() {
+    let newObj;
     const matchedIngredients = this.contents.map(ingredient => {
       const foundIngredient = this.ingredientsData.find(data => {
         return data.id === ingredient.ingredient;
       });
-      return foundIngredient
+      newObj = Object.assign(foundIngredient, ingredient);
+      return newObj;
+
     });
     return matchedIngredients;
   }
@@ -20,7 +23,6 @@ class Pantry {
     let findIngs = recipe.ingredients.every((ingredient, i) => {
       return this.contents[i].ingredient === ingredient.id;
     });
-
     if (findIngs) {
       this.hasIngredients = true;
       return this.haveAmountsPerRecipe(recipe);
@@ -45,24 +47,22 @@ class Pantry {
     }, []);
 
     const goBuyThis = ingredientsINeed.map(ingredient => {
+      let newObj;
       const foundIngredient = this.ingredientsData.find(data => {
         return data.id === ingredient.id;
       });
-      return foundIngredient
+      newObj = Object.assign(foundIngredient, ingredient);
+      return newObj;
     });
+
     return goBuyThis;
-  
   }
  
   haveAmountsPerRecipe(recipe) {
-    let findAmounts;
-
-    if (this.hasIngredients) {
-      findAmounts = recipe.ingredients.every((ingredient, i) => {
-        return this.contents[i].amount >= ingredient.quantity.amount;
-      });
-    }
-
+    const findAmounts = recipe.ingredients.every((ingredient, i) => {
+      return this.contents[i].amount >= ingredient.quantity.amount;
+    });
+    
     if (findAmounts) {
       return this.hasIngredientAmounts = true;
     } else {
@@ -88,7 +88,7 @@ class Pantry {
         const foundIngredient = this.ingredientsData.find(data => {
           return data.id === ingredient.id;
         });
-        let newObj = Object.assign(foundIngredient, ingredient)
+        let newObj = Object.assign(foundIngredient, ingredient.quantity)
         return newObj;
       });
       return matchedIDs;
