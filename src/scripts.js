@@ -7,6 +7,7 @@ import apiCalls from './apiCalls'
 import User from './user';
 import Recipe from './recipe';
 import Cookbook from './cookbook';
+import Pantry from './pantry';
 import './images/apple-logo-outline.png'
 import './images/apple-logo.png'
 import './images/chicken-parm.jpg'
@@ -75,6 +76,7 @@ function startUp() {
 function makeUserInstance(apiUserData) {
   let randomNumber = Math.floor(Math.random() * apiUserData.length);
   user = new User(apiUserData[randomNumber]);
+  console.log("user", user)
 }
 
 function makeRecipeInstances(apiRecipeData, apiIngredientData) {
