@@ -64,7 +64,7 @@ function startUp() {
       domUpdates.updateWelcomeMessage(user);
       getTagsFromRecipeData()
       domUpdates.renderRecipeCards(cookbook)
-      domUpdates.displayPantryInfo(user.pantry)
+      domUpdates.displayPantryInfo(pantry)
       //need to instantiate a new pantry on load
       // need to pass the ingredients (with names) to domUpdates.displayPantryInfo
     })
@@ -78,7 +78,7 @@ function makeUserInstance(apiUserData, apiIngredientData) {
 }
 
 function makePantryInstance(user, apiIngredientData) {
-  let newPantry = new Pantry(user, apiIngredientData)
+  pantry = new Pantry(user, apiIngredientData)
 }
 
 

@@ -67,12 +67,13 @@ let domUpdates = {
   // add a + and - button next to each one to do the post request 
   // we don't actually want a checkbox, we want a plus and minus and the amount ex: " - 2 + "
   displayPantryInfo(pantry) {
-    // console.log("pantry", pantry)
-    // let updatePantryIngs = pantry.returnPantryIngredients()
-    // console.log("updated", updatePantryIngs)
-    pantry.forEach(ingredient => {
+    // console.log("pantry", pantry.contents)
+    let updatedPantryIngs = pantry.returnPantryIngredients()
+    // console.log("updated", updatedPantryIngs)
+    updatedPantryIngs.forEach(ingredient => {
+      // console.log("ingreeeeeed", ingredient)
       let ingredientHtml = `<li><input type='checkbox' class='pantry-checkbox' id='${ingredient.name}'>
-          <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.count}</label></li>`;
+          <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.amount}</label></li>`;
       document
         .querySelector('.pantry-list')
         .insertAdjacentHTML('beforeend', ingredientHtml);
