@@ -19,26 +19,31 @@ class Pantry {
     return matchedIngredients;
   }
 
-
-
   canICookRecipe(recipe) {
-    let findIngs = recipe.ingredients.every((ingredient, i) =>
-      this.contents[i].ingredient === ingredient.id)
+    let findIngs = recipe.ingredients.every((ingredient, i) => {
+      return this.contents[i].ingredient === ingredient.id})
 
     if (findIngs) {
       this.hasIngredients = true
       return "You have the ingredients in your pantry to cook this recipe!"
     } else {
-      this.whatDoIStillNeed(recipe)
+      return this.whatDoIStillNeed(recipe)
     }
   }
 
-  whatDoIStillNeed(recipe) {
-    let missing = this.contents.filter(ingredient => {
-      recipe.ingredients.filter(ing => {
-        return parseInt(ingredient.ingredient) !== parseInt(ing.id)
-      })
-    })
+  whatDoIStillNeed(recipe) {    
+    let pantryIngredientsById = this.contents.map(ingredient => ingredient.ingredient)
+    
+    let ingredientsINeed = recipe.ingredients.reduce((acc, ingredient) => {
+      let ingredientsIHave = pantryIngredientsById.filter(
+        id => id === ingredient.id
+      );
+      if (!ingredientsIHave.includes(ingredient.id)) {
+        acc.push(ingredient);
+      }
+      return acc;
+    }, []);
+    return ingredientsINeed;
   }
 
   haveAmountsPerRecipe(recipe) {
