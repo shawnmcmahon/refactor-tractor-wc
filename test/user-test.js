@@ -5,6 +5,7 @@ import data from '../src/data/users-data';
 //import { testIngredients, testRecipes, testUserData} from './test-data'
 import testUserData from './sampleUserData';
 import testRecipes from './sampleRecipesData'
+import testIngredients from './sampleIngredientsData';
 
 describe('User', function() {
   let user;
@@ -74,9 +75,10 @@ describe('User', function() {
     expect(breakfastRecipes).to.deep.equal([recipe]);
   });
 
-  it('should be able to search recipes by name', function() {
+  it.only('should be able to search recipes by name', function() {
     user.saveRecipe(recipe);
-    const recipeSearch = user.searchForRecipe('Rice bowl with Fried Egg');
+    console.log('any favorites?', user.favoriteRecipes)
+    const recipeSearch = user.searchForRecipe(testIngredients, 'Egg', 'Rice');
     expect(recipeSearch).to.deep.equal([recipe]);
   });
 });

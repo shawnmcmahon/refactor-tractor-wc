@@ -32,9 +32,9 @@ class User {
     // return this.favoriteRecipes.filter(recipe => recipe.tags.includes(type));
   }
 
-  searchForRecipe(keyword) {
+  searchForRecipe(ingredientsData, ...keyword) {
     let favoriteRecipes = new Cookbook(this.favoriteRecipes);
-    return favoriteRecipes.filterByNameOrIngredient(keyword)
+    return favoriteRecipes.filterByNameOrIngredient(ingredientsData, ...keyword)
     // return this.favoriteRecipes.filter(recipe => recipe.name.includes(keyword) || recipe.ingredients.includes(keyword));
   }
 
