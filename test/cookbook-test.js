@@ -57,13 +57,12 @@ describe('Cookbook', () => {
   });
 
   it('Should be able to retrieve recipes by name', () => {
-    const eggRecipe = testCookbook.filterByNameOrIngredient(testIngredients, 'Tomatillo')
-    console.log('what i need', recipe2)
+    const eggRecipe = testCookbook.filterByNameOrIngredient(testIngredients, 'Tomatillo');
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([recipe2])
   })
 
 
-  it.only('Should be able to filter recipes by ingredient', () => {
+  it('Should be able to filter recipes by ingredient', () => {
     testCookbook.filterByNameOrIngredient(testIngredients, 'egg', 'pineapple');
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([
       recipe1,
@@ -92,7 +91,7 @@ describe('Cookbook', () => {
   });
 
   it('Should be able to filter recipes by a different name', () => {
-    testCookbook.filterByNameOrIngredient(testIngredients, 'omelet');
+    testCookbook.filterByNameOrIngredient(testIngredients, 'Tamagoyaki');
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([recipe3]);
   });
 

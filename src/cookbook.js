@@ -51,7 +51,7 @@ class Cookbook {
         })
       })
     })
-    console.log('matches', matchingRecipes[0])
+
     return matchingRecipes;
   }, [])
   //console.log('the result', results)

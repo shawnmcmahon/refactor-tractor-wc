@@ -27,15 +27,15 @@ class User {
   }
 
   filterRecipes(type) {
-    // let favoriteRecipes = new Cookbook(this.favoriteRecipes);
-    // return favoriteRecipes.filterByTag(...tag);
-    return this.favoriteRecipes.filter(recipe => recipe.tags.includes(type));
+    let favoriteRecipes = new Cookbook(this.favoriteRecipes);
+    return favoriteRecipes.filterByTag(...tag);
+    // return this.favoriteRecipes.filter(recipe => recipe.tags.includes(type));
   }
 
   searchForRecipe(keyword) {
-    // let favoriteRecipes = new Cookbook(this.favoriteRecipes);
-    // return favoriteRecipes.filterByNameOrIngredient(keyword)
-    return this.favoriteRecipes.filter(recipe => recipe.name.includes(keyword) || recipe.ingredients.includes(keyword));
+    let favoriteRecipes = new Cookbook(this.favoriteRecipes);
+    return favoriteRecipes.filterByNameOrIngredient(keyword)
+    // return this.favoriteRecipes.filter(recipe => recipe.name.includes(keyword) || recipe.ingredients.includes(keyword));
   }
 
 
