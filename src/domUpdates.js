@@ -62,16 +62,12 @@ let domUpdates = {
     }
   },
 
-  // this function needs info out of pantry class
-  // once we have the names, we can render the pantry the DOM with all the items in our pantry
+
   // add a + and - button next to each one to do the post request 
   // we don't actually want a checkbox, we want a plus and minus and the amount ex: " - 2 + "
   displayPantryInfo(pantry) {
-    // console.log("pantry", pantry.contents)
-    let updatedPantryIngs = pantry.returnPantryIngredients()
-    // console.log("updated", updatedPantryIngs)
+    let updatedPantryIngs = pantry.returnPantryIngredients(
     updatedPantryIngs.forEach(ingredient => {
-      // console.log("ingreeeeeed", ingredient)
       let ingredientHtml = `<li><input type='checkbox' class='pantry-checkbox' id='${ingredient.name}'>
           <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.amount}</label></li>`;
       document
