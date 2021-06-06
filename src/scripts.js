@@ -68,7 +68,7 @@ function startUp() {
 
 function makeUserInstance(apiUserData, apiIngredientData) {
   let randomNumber = Math.floor(Math.random() * apiUserData.length);
-  user = new User(apiUserData[randomNumber]);
+  user = new User(apiUserData[randomNumber], apiIngredientData);
   makePantryInstance(user, apiIngredientData)
 }
 
