@@ -27,19 +27,6 @@ span {
   width: 35px;
 }
 
-
-#search {
-  border-radius: 15px 15px 15px 15px;
-  border: 3px outset #C4EB67;
-  box-shadow: 0px 0px 7px 0px #475d74;
-  display: flex;
-  flex-direction: row;
-  font-family: "Quicksand", sans-serif;
-  justify-content: center;
-  margin: 1.2% 0.5% 1.2% 0%;
-  width: 100%;
-}
-
 #search-input {
   background-color: #b6dcca;
   background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(255, 255, 255)), color-stop(1, rgb(225,225,225)));
@@ -117,4 +104,42 @@ span {
   max-height: 40px;
   max-width: 40px;
   padding: 2px 0px;
+}
+
+.saved-ingredients-btn {
+  border-left: 3px solid #C4EB67;
+}
+
+.ing-pan-btn {
+  margin: 1% 0%;
+  padding: 1px 6px 5px 0px;
+}
+
+.banner-image {
+  background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),url("../images/green-apples.jpg");
+  grid-area: image;
+  height: 150px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.my-recipes-banner,
+.welcome-msg {
+  text-align: center;
+  width: 95%;
+}
+
+.my-recipes-banner h1,
+.welcome-msg h1 {
+  color: white;
+  width: 100%;
+}
+
+.my-recipes-banner {
+  display: none;
+  margin-top: 25px;
+}
+
+.welcome-msg {
+  margin-top: 50px;
 }

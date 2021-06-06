@@ -1,3 +1,4 @@
+//_body
 body {
   background-color: #5B7894;
   display: grid;
@@ -13,6 +14,7 @@ body {
   -webkit-font-smoothing: auto;
 }
 
+//_nav
 h1 {
   align-self: center;
   color: white;
@@ -23,11 +25,13 @@ h1 {
   width: 70%;
 }
 
+//_body
 h2 {
   color: #84C8A4;
   margin: 10px 0px 10px 0px;
 }
 
+//_cardStyles.scss
 h3 {
   color: #359567;
   cursor: pointer;
@@ -36,6 +40,7 @@ h3 {
   transition: .8s ease;
 }
 
+//_cardStyles.scss
 h4 {
   color: #359567;
   background-color: #C4EB67;
@@ -46,6 +51,7 @@ h4 {
 }
 
 
+//_nav
 /* HEADER */
 header {
   display: flex;
@@ -55,17 +61,20 @@ header {
   width: 100%;
 }
 
+//_nav
 span {
   color: #C4EB67;
   font-weight: 400;
 }
 
+//_nav
 .header-apple-icon {
   height: 40px;
   margin-left: 5px;
   width: 35px;
 }
 
+// ????
 #search {
   border-radius: 15px 15px 15px 15px;
   border: 3px outset #C4EB67;
@@ -78,6 +87,8 @@ span {
   width: 100%;
 }
 
+// Not sure if used
+//_nav
 #search-input {
   background-color: #b6dcca;
   background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(255, 255, 255)), color-stop(1, rgb(225,225,225)));
@@ -95,15 +106,21 @@ span {
   width: 100%;
 }
 
+// Not sure if used
+//_nav
 #search-input:hover {
   box-shadow: inset 0px 0px 0px 0px white;
   transition: .8s ease;
 }
 
+// Not sure if used
+//_nav
 #search-input:focus {
   box-shadow: inset 0px 0px 0px 0px white;
 }
 
+// Not sure if used
+//_nav
 #search-input::placeholder {
   color: #5B7894;
   font-size: 20px;
@@ -111,21 +128,26 @@ span {
   text-shadow: none;
 }
 
+// Not sure if used
+//_nav
 #search-input:focus::placeholder {
   font-size: 0px;
   transition: .8s ease;
 }
 
+//_nav
 .search-label {
   display: none;
 }
 
+//_nav
 .search-btn {
   border-left: 3px outset #C4EB67;
   border-radius: 0px 15px 15px 0px;
   padding: 1%;
 }
 
+//_nav
 .nav-btn {
   align-items: center;
   background: #5B7894 no-repeat;
@@ -144,6 +166,7 @@ span {
   width: 15%;
 }
 
+//nav
 .nav-btn:hover {
   color: #C4EB67;
   font-size: 14px;
@@ -151,18 +174,20 @@ span {
   transition: .4s ease;
 }
 
+
+//nav
 .nav-btn img {
   max-height: 40px;
   max-width: 40px;
   padding: 2px 0px;
 }
 
-//not in html
+//nav
 .saved-ingredients-btn {
   border-left: 3px solid #C4EB67;
 }
 
-// not in html
+//nav
 .ing-pan-btn {
   margin: 1% 0%;
   padding: 1px 6px 5px 0px;
@@ -171,6 +196,7 @@ span {
 
 /* BANNER IMAGE*/
 // not in html
+// nav
 .banner-image {
   background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),url("../images/green-apples.jpg");
   grid-area: image;
@@ -180,29 +206,36 @@ span {
 }
 
 
+//nav
 .my-recipes-banner,
 .welcome-msg {
   text-align: center;
   width: 95%;
 }
 
+//nav
 .my-recipes-banner h1,
 .welcome-msg h1 {
   color: white;
   width: 100%;
 }
 
+
+//nav
 .my-recipes-banner {
   display: none;
   margin-top: 25px;
 }
 
+
+//nav
 .welcome-msg {
   margin-top: 50px;
 }
 
 
 /* FILTER SIDEBAR */
+//body
 aside {
   background-color: white;
   display: flex;
@@ -211,6 +244,7 @@ aside {
   text-align: center;
 }
 
+//body
 .wrap {
   background-color: white;
   height: 100vh;
@@ -219,18 +253,21 @@ aside {
   width: 200px;
 }
 
+//body
 ul {
   list-style-type: none;
   text-align: left;
   padding-left: 35px;
 }
 
+//body
 li {
   margin: 2px;
 }
 
 
 /* RECIPE CARD SECTION */
+// body
 main {
   grid-area: main;
   display: flex;
@@ -240,6 +277,7 @@ main {
   flex-wrap: wrap;
 }
 
+//cardstyles
 .recipe-card {
   background-color: white;
   border: 2px solid #C4EB67;
@@ -251,11 +289,13 @@ main {
   width: 250px;
 }
 
+//cardstyles
 .recipe-card:hover .card-photo-preview {
   opacity: 50%;
   transition: .8s ease;
 }
 
+//cardstyles
 .recipe-card:hover .text {
   font-size: 20px;
   opacity: 100%;
@@ -263,11 +303,13 @@ main {
   width: 100%;
 }
 
+//cardstyles
 .recipe-card:hover h3 {
   text-shadow: 0px 0px 4px #C4EB67;
   transition: .8s ease;
 }
 
+//cardstyles
 .card-apple-icon {
   cursor: pointer;
   float: right;
@@ -276,6 +318,7 @@ main {
   width: 45px;
 }
 
+//cardstyles
 .card-photo-preview {
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -287,6 +330,7 @@ main {
   width: 100%;
 }
 
+//cardstyles
 .card-photo-container {
   align-items: center;
   display: flex;
@@ -295,6 +339,7 @@ main {
   position: relative;
 }
 
+// ???
 .text {
   background: #359567;
   color: white;
@@ -310,6 +355,7 @@ main {
 
 
 /* BUTTONS */
+// body
 .show-pantry-recipes-btn,
 .show-all-btn,
 .filter-btn {
@@ -324,22 +370,25 @@ main {
   padding: 5px 10px 5px 10px;
 }
 
+// body
 .show-pantry-recipes-btn {
   margin-top: 10px;
 }
 
+// body
 .show-all-btn {
   height: 40px;
   margin-top: 20px;
   width: 200px;
 }
-
+// body
 .filter-btn:hover {
   background-color: #84C8A4;
 }
 
 
 /* PANTRY LIST */
+// body
 .drop-menu {
   align-items: center;
   background-color: #DAE4EE;
@@ -355,11 +404,13 @@ main {
   z-index: 3;
 }
 
+// body
 .drop-menu h2 {
   color: #359567;
   margin: 0px;
 }
 
+// body
 .pantry-list {
   color: #000000;
   padding-left: 15px;
@@ -368,6 +419,7 @@ main {
 
 
 /* RECIPE INSTRUCTIONS */
+// card
 .recipe-instructions {
   background: white;
   border: 3px solid #C4EB67;
@@ -385,6 +437,7 @@ main {
   z-index: 1000;
 }
 
+// card
 #exit-recipe-btn {
   background: white;
   border: 2px double #359567;
@@ -398,11 +451,13 @@ main {
   transition: .3s ease;
 }
 
+// card
 #exit-recipe-btn:hover {
   background: #C4EB67;
   transition: .3s ease;
 }
 
+// card
 #recipe-title {
   background-repeat: no-repeat;
   background-size: cover;
@@ -415,19 +470,23 @@ main {
   text-shadow: 0px 0px 6px black;
 }
 
+// card
 .recipe-instructions h4 {
   background: white;
   color: #359567;
 }
 
+// card
 .recipe-instructions p {
   margin-left: 2%;
 }
 
+// card
 .recipe-instructions ol {
   margin-right: 2%;
 }
 
+//card
 #overlay {
   filter:alpha(opacity=50);
   background-color: #5B7894;
@@ -440,10 +499,13 @@ main {
   z-index:100;
 }
 
+//body
 .block {
   display: block;
 }
 
+
+//body
 .hidden {
   display: none;
 }
