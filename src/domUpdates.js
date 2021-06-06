@@ -33,10 +33,7 @@ let domUpdates = {
         <div class='recipe-card' id=${recipe.id}>
           <h3>${name}</h3>
           <div class='card-photo-container'>
-            <img src=${recipe.image} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
-            <div class='text'>
-              <div>Click for Instructions</div>
-            </div>
+            <img src=${recipe.image} id=${recipe.id} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
           </div>
           <h4>${recipe.tags[0]}</h4>
           <img src='../images/add-to-cook-queue-2.png' alt="add to cook queue icon" class='card-silverware-icon'>
@@ -58,9 +55,6 @@ let domUpdates = {
           <h3>${name}</h3>
           <div class='card-photo-container'>
             <img src=${recipe.image} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
-            <div class='text'>
-              <div>Click for Instructions</div>
-            </div>
           </div>
           <h4>${recipe.tags[0]}</h4>
           <img src='../images/add-to-cook-queue-2.png' alt="add to cook queue icon" class='card-silverware-icon'>
@@ -82,10 +76,7 @@ let domUpdates = {
         <div class='recipe-card' id=${recipe.id}>
           <h3>${name}</h3>
           <div class='card-photo-container'>
-            <img src=${recipe.image} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
-            <div class='text'>
-              <div>Click for Instructions</div>
-            </div>
+            <img src='${recipe.image}' id=${recipe.id} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
           </div>
           <h4>${recipe.tags[0]}</h4>
           <img src='../images/add-to-cook-queue-2.png' alt="add to cook queue icon" class='card-silverware-icon'>
@@ -108,10 +99,7 @@ let domUpdates = {
         <div class='recipe-card' id=${recipe.id}>
           <h3>${name}</h3>
           <div class='card-photo-container'>
-            <img src=${recipe.image} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
-            <div class='text'>
-              <div>Click for Instructions</div>
-            </div>
+            <img src='${recipe.image}' id=${recipe.id} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
           </div>
           <h4>${recipe.tags[0]}</h4>
           <img src='../images/add-to-cook-queue-2.png' alt="add to cook queue icon" class='card-silverware-icon'>

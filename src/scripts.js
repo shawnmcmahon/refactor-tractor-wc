@@ -107,7 +107,8 @@ function getTagsFromRecipeData() {
 }
 
 function clickRecipeCard(event) {
-  let eventTarget = event.target.closest('.recipe-card');
+  let eventTarget = event.target.closest('.card-photo-preview');
+  console.log('event target', eventTarget)
   if (eventTarget) {
     const targetId = parseInt(eventTarget.id);
     const foundRecipe = cookbook.cookbook.find(
