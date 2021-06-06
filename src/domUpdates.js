@@ -21,6 +21,31 @@ let domUpdates = {
   renderRecipeCards(cookbook) {
     let allRecipeCards = document.getElementById('allRecipeCards');
     let recipes = cookbook.cookbook;
+    allRecipeCards.innerHTML = '';
+    recipes.forEach(recipe => {
+      let name = domUpdates.shortenNames(recipe);
+
+      let cardHtml = `
+        <div class='recipe-card' id=${recipe.id}>
+          <h3>${name}</h3>
+          <div class='card-photo-container'>
+            <img src=${recipe.image} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
+            <div class='text'>
+              <div>Click for Instructions</div>
+            </div>
+          </div>
+          <h4>${recipe.tags[0]}</h4>
+          <img src='../images/apple-logo-outline.png' alt='unfilled apple icon' class='card-apple-icon'>
+        </div>`;
+      allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
+    });
+  },
+
+  renderSearchResults(results) {
+    let allRecipeCards = document.getElementById('allRecipeCards');
+    let recipes = results;
+    allRecipeCards.innerHTML = '';
+
     recipes.forEach(recipe => {
       let name = domUpdates.shortenNames(recipe);
 
@@ -64,10 +89,10 @@ let domUpdates = {
 
   // this function needs info out of pantry class
   // once we have the names, we can render the pantry the DOM with all the items in our pantry
-  // add a + and - button next to each one to do the post request 
+  // add a + and - button next to each one to do the post request
   // we don't actually want a checkbox, we want a plus and minus and the amount ex: " - 2 + "
   displayPantryInfo(pantry) {
-    let updatePantryIngs = pantry.returnPantryIngredients()
+    let updatePantryIngs = pantry.returnPantryIngredients();
     updatePantryIngs.forEach(ingredient => {
       let ingredientHtml = `<li><input type='checkbox' class='pantry-checkbox' id='${ingredient.name}'>
           <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.amount}</label></li>`;
@@ -76,12 +101,12 @@ let domUpdates = {
         .insertAdjacentHTML('beforeend', ingredientHtml);
     });
 
-    // this can be modified into the post request 
+    // this can be modified into the post request
     let pantryCheckboxes = document.querySelectorAll('.pantry-checkbox');
     pantryCheckboxes.forEach(checkbox => {
       checkbox.addEventListener('click', () => {
-        domUpdates.findCheckedPantryBoxes('click')
-      })
+        domUpdates.findCheckedPantryBoxes('click');
+      });
     });
   },
 
@@ -89,9 +114,9 @@ let domUpdates = {
     let welcomeMessage = document.getElementById('welcomeMessage');
     let myRecipesBanner = document.getElementById('myRecipesBanner');
     welcomeMessage.classList.toggle('hidden');
-    myRecipesBanner.classList.toggle('block')
+    myRecipesBanner.classList.toggle('block');
   },
-  
+
   openRecipeInfo(recipe) {
     fullRecipeInfo = document.getElementById('fullRecipeInstructions');
     fullRecipeInfo.style.display = 'inline';
@@ -112,30 +137,29 @@ let domUpdates = {
       <h3 id='recipe-title'>${recipe.name}</h3>
       <h4>Ingredients</h4>
       <p id="ingredientsSection"></p>
-      `
+      `;
     fullRecipeInfo.insertAdjacentHTML('beforeend', recipeTitle);
   },
 
   generateIngredients(recipe) {
-    let ingSection  = document.getElementById('ingredientsSection')
+    let ingSection = document.getElementById('ingredientsSection');
 
     let allIngredientInfo = recipe.getIngredients();
     allIngredientInfo.forEach(ingredient => {
-    
-      let ingName = ingredient.name 
-      let ingAmount = ingredient.quantity.amount
-      let ingUnit = ingredient.quantity.unit
+      let ingName = ingredient.name;
+      let ingAmount = ingredient.quantity.amount;
+      let ingUnit = ingredient.quantity.unit;
 
       ingSection.innerText += `
       ${ingName}, ${ingAmount}, ${ingUnit}
-      `
+      `;
     });
   },
 
   generateRecipeCost(recipe) {
     let ingSection = document.getElementById('ingredientsSection');
-    let cost = recipe.getRecipeCost()
-    let insertCost = `<h5>Total Recipe Cost: ${cost}</h5>`
+    let cost = recipe.getRecipeCost();
+    let insertCost = `<h5>Total Recipe Cost: ${cost}</h5>`;
     ingSection.insertAdjacentHTML('beforeend', insertCost);
   },
 
@@ -144,27 +168,32 @@ let domUpdates = {
       'recipe-title'
     ).style.backgroundImage = `url(${recipe.image})`;
   },
-  
+
   generateInstructions(recipe) {
     let instructionsList = '';
     let instructions = recipe.instructions.map(i => {
-      return i.instruction
+      return i.instruction;
     });
     instructions.forEach(i => {
-      instructionsList += `<li>${i}</li>`
+      instructionsList += `<li>${i}</li>`;
     });
-    fullRecipeInfo.insertAdjacentHTML('beforeend', '<h4 id="instructionsHeader">Instructions</h4>');
-    fullRecipeInfo.insertAdjacentHTML('beforeend', `<ol>${instructionsList}</ol>`);
+    fullRecipeInfo.insertAdjacentHTML(
+      'beforeend',
+      '<h4 id="instructionsHeader">Instructions</h4>'
+    );
+    fullRecipeInfo.insertAdjacentHTML(
+      'beforeend',
+      `<ol>${instructionsList}</ol>`
+    );
   },
 
-
   exitRecipe(event) {
-    let overlay = document.getElementById('overlay')
+    let overlay = document.getElementById('overlay');
 
     if (event.target.id === 'exit-recipe-btn') {
       while (
         fullRecipeInfo.firstChild &&
-      fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)
+        fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)
       ) {
         fullRecipeInfo.style.display = 'none';
         overlay.remove();
@@ -172,9 +201,7 @@ let domUpdates = {
     }
   },
 
-  
   ///////////// everything above this line is not total garbage /////////////
-
 
   //This could definitely be broken down for more SRP code
   addToMyRecipes() {
