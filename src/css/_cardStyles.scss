@@ -69,6 +69,18 @@ h4 {
   justify-content: center;
   position: relative;
 }
+.text {
+  background: #359567;
+  color: white;
+  font-weight: 700;
+  font-size: 0px;
+  opacity: 0%;
+  padding: 0%;
+  position: absolute;
+  text-align: center;
+  width: 0%;
+  transition: .5s ease;
+}
 
 /* RECIPE INSTRUCTIONS */
 // card

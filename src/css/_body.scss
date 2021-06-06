@@ -26,14 +26,6 @@ aside {
   text-align: center;
 }
 
-.wrap {
-  background-color: white;
-  height: 100vh;
-  padding: 10px;
-  position: relative;
-  width: 200px;
-}
-
 ul {
   list-style-type: none;
   text-align: left;
@@ -52,6 +44,15 @@ main {
   flex-direction: row;
   flex-wrap: wrap;
 }
+
+.wrap {
+  background-color: white;
+  height: 100vh;
+  padding: 10px;
+  position: relative;
+  width: 200px;
+}
+
 
 .show-pantry-recipes-btn,
 .show-all-btn,
