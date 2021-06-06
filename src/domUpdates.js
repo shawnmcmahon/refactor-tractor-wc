@@ -18,9 +18,62 @@ let domUpdates = {
     });
   },
 
-  renderRecipeCards(cookbook) {
+  renderRecipeCards(cookbook, user) {
+    user.viewHome()
+    // console.log('user view home method', user.isViewingFavorites)
+    // user.isViewingFavorites = false;
+    // user.isViewingRecipesToCook = false;
     let allRecipeCards = document.getElementById('allRecipeCards');
     let recipes = cookbook.cookbook;
+    allRecipeCards.innerHTML = '';
+    recipes.forEach(recipe => {
+      let name = domUpdates.shortenNames(recipe);
+
+      let cardHtml = `
+        <div class='recipe-card' id=${recipe.id}>
+          <h3>${name}</h3>
+          <div class='card-photo-container'>
+            <img src=${recipe.image} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
+            <div class='text'>
+              <div>Click for Instructions</div>
+            </div>
+          </div>
+          <h4>${recipe.tags[0]}</h4>
+          <img src='../images/add-to-cook-queue-2.png' alt="add to cook queue icon" class='card-silverware-icon'>
+          <img src='../images/apple-logo-outline.png' alt='unfilled apple icon' class='card-apple-icon'>
+        </div>`;
+      allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
+    });
+  },
+
+  renderFavoriteRecipeCards(user) {
+    let allRecipeCards = document.getElementById('allRecipeCards');
+    let recipes = user.favoriteRecipes;
+    // allRecipeCards.innerHTML = '';
+    recipes.forEach(recipe => {
+      let name = domUpdates.shortenNames(recipe);
+
+      let cardHtml = `
+        <div class='recipe-card' id=${recipe.id}>
+          <h3>${name}</h3>
+          <div class='card-photo-container'>
+            <img src=${recipe.image} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
+            <div class='text'>
+              <div>Click for Instructions</div>
+            </div>
+          </div>
+          <h4>${recipe.tags[0]}</h4>
+          <img src='../images/add-to-cook-queue-2.png' alt="add to cook queue icon" class='card-silverware-icon'>
+          <img src='../images/apple-logo-outline.png' alt='unfilled apple icon' class='card-apple-icon'>
+        </div>`;
+      allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
+    });
+  },
+
+  renderRecipeToCookCards(user) {
+    user.viewCookBook();
+    let allRecipeCards = document.getElementById('allRecipeCards');
+    let recipes = user.recipesToCook;
     // allRecipeCards.innerHTML = '';
     recipes.forEach(recipe => {
       let name = domUpdates.shortenNames(recipe);
@@ -43,6 +96,7 @@ let domUpdates = {
   },
 
   renderSearchResults(results) {
+
     let allRecipeCards = document.getElementById('allRecipeCards');
     let recipes = results;
     allRecipeCards.innerHTML = '';
@@ -120,6 +174,10 @@ let domUpdates = {
   },
 
   openRecipeInfo(recipe) {
+    allRecipeCards.innerHTML += `
+    <div class="recipe-instructions" id="fullRecipeInstructions">
+    `
+
     fullRecipeInfo = document.getElementById('fullRecipeInstructions');
     fullRecipeInfo.style.display = 'inline';
     domUpdates.generateRecipeTitle(recipe);

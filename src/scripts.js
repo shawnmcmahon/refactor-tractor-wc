@@ -23,6 +23,7 @@ import './images/spoon.png'
 import './images/add-to-cook-queue.png'
 import './images/add-to-cook-queue-2.png'
 import './images/remove-from-cook-queue.png'
+import './images/home.png'
 
 // query selectors
 let pantryBtn = document.getElementById('myPantryButton');
@@ -35,7 +36,8 @@ let showPantryRecipes = document.getElementById('whatCanIMake');
 let searchForm = document.getElementById('searchBar');
 // let exitBtn = document.getElementById('exit-recipe-btn')
 let recipeSection = document.getElementById('fullRecipeInstructions')
-
+let homeBtn = document.getElementById('myHomeButton')
+let allRecipeCards = document.getElementById('allRecipeCards');
 // variables
 let user, cookbook, pantry;
 let globalIngredientsData = {};
@@ -50,8 +52,10 @@ window.addEventListener('click', () => clickRecipeCard(event));
 searchForm.addEventListener('submit', () =>  pressEnterSearch(event));
 searchBtn.addEventListener('click', searchRecipes);
 recipeSection.addEventListener('click', domUpdates.exitRecipe);
-allRecipesBtn.addEventListener('click', () => domUpdates.renderRecipeCards(cookbook))
+allRecipesBtn.addEventListener('click', () => domUpdates.renderRecipeCards(cookbook, user))
 allRecipesBtn.addEventListener('click', domUpdates.toggleBannerText)
+homeBtn.addEventListener('click', () => domUpdates.renderRecipeCards(cookbook, user))
+allRecipeCards.addEventListener('click', domUpdates.exitRecipe);
 // exitBtn.addEventListener('click', domUpdates.exitRecipe)
 // main.addEventListener('click', addToMyRecipes);
 // allRecipesBtn.addEventListener('click', showAllRecipes);
@@ -66,7 +70,7 @@ function startUp() {
       globalIngredientsData = promise[2].ingredientsData
       domUpdates.updateWelcomeMessage(user);
       getTagsFromRecipeData()
-      domUpdates.renderRecipeCards(cookbook)
+      domUpdates.renderRecipeCards(cookbook, user)
       domUpdates.displayPantryInfo(pantry)
     })
 
