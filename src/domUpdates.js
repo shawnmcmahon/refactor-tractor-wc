@@ -35,7 +35,7 @@ let domUpdates = {
             </div>
           </div>
           <h4>${recipe.tags[0]}</h4>
-          <img src='../images/add-to-cook-queue-2.png' alt="add to cook queue icon" class='card-apple-icon'>
+          <img src='../images/add-to-cook-queue-2.png' alt="add to cook queue icon" class='card-silverware-icon'>
           <img src='../images/apple-logo-outline.png' alt='unfilled apple icon' class='card-apple-icon'>
         </div>`;
       allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
@@ -60,7 +60,7 @@ let domUpdates = {
             </div>
           </div>
           <h4>${recipe.tags[0]}</h4>
-          <img src='../images/add-to-cook-queue-2.png' alt="add to cook queue icon" class='card-apple-icon'>
+          <img src='../images/add-to-cook-queue-2.png' alt="add to cook queue icon" class='card-silverware-icon'>
           <img src='../images/apple-logo-outline.png' alt='unfilled apple icon' class='card-apple-icon'>
         </div>`;
       allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
@@ -215,6 +215,26 @@ let domUpdates = {
       } else {
         event.target.src = '../images/apple-logo-outline.png';
         user.removeRecipe(cardId);
+      }
+    } else if (event.target.id === 'exit-recipe-btn') {
+      exitRecipe();
+    } else if (
+      isDescendant(event.target.closest('.recipe-card'), event.target)
+    ) {
+      openRecipeInfo(event);
+    }
+  },
+
+  addToRecipesToCook() {
+    if (event.target.className === 'card-silverware-icon') {
+      let cardId = parseInt(event.target.closest('.recipe-card').id);
+      if (!user.recipesToCook.includes(cardId)) {
+        event.target.src = '../images/remove-from-cook-queue.png';
+        user.decideToCook(cardId);
+      } else {
+        event.target.src = '../images/add-to-cook-queue-2.png';
+        user.removeFromRecipesToCook(cardId);
+        console.log(user.recipesToCook)
       }
     } else if (event.target.id === 'exit-recipe-btn') {
       exitRecipe();
