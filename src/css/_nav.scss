@@ -99,8 +99,8 @@ span {
   text-align: center;
   transition: .4s ease;
   width: 15%;
-  @include flex-center()
-  @include flex-column()
+  @include flex-center();
+  @include flex-column();
 }
 
 .nav-btn:hover {

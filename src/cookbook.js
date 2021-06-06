@@ -6,10 +6,8 @@ class Cookbook {
     this.ingredientsData = ingredients
   }
 
-  // this is called inside of findCheckedBoxes
-  filterByTag(...tags) {
-    const lowerCaseTags = tags.map(tag => tag.toLowerCase());
-    let results =  lowerCaseTags.reduce((matchingRecipes, tag) => {
+  filterByTag(tags) {
+    let results =  tags.reduce((matchingRecipes, tag) => {
       this.cookbook.forEach(recipe => {
         recipe.tags.forEach(currentTag => {
           if (tag === currentTag && !matchingRecipes.includes(recipe)) {
