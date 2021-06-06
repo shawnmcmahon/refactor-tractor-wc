@@ -23,7 +23,6 @@ let savedRecipesBtn = document.getElementById('myFavRecipesButton');
 let searchBtn = document.getElementById('searchButton');
 let searchInput = document.getElementById('searchInput');
 let allRecipesBtn = document.getElementById('showAllRecipesButton');
-
 let filterBtn = document.getElementById('filterRecipesButton');
 let showPantryRecipes = document.getElementById('whatCanIMake');
 let searchForm = document.getElementById('searchBar');
@@ -43,9 +42,9 @@ savedRecipesBtn.addEventListener('click', domUpdates.toggleBannerText);
 window.addEventListener('click', () => clickRecipeCard(event));
 searchForm.addEventListener('submit', () =>  pressEnterSearch(event));
 searchBtn.addEventListener('click', searchRecipes);
-recipeSection.addEventListener('click', domUpdates.exitRecipe)
-
-
+recipeSection.addEventListener('click', domUpdates.exitRecipe);
+allRecipesBtn.addEventListener('click', () => domUpdates.renderRecipeCards(cookbook))
+allRecipesBtn.addEventListener('click', domUpdates.toggleBannerText)
 // exitBtn.addEventListener('click', domUpdates.exitRecipe)
 // main.addEventListener('click', addToMyRecipes);
 // allRecipesBtn.addEventListener('click', showAllRecipes);
@@ -115,10 +114,10 @@ function pressEnterSearch(event) {
 function searchRecipes() {
   let input = searchInput.value
   let results = cookbook.filterByNameOrIngredient(input);
-  console.log(results)
+  domUpdates.renderSearchResults(results)
+  domUpdates.toggleBannerText()
   searchInput.value = ''
 }
-
 
 
 ///////////// everything above this line is not total garbage /////////////
