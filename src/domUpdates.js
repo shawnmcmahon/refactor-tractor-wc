@@ -12,7 +12,7 @@ let domUpdates = {
   listTags(allTags) {
     let tagList = document.getElementById('tagList');
     allTags.forEach(tag => {
-      let tagHtml = `<li><input type='checkbox' class='checked-tag' id='${tag}'>
+      let tagHtml = `<li><input type='checkbox' class='checked-tag' id="${tag}">
         <label for='${tag}'>${tag.toUpperCase()}</label></li>`;
       tagList.insertAdjacentHTML('beforeend', tagHtml);
     });
@@ -64,6 +64,7 @@ let domUpdates = {
     });
   },
 
+  // this isn't called anywhere??
   renderRecipeToCookCards(user) {
     user.viewCookBook();
     let allRecipeCards = document.getElementById('allRecipeCards');
@@ -87,7 +88,6 @@ let domUpdates = {
   },
 
   renderSearchResults(results) {
-
     let allRecipeCards = document.getElementById('allRecipeCards');
     let recipes = results;
     allRecipeCards.innerHTML = '';
