@@ -63,10 +63,9 @@ h4 {
 }
 
 .card-photo-container {
-  align-items: center;
   display: flex;
   height: 130px;
-  justify-content: center;
+  @include flex-center()
   position: relative;
 }
 .text {
