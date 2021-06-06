@@ -29,7 +29,6 @@ class User {
   filterRecipes(...tag) {
     let favoriteRecipes = new Cookbook(this.favoriteRecipes);
     return favoriteRecipes.filterByTag(...tag);
-
   }
 
   searchForRecipe(ingredientsData, ...keyword) {
