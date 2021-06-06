@@ -19,6 +19,10 @@ import './images/green-apples.jpg'
 import './images/pancakes.jpg'
 import './images/search.png'
 import './images/seasoning.png'
+import './images/spoon.png'
+import './images/add-to-cook-queue.png'
+import './images/add-to-cook-queue-2.png'
+import './images/remove-from-cook-queue.png'
 
 // query selectors
 let pantryBtn = document.getElementById('myPantryButton');
