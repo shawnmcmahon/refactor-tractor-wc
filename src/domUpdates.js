@@ -21,7 +21,7 @@ let domUpdates = {
   renderRecipeCards(cookbook) {
     let allRecipeCards = document.getElementById('allRecipeCards');
     let recipes = cookbook.cookbook;
-    allRecipeCards.innerHTML = '';
+    // allRecipeCards.innerHTML = '';
     recipes.forEach(recipe => {
       let name = domUpdates.shortenNames(recipe);
 

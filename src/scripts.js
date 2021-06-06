@@ -1,7 +1,10 @@
 /* eslint-disable max-len */
 //imports
-import './css/base.scss';
-import './css/styles.scss';
+// import './css/base.scss';
+// import './css/styles.scss';
+
+import './css/index.scss';
+
 import domUpdates from './domUpdates';
 import apiCalls from './apiCalls'
 import User from './user';
@@ -79,7 +82,7 @@ function makePantryInstance(user, apiIngredientData) {
 function makeRecipeInstances(apiRecipeData, apiIngredientData) {
   const newRecipes = apiRecipeData.map(recipe => {
     return new Recipe(recipe, apiIngredientData)
-  })  
+  })
   return newRecipes
 }
 
@@ -274,8 +277,8 @@ function addToMyRecipes() {
       event.target.src = '../images/apple-logo-outline.png';
       user.removeRecipe(cardId);
     }
-  } 
-  
+  }
+
   else if (event.target.id === 'exit-recipe-btn') {
     exitRecipe();
   } else if (isDescendant(event.target.closest('.recipe-card'), event.target)) {

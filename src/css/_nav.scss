@@ -17,7 +17,7 @@ header {
 }
 
 span {
-  color: #C4EB67;
+  color: $yellow;
   font-weight: 400;
 }
 
@@ -26,7 +26,6 @@ span {
   margin-left: 5px;
   width: 35px;
 }
-
 
 #search {
   border-radius: 15px 15px 15px 15px;
@@ -46,7 +45,7 @@ span {
   border-radius: 10px 0px 0px 10px;
   border: none;
   box-shadow: inset -3px -1px 20px 1px #5c7894;
-  color: #5B7894;
+  color: $blueish-gray;
   font-family: "Quicksand", sans-serif;
   font-size: 42px;
   height: 100%;
@@ -67,7 +66,7 @@ span {
 }
 
 #search-input::placeholder {
-  color: #5B7894;
+  color: $blueish-gray;
   font-size: 20px;
   text-align: right;
   text-shadow: none;
@@ -83,31 +82,29 @@ span {
 }
 
 .search-btn {
-  border-left: 3px outset #C4EB67;
+  border-left: 3px outset $yellow;
   border-radius: 0px 15px 15px 0px;
   padding: 1%;
 }
 
 .nav-btn {
-  align-items: center;
-  background: #5B7894 no-repeat;
+  background: $blueish-gray no-repeat;
   border: none;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
   font-size: 0px;
   font-weight: 700;
-  justify-content: center;
   margin: 0%;
   outline: none;
   overflow: hidden;
   text-align: center;
   transition: .4s ease;
   width: 15%;
+  @include flex-center()
+  @include flex-column()
 }
 
 .nav-btn:hover {
-  color: #C4EB67;
+  color: $yellow;
   font-size: 14px;
   text-shadow: 0px 2px 4px black;
   transition: .4s ease;
@@ -117,4 +114,42 @@ span {
   max-height: 40px;
   max-width: 40px;
   padding: 2px 0px;
+}
+
+.saved-ingredients-btn {
+  border-left: 3px solid $yellow;
+}
+
+.ing-pan-btn {
+  margin: 1% 0%;
+  padding: 1px 6px 5px 0px;
+}
+
+.banner-image {
+  background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),url("../images/green-apples.jpg");
+  grid-area: image;
+  height: 150px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.my-recipes-banner,
+.welcome-msg {
+  text-align: center;
+  width: 95%;
+}
+
+.my-recipes-banner h1,
+.welcome-msg h1 {
+  color: white;
+  width: 100%;
+}
+
+.my-recipes-banner {
+  display: none;
+  margin-top: 25px;
+}
+
+.welcome-msg {
+  margin-top: 50px;
 }

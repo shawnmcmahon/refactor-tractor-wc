@@ -1,5 +1,5 @@
 body {
-  background-color: #5B7894;
+  background-color: $blueish-gray;
   display: grid;
   font-family: "Quicksand", sans-serif;
   grid-template-columns: 1fr 5fr;
@@ -13,6 +13,29 @@ body {
   -webkit-font-smoothing: auto;
 }
 
+h2 {
+  color: $light-green;
+  margin: 10px 0px 10px 0px;
+}
+
+aside {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  height: auto;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  text-align: left;
+  padding-left: 35px;
+}
+
+li {
+  margin: 2px;
+}
+
 main {
   grid-area: main;
   display: flex;
@@ -22,8 +45,48 @@ main {
   flex-wrap: wrap;
 }
 
+.wrap {
+  background-color: white;
+  height: 100vh;
+  padding: 10px;
+  position: relative;
+  width: 200px;
+}
+
+
+.show-pantry-recipes-btn,
+.show-all-btn,
+.filter-btn {
+  background-color: $green;
+  border: 0;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  font-family: "Quicksand", sans-serif;
+  font-size: 12pt;
+  font-weight: bold;
+  padding: 5px 10px 5px 10px;
+}
+
+.show-pantry-recipes-btn {
+  margin-top: 10px;
+}
+
+
+// body
+.show-all-btn {
+  height: 40px;
+  margin-top: 20px;
+  width: 200px;
+}
+// body
+.filter-btn:hover {
+  background-color: $light-green;
+}
+
 
 /* PANTRY LIST */
+// body
 .drop-menu {
   align-items: center;
   background-color: #DAE4EE;
@@ -39,87 +102,26 @@ main {
   z-index: 3;
 }
 
+// body
 .drop-menu h2 {
-  color: #359567;
+  color: $green;
   margin: 0px;
 }
 
+// body
 .pantry-list {
   color: #000000;
   padding-left: 15px;
   text-align: left;
 }
 
+//body
+.block {
+  display: block;
+}
 
-/* RECIPE INSTRUCTIONS */
-.recipe-instructions {
-  background: white;
-  border: 3px solid #C4EB67;
-  border-radius: 10px;
-  box-shadow: 1px 1px 115px black;
+
+//body
+.hidden {
   display: none;
-  height: 70%;
-  margin: 0;
-  overflow-x: scroll;
-  padding: 1% 1% 1% 1%;
-  position: fixed;
-  right: 15%;
-  top: 15%;
-  width: 70%;
-  z-index: 1000;
-}
-
-#exit-recipe-btn {
-  background: white;
-  border: 2px double #359567;
-  border-radius: 5px;
-  color: #359567;
-  cursor: pointer;
-  font-size: 20px;
-  font-weight: 700;
-  margin: -4% -3% 2% -1%;
-  position: fixed;
-  transition: .3s ease;
-}
-
-#exit-recipe-btn:hover {
-  background: #C4EB67;
-  transition: .3s ease;
-}
-
-#recipe-title {
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 7px 7px 0px 0px;
-  color: white;
-  font-size: 30px;
-  margin: 0;
-  padding: 5%;
-  text-align: center;
-  text-shadow: 0px 0px 6px black;
-}
-
-.recipe-instructions h4 {
-  background: white;
-  color: #359567;
-}
-
-.recipe-instructions p {
-  margin-left: 2%;
-}
-
-.recipe-instructions ol {
-  margin-right: 2%;
-}
-
-#overlay {
-  filter:alpha(opacity=50);
-  background-color: #5B7894;
-  height:100%;
-  left:0;
-  opacity:0.5;
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:100;
 }

@@ -1,0 +1,15 @@
+$blueish-gray: #5B7894;
+$green: #359567;
+$light-green: #84C8A4;
+$yellow: #C4EB67;
+
+@mixin flex-column() {
+  display: flex;
+  flex-direction: column;
+}
+
+
+@mixin flex-center() {
+  align-items: center;
+  justify-content: center;
+}

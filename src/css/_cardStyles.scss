@@ -1,15 +1,23 @@
-main {
-  grid-area: main;
-  display: flex;
-  justify-content: center;
-  align-content: flex-start;
-  flex-direction: row;
-  flex-wrap: wrap;
+h3 {
+  color: $green;
+  cursor: pointer;
+  height: 17%;
+  margin: 5px 5px 10px 0px;
+  transition: .8s ease;
+}
+
+h4 {
+  color: $green;
+  background-color: $yellow;
+  border-radius: 3px;
+  margin: 10px 0px 0px 0px;
+  padding: 1px 4px 1px 4px;
+  width: max-content;
 }
 
 .recipe-card {
   background-color: white;
-  border: 2px solid #C4EB67;
+  border: 2px solid $yellow;
   border-radius: 7px;
   cursor: pointer;
   height: 270px;
@@ -31,7 +39,7 @@ main {
 }
 
 .recipe-card:hover h3 {
-  text-shadow: 0px 0px 4px #C4EB67;
+  text-shadow: 0px 0px 4px $yellow;
   transition: .8s ease;
 }
 
@@ -55,15 +63,14 @@ main {
 }
 
 .card-photo-container {
-  align-items: center;
   display: flex;
   height: 130px;
-  justify-content: center;
+  @include flex-center()
   position: relative;
 }
 
 .text {
-  background: #359567;
+  background: $green;
   color: white;
   font-weight: 700;
   font-size: 0px;
@@ -75,32 +82,83 @@ main {
   transition: .5s ease;
 }
 
+/* RECIPE INSTRUCTIONS */
+// card
+.recipe-instructions {
+  background: white;
+  border: 3px solid $yellow;
+  border-radius: 10px;
+  box-shadow: 1px 1px 115px black;
+  display: none;
+  height: 70%;
+  margin: 0;
+  overflow-x: scroll;
+  padding: 1% 1% 1% 1%;
+  position: fixed;
+  right: 15%;
+  top: 15%;
+  width: 70%;
+  z-index: 1000;
+}
 
-/* BUTTONS */
-.show-pantry-recipes-btn,
-.show-all-btn,
-.filter-btn {
-  background-color: #359567;
-  border: 0;
-  border-radius: 3px;
-  color: white;
+// card
+#exit-recipe-btn {
+  background: white;
+  border: 2px double $green;
+  border-radius: 5px;
+  color: $green;
   cursor: pointer;
-  font-family: "Quicksand", sans-serif;
-  font-size: 12pt;
-  font-weight: bold;
-  padding: 5px 10px 5px 10px;
+  font-size: 20px;
+  font-weight: 700;
+  margin: -4% -3% 2% -1%;
+  position: fixed;
+  transition: .3s ease;
 }
 
-.show-pantry-recipes-btn {
-  margin-top: 10px;
+// card
+#exit-recipe-btn:hover {
+  background: $yellow;
+  transition: .3s ease;
 }
 
-.show-all-btn {
-  height: 40px;
-  margin-top: 20px;
-  width: 200px;
+// card
+#recipe-title {
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 7px 7px 0px 0px;
+  color: white;
+  font-size: 30px;
+  margin: 0;
+  padding: 5%;
+  text-align: center;
+  text-shadow: 0px 0px 6px black;
 }
 
-.filter-btn:hover {
-  background-color: #84C8A4;
+// card
+.recipe-instructions h4 {
+  background: white;
+  color: $green;
+}
+
+// card
+.recipe-instructions p {
+  margin-left: 2%;
+}
+
+// card
+.recipe-instructions ol {
+  margin-right: 2%;
+}
+
+//card
+#overlay {
+  filter:alpha(opacity=50);
+  background-color: $blueish-gray;
+  height:100%;
+  left:0;
+  opacity:0.5;
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:100;
 }
