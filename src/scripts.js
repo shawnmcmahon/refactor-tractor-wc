@@ -18,7 +18,6 @@ import './images/search.png'
 import './images/seasoning.png'
 
 // query selectors
-let main = document.querySelector('main');
 let pantryBtn = document.getElementById('myPantryButton');
 let savedRecipesBtn = document.getElementById('myFavRecipesButton');
 let searchBtn = document.getElementById('searchButton');
@@ -39,34 +38,30 @@ let globalIngredientsData = {};
 window.onload = startUp()
 filterBtn.addEventListener('click', findCheckedBoxes);
 showPantryRecipes.addEventListener('click', domUpdates.findCheckedPantryBoxes);
-searchForm.addEventListener('submit', pressEnterSearch);
 pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
 savedRecipesBtn.addEventListener('click', domUpdates.toggleBannerText);
 window.addEventListener('click', () => clickRecipeCard(event));
-
+searchForm.addEventListener('submit', () =>  pressEnterSearch(event));
+searchBtn.addEventListener('click', searchRecipes);
 recipeSection.addEventListener('click', domUpdates.exitRecipe)
 
-// exitBtn.addEventListener('click', domUpdates.exitRecipe)
 
+// exitBtn.addEventListener('click', domUpdates.exitRecipe)
 // main.addEventListener('click', addToMyRecipes);
 // allRecipesBtn.addEventListener('click', showAllRecipes);
-// searchBtn.addEventListener('click', searchRecipes);
 // showPantryRecipes.addEventListener('click', findCheckedPantryBoxes);
-// searchForm.addEventListener('submit', pressEnterSearch);
 
 function startUp() {
   apiCalls.retrieveData()
     .then((promise) => {
       makeUserInstance(promise[0].usersData, promise[2].ingredientsData);
       const allRecipes = makeRecipeInstances(promise[1].recipeData, promise[2].ingredientsData);
-      cookbook = new Cookbook(allRecipes);
+      cookbook = new Cookbook(allRecipes, promise[2].ingredientsData);
       globalIngredientsData = promise[2].ingredientsData
       domUpdates.updateWelcomeMessage(user);
       getTagsFromRecipeData()
       domUpdates.renderRecipeCards(cookbook)
       domUpdates.displayPantryInfo(pantry)
-      //need to instantiate a new pantry on load
-      // need to pass the ingredients (with names) to domUpdates.displayPantryInfo
     })
 
 }
@@ -112,6 +107,17 @@ function clickRecipeCard(event) {
   }
 }
 
+function pressEnterSearch(event) {
+  event.preventDefault();
+  searchRecipes();
+}
+
+function searchRecipes() {
+  let input = searchInput.value
+  let results = cookbook.filterByNameOrIngredient(input);
+  console.log(results)
+  searchInput.value = ''
+}
 
 
 
@@ -150,12 +156,6 @@ function findCheckedBoxes() {
   cookbook.filterByTag(selectedTags);
 }
 
-
-// this will be scripts. However, there is a better way to do.
-function pressEnterSearch(event) {
-  event.preventDefault();
-  searchRecipes();
-}
 
 //This might not be needed if we can find a way that html just generates the recipes that have been searched
 function filterNonSearched(filtered) {
@@ -380,18 +380,6 @@ function addToMyRecipes() {
 // function showWelcomeBanner() {
 //   document.querySelector('.welcome-msg').style.display = 'flex';
 //   document.querySelector('.my-recipes-banner').style.display = 'none';
-// }
-
-
-// This should go in the Cookbook class (filter by name)
-// this function really sucked, I made a new method in cookbook class called filterByNameOrIngredient
-
-// function searchRecipes() {
-//   showAllRecipes();
-//   let searchedRecipes = recipeData.filter(recipe => {
-//     return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase());
-//   });
-//   filterNonSearched(createRecipeObject(searchedRecipes));
 // }
 
 
