@@ -1,5 +1,5 @@
 body {
-  background-color: #5B7894;
+  background-color: $blueish-gray;
   display: grid;
   font-family: "Quicksand", sans-serif;
   grid-template-columns: 1fr 5fr;
@@ -14,7 +14,7 @@ body {
 }
 
 h2 {
-  color: #84C8A4;
+  color: $light-green;
   margin: 10px 0px 10px 0px;
 }
 
@@ -57,7 +57,7 @@ main {
 .show-pantry-recipes-btn,
 .show-all-btn,
 .filter-btn {
-  background-color: #359567;
+  background-color: $green;
   border: 0;
   border-radius: 3px;
   color: white;
@@ -81,7 +81,7 @@ main {
 }
 // body
 .filter-btn:hover {
-  background-color: #84C8A4;
+  background-color: $light-green;
 }
 
 
@@ -104,7 +104,7 @@ main {
 
 // body
 .drop-menu h2 {
-  color: #359567;
+  color: $green;
   margin: 0px;
 }
 
