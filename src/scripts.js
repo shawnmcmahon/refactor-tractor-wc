@@ -23,6 +23,7 @@ import './images/spoon.png'
 import './images/add-to-cook-queue.png'
 import './images/add-to-cook-queue-2.png'
 import './images/remove-from-cook-queue.png'
+import './images/home.png'
 
 // query selectors
 let pantryBtn = document.getElementById('myPantryButton');
