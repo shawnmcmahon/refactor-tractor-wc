@@ -20,7 +20,6 @@ let domUpdates = {
 
   renderRecipeCards(cookbook, user) {
     user.viewHome()
-    // console.log('user view home method', user.isViewingFavorites)
     // user.isViewingFavorites = false;
     // user.isViewingRecipesToCook = false;
     let allRecipeCards = document.getElementById('allRecipeCards');
@@ -249,6 +248,16 @@ let domUpdates = {
     }
   },
 
+  showSavedRecipes() {
+    let unsavedRecipes = recipes.filter(recipe => {
+      return !user.favoriteRecipes.includes(recipe.id);
+    });
+    unsavedRecipes.forEach(recipe => {
+      let domRecipe = document.getElementById(`${recipe.id}`);
+      domRecipe.style.display = 'none';
+    });
+  },
+
   ///////////// everything above this line is not total garbage /////////////
 
   //This could definitely be broken down for more SRP code
@@ -285,17 +294,6 @@ let domUpdates = {
   //   }
   //
   // },
-
-  showSavedRecipes() {
-    let unsavedRecipes = recipes.filter(recipe => {
-      return !user.favoriteRecipes.includes(recipe.id);
-    });
-    unsavedRecipes.forEach(recipe => {
-      let domRecipe = document.getElementById(`${recipe.id}`);
-      domRecipe.style.display = 'none';
-    });
-    showMyRecipesBanner();
-  }
-};
+}
 
 export default domUpdates

@@ -48,7 +48,7 @@ window.onload = startUp()
 filterRecipesBtn.addEventListener('click', findCheckedTags);
 //showPantryRecipes.addEventListener('click', domUpdates.findCheckedPantryBoxes);
 pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
-savedRecipesBtn.addEventListener('click', domUpdates.toggleBannerText);
+savedRecipesBtn.addEventListener('click', findFavoriteRecipes);
 window.addEventListener('click', () => clickRecipeCard(event));
 searchForm.addEventListener('submit', () =>  pressEnterSearch(event));
 searchBtn.addEventListener('click', searchRecipes);
@@ -116,6 +116,15 @@ function clickRecipeCard(event) {
     );
     domUpdates.openRecipeInfo(foundRecipe)
   }
+}
+
+
+function findFavoriteRecipes() {
+  let favorites = user.favoriteRecipes
+  domUpdates.renderSearchResults(favorites)
+  //need to get banner text to show when you are viewing favorites
+  domUpdates.toggleBannerText()
+
 }
 
 function pressEnterSearch(event) {
