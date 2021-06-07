@@ -73,6 +73,7 @@ h4 {
 .card-photo-container {
   display: flex;
   height: 130px;
+  @include flex-center();
   position: relative;
   @include flex-center();
 }
