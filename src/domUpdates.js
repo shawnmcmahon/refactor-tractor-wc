@@ -10,6 +10,14 @@ let domUpdates = {
     element.classList.add('hidden')
   },
 
+ hideMany(elements) {
+    elements.forEach(element => element.classList.add('hidden'));
+  },
+  
+  showMany(elements) {
+    elements.forEach(element => element.classList.remove('hidden'))
+  },
+
   updateWelcomeMessage(user) {
     let welcomeMessage = document.getElementById('welcomeMessage');
     let myRecipesBanner = document.getElementById('myRecipesBanner');
@@ -70,6 +78,7 @@ let domUpdates = {
           <h4>${recipe.tags[0]}</h4>
           <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
           <img src='../images/apple-logo-outline.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon'>
+          <img src='../images/apple-logo.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon filled-apple-icon hidden'>
         </div>`;
       allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
     });
@@ -92,9 +101,12 @@ let domUpdates = {
           <h4>${recipe.tags[0]}</h4>
           <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
           <img src='../images/apple-logo-outline.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon'>
+          <img src='/images/apple-logo.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon filled-apple-icon hidden'>
         </div>`;
       allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
     });
+    // domUpdates.show(filledApple);
+    // domUpdates.hide(emptyApple);
   },
 
   shortenNames(recipe) {
@@ -221,7 +233,11 @@ let domUpdates = {
         overlay.remove();
       }
     }
-  }
+  },
+
+
+
+
 };
 
 export default domUpdates

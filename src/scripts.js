@@ -31,6 +31,9 @@ let favRecipesBtn = document.getElementById('myFavRecipesButton');
 let searchBtn = document.getElementById('searchButton');
 let searchInput = document.getElementById('searchInput');
 let searchForm = document.getElementById('searchBar');
+// let emptyApple = document.querySelector('.card-apple-icon');
+// let filledApple = document.querySelector('.filled-apple-icon ');
+
 
 let welcomeMessage = document.getElementById('welcomeMessage');
 let myRecipesBanner = document.getElementById('myRecipesBanner');
@@ -114,6 +117,9 @@ function clickRecipeCard(event) {
     );
     if (!user.favoriteRecipes.includes(foundRecipe)) {
       user.saveRecipe(foundRecipe);
+      eventAppleTarget.src = "../images/apple-logo.png";
+      console.log("saved", user.favoriteRecipes)
+      console.log("book", cookbook)
     }
   } else if (eventSilverwareTarget) {
     let silverWareId = parseInt(eventSilverwareTarget.id);
