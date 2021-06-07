@@ -20,10 +20,14 @@ class Pantry {
   }
 
   canICookRecipe(recipe) {
-    let findIngs = recipe.ingredients.every((ingredient, i) => {
-      return this.contents[i].ingredient === ingredient.id;
+    let findIngs = recipe.ingredients.filter(ingredient => {
+      let ids = this.contents.map(item => item.ingredient)
+      if (ids.includes(ingredient.id)) {
+        return ingredient
+      }
     });
-    if (findIngs) {
+
+    if (findIngs.length === recipe.ingredients.length) {
       this.hasIngredients = true;
       return this.haveAmountsPerRecipe(recipe);
     } else {
@@ -54,36 +58,35 @@ class Pantry {
       newObj = Object.assign(foundIngredient, ingredient);
       return newObj;
     });
-
     return goBuyThis;
   }
  
   haveAmountsPerRecipe(recipe) {
-    const findAmounts = recipe.ingredients.every((ingredient, i) => {
-      return this.contents[i].amount >= ingredient.quantity.amount;
-    });
     
-    if (findAmounts) {
-      return this.hasIngredientAmounts = true;
-    } else {
-      let whatINeed = []
-      recipe.ingredients.map(ingredient => {
-        this.contents.forEach(item => {
-          if (
-            item.ingredient === ingredient.id &&
-            ingredient.quantity.amount - item.amount > 0
-          ) {
-            whatINeed.push({
-              id: item.ingredient,
-              quantity: {
-                amount: ingredient.quantity.amount - item.amount,
-                unit: ingredient.quantity.unit
-              }  
-            });
-          }
-        })
-      })
+    let whatINeed = []
 
+    recipe.ingredients.map(ingredient => {
+      this.contents.forEach(item => {
+        if (
+          item.ingredient === ingredient.id &&
+          ingredient.quantity.amount - item.amount > 0
+        ) {
+          whatINeed.push({
+            id: item.ingredient,
+            quantity: {
+              amount: ingredient.quantity.amount - item.amount,
+              unit: ingredient.quantity.unit
+            }  
+          });
+        }
+      })
+    })
+
+    if (whatINeed.length === 0) {
+      this.hasIngredientAmounts = true;
+      return []
+      return 
+    } else {
       const matchedIDs = whatINeed.map(ingredient => {
         const foundIngredient = this.ingredientsData.find(data => {
           return data.id === ingredient.id;
@@ -94,12 +97,8 @@ class Pantry {
       return matchedIDs;
     }
   }
+  
 }
 
 export default Pantry;
 
-//haveAmountsPerRecipe
-//render to the DOM!!!
-// let howMuch = hasIngs.map(ing => {
-//   return `Sorry, you need ${ing.quantity.amount} ${ing.quantity.unit} of ${ing.name}.`;
-// });

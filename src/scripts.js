@@ -31,6 +31,7 @@ let favRecipesBtn = document.getElementById('myFavRecipesButton');
 let searchBtn = document.getElementById('searchButton');
 let searchInput = document.getElementById('searchInput');
 let searchForm = document.getElementById('searchBar');
+let whatCanIMakeBtn = document.getElementById('whatCanIMake');
 // let emptyApple = document.querySelector('.card-apple-icon');
 // let filledApple = document.querySelector('.filled-apple-icon ');
 
@@ -43,7 +44,7 @@ let bannerText = document.getElementById('bannerText');
 let user, cookbook, pantry;
 
 //event listeners
-window.onload = startUp()
+window.onload = startUp();
 favRecipesBtn.addEventListener('click', () => domUpdates.updateBanner(event));
 recipesToCookBtn.addEventListener('click', () => domUpdates.updateBanner(event));
 recipesToCookBtn.addEventListener('click', findCookList)
@@ -56,6 +57,7 @@ searchBtn.addEventListener('click', searchRecipes);
 homeBtn.addEventListener('click', () => domUpdates.renderRecipeCards(cookbook, user))
 homeBtn.addEventListener('click', () => domUpdates.updateWelcomeMessage(user));
 allRecipeCards.addEventListener('click', domUpdates.exitRecipe);
+allRecipeCards.addEventListener('click', () => findIngredientsInPantry(event));
 
 function startUp() {
   apiCalls.retrieveData()
@@ -68,12 +70,12 @@ function startUp() {
       domUpdates.renderRecipeCards(cookbook, user)
       domUpdates.displayPantryInfo(pantry)
     })
-
 }
 
 function makeUserInstance(apiUserData, apiIngredientData) {
   let randomNumber = Math.floor(Math.random() * apiUserData.length);
   user = new User(apiUserData[randomNumber], apiIngredientData);
+
   makePantryInstance(user, apiIngredientData)
 }
 
@@ -118,8 +120,6 @@ function clickRecipeCard(event) {
     if (!user.favoriteRecipes.includes(foundRecipe)) {
       user.saveRecipe(foundRecipe);
       eventAppleTarget.src = "../images/apple-logo.png";
-      console.log("saved", user.favoriteRecipes)
-      console.log("book", cookbook)
     }
   } else if (eventSilverwareTarget) {
     let silverWareId = parseInt(eventSilverwareTarget.id);
@@ -193,3 +193,23 @@ function findCheckedTags() {
   }
 }
 
+function findIngredientsInPantry(event) {
+  if (event.target.id === 'whatCanIMakeBtn') {
+    let recipeId = event.target.classList[0];
+
+    let matchedRecipe = cookbook.cookbook.find(recipe => {
+      return parseInt(recipe.id) === parseInt(recipeId);
+    });
+
+    let results = pantry.canICookRecipe(matchedRecipe);
+    domUpdates.displayCanICookResults(results, pantry)
+
+  }
+
+  //domUpdates.updatePantryAside()
+
+  //render to the DOM!!!
+  // let howMuch = hasIngs.map(ing => {
+  //   return `Sorry, you need ${ing.quantity.amount} ${ing.quantity.unit} of ${ing.name}.`;
+  // });
+}

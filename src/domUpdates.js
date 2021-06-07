@@ -3,28 +3,33 @@ let fullRecipeInfo;
 
 let domUpdates = {
   show(element) {
-    element.classList.remove('hidden')
+    element.classList.remove('hidden');
   },
 
   hide(element) {
-    element.classList.add('hidden')
+    element.classList.add('hidden');
   },
 
- hideMany(elements) {
+  hideMany(elements) {
     elements.forEach(element => element.classList.add('hidden'));
   },
-  
+
   showMany(elements) {
-    elements.forEach(element => element.classList.remove('hidden'))
+    elements.forEach(element => element.classList.remove('hidden'));
   },
 
   updateWelcomeMessage(user) {
     let welcomeMessage = document.getElementById('welcomeMessage');
     let myRecipesBanner = document.getElementById('myRecipesBanner');
-    let aside = document.querySelector('aside');
+    let tagAside = document.getElementById('tagAside');
+    let pantryAside = document.getElementById('pantryAside');
+    let searchBar = document.getElementById('searchBar');
+
     this.hide(myRecipesBanner);
     this.show(welcomeMessage);
-    this.show(aside)
+    this.show(tagAside);
+    this.hide(pantryAside);
+    this.show(searchBar);
     let firstName = user.name.split(' ')[0];
     welcomeMessage.innerHTML = `
         <h1>Welcome ${firstName}!</h1>
@@ -35,24 +40,41 @@ let domUpdates = {
     let welcomeMessage = document.getElementById('welcomeMessage');
     let myRecipesBanner = document.getElementById('myRecipesBanner');
     let bannerText = document.getElementById('bannerText');
-    let aside = document.querySelector('aside')
-    this.hide(welcomeMessage)
-    this.show(myRecipesBanner)
+    let tagAside = document.getElementById('tagAside');
+    let pantryAside = document.getElementById('pantryAside');
+    let searchBar = document.getElementById('searchBar');
 
-    let target = event.target.closest('button').id
+    this.hide(welcomeMessage);
+    this.show(myRecipesBanner);
+
+    let target = event.target.closest('button').id;
 
     if (target.includes('Fav')) {
-      bannerText.innerText = 'My Favorite Recipes'
-      this.show(aside)
+      bannerText.innerText = 'My Favorite Recipes';
+      this.show(tagAside);
+      this.hide(pantryAside);
+      this.show(searchBar);
     } else if (target.includes('Cook')) {
       bannerText.innerText = 'My Cooking Queue';
-      this.hide(aside)
-      // hide search bar
+      this.hide(tagAside);
+      this.show(pantryAside);
+      this.hide(searchBar);
     }
   },
 
+  updatePantryAside() {
+    let pantrySearchResults = document.getElementById('pantrySearchResults');
+
+    pantrySearchResults.innerHTML = `
+    <h3>With your current pantry you can make: </h3>
+    <ul>Pork Chops</ul>
+    <h3>You need a few more things from the store to make these:</h3>
+    <ul>Cookies- 2 eggs</ul>
+    `;
+  },
+
   listTags(allTags) {
-    allTags.push('show all')
+    allTags.push('show all');
     let tagList = document.getElementById('tagList');
     allTags.forEach(tag => {
       let tagHtml = `<li><input type='checkbox' class='checked-tag' id="${tag}">
@@ -132,6 +154,7 @@ let domUpdates = {
 
   displayPantryInfo(pantry) {
     let updatePantryIngs = pantry.returnPantryIngredients();
+
     updatePantryIngs.forEach(ingredient => {
       let ingredientHtml = `<li><input type='checkbox' class='pantry-checkbox' id='${ingredient.name}'>
           <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.amount}</label></li>`;
@@ -160,6 +183,7 @@ let domUpdates = {
     domUpdates.addRecipeImage(recipe);
     domUpdates.generateRecipeCost(recipe);
     domUpdates.generateInstructions(recipe);
+    domUpdates.generatePantryButton(recipe);
     fullRecipeInfo.insertAdjacentHTML(
       'beforebegin',
       '<section id="overlay"></div>'
@@ -170,7 +194,7 @@ let domUpdates = {
     let recipeTitle = `
       <button id='exit-recipe-btn'>X</button>
       <h3 id='recipe-title'>${recipe.name}</h3>
-      <h4>Ingredients</h4>
+      <h4 id='${recipe.id}'>Ingredients</h4>
       <p id="ingredientsSection"></p>
       `;
     fullRecipeInfo.insertAdjacentHTML('beforeend', recipeTitle);
@@ -196,6 +220,31 @@ let domUpdates = {
     let cost = recipe.getRecipeCost();
     let insertCost = `<h5>Total Recipe Cost: ${cost}</h5>`;
     ingSection.insertAdjacentHTML('beforeend', insertCost);
+  },
+
+  generatePantryButton(recipe) {
+    let ingSection = document.getElementById('ingredientsSection');
+    let buttonHTML = `
+      <button id="whatCanIMakeBtn" class="${recipe.id} show-pantry-recipes-btn">Can I Make This?</button>
+        <section id="pantrySearchResults">
+        </section>
+    `;
+    ingSection.insertAdjacentHTML('beforeend', buttonHTML);
+  },
+
+  displayCanICookResults(results, pantry) {
+    let resultSection = document.getElementById('pantrySearchResults')
+    if (pantry.hasIngredients && pantry.hasIngredientAmounts) {
+      resultSection.innerText = 'You have everything you need to cook this recipe!'
+    } else {
+      resultSection.innerText = 'You are short on these ingredients:'
+      results.forEach(item => {
+        let html = `
+        <ul>${item.name} - ${item.quantity.amount} ${item.quantity.unit}</ul>
+        `;
+        resultSection.insertAdjacentHTML('beforeend', html)
+      })
+    }
   },
 
   addRecipeImage(recipe) {
@@ -233,11 +282,7 @@ let domUpdates = {
         overlay.remove();
       }
     }
-  },
-
-
-
-
+  }
 };
 
 export default domUpdates
