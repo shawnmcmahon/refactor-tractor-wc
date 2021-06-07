@@ -175,25 +175,26 @@ function findIngredientsInPantry(event) {
     let results = pantry.canICookRecipe(matchedRecipe);
     domUpdates.displayCanICookResults(results, pantry)
   }
+}
 
 function addToMyRecipes(event) {
-let eventTarget = event.target.closest('.card-photo-preview');
-let eventAppleTarget = event.target.closest('.card-apple-icon');
-let eventSilverwareTarget = event.target.closest('.card-silverware-icon')
+  let eventTarget = event.target.closest('.card-photo-preview');
+  let eventAppleTarget = event.target.closest('.card-apple-icon');
+  let eventSilverwareTarget = event.target.closest('.card-silverware-icon')
 
-if(eventTarget) {
-  const targetId = parseInt(eventTarget.id);
-  const foundRecipe = cookbook.cookbook.find(
-    recipe => targetId === recipe.id
-  );
-  domUpdates.openRecipeInfo(foundRecipe)
-} else if (eventAppleTarget) {
-  let recipeId = parseInt(eventAppleTarget.id);
-  const foundRecipe = cookbook.cookbook.find(
-    recipe => recipeId === recipe.id
-  );
+  if (eventTarget) {
+    const targetId = parseInt(eventTarget.id);
+    const foundRecipe = cookbook.cookbook.find(
+      recipe => targetId === recipe.id
+    );
+    domUpdates.openRecipeInfo(foundRecipe)
+  } else if (eventAppleTarget) {
+    let recipeId = parseInt(eventAppleTarget.id);
+    const foundRecipe = cookbook.cookbook.find(
+      recipe => recipeId === recipe.id
+    );
 
-  let cardId = parseInt(eventAppleTarget.id)
+    let cardId = parseInt(eventAppleTarget.id)
     if (!user.favoriteRecipes.includes(foundRecipe)) {
       const foundRecipe = cookbook.cookbook.find(
         recipe => cardId === recipe.id
@@ -208,12 +209,12 @@ if(eventTarget) {
       user.removeRecipe(foundRecipe);
     }
   } else if (event.target.closest('.card-photo-preview')) {
-      const targetId = parseInt(eventTarget.id);
-      const foundRecipe = cookbook.cookbook.find(
-        recipe => targetId === recipe.id
-      );
-      domUpdates.openRecipeInfo(foundRecipe)
- } else if (eventSilverwareTarget) {
+    const targetId = parseInt(eventTarget.id);
+    const foundRecipe = cookbook.cookbook.find(
+      recipe => targetId === recipe.id
+    );
+    domUpdates.openRecipeInfo(foundRecipe)
+  } else if (eventSilverwareTarget) {
     let silverWareId = parseInt(eventSilverwareTarget.id);
     const foundRecipe = cookbook.cookbook.find(
       recipe => silverWareId === recipe.id

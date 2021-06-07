@@ -85,7 +85,6 @@ class Pantry {
     if (whatINeed.length === 0) {
       this.hasIngredientAmounts = true;
       return []
-      return 
     } else {
       const matchedIDs = whatINeed.map(ingredient => {
         const foundIngredient = this.ingredientsData.find(data => {
