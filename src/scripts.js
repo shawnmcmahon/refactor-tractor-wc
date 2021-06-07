@@ -156,7 +156,7 @@ function amIOnTheHomePage() {
 }
 
 function searchRecipes() {
-  let input = searchInput.value
+  let input = [searchInput.value]
   searchInput.value = ''
   let homePage = amIOnTheHomePage();
 
