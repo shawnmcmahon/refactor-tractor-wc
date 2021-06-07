@@ -31,6 +31,9 @@ let favRecipesBtn = document.getElementById('myFavRecipesButton');
 let searchBtn = document.getElementById('searchButton');
 let searchInput = document.getElementById('searchInput');
 let searchForm = document.getElementById('searchBar');
+// let emptyApple = document.querySelector('.card-apple-icon');
+// let filledApple = document.querySelector('.filled-apple-icon ');
+
 
 // variables
 let user, cookbook, pantry;
@@ -110,6 +113,7 @@ function clickRecipeCard(event) {
     if(!user.favoriteRecipes.includes(foundRecipe)) {
       user.saveRecipe(foundRecipe);
       console.log("saved", user.favoriteRecipes)
+      domUpdates.hideOrFillApple(eventAppleTarget);
     }
   } else if (eventSilverwareTarget) {
     let silverWareId = parseInt(eventSilverwareTarget.id);
@@ -149,6 +153,3 @@ function findCheckedTags() {
   let results = cookbook.filterByTag(selectedTags);
   domUpdates.renderSearchResults(results)
 }
-
-
-
