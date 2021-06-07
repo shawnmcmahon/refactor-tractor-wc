@@ -131,3 +131,25 @@ main {
 .hidden {
   display: none;
 }
+
+@media screen and (min-width: 550px) {
+
+aside {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  height: 525px;
+  text-align: center;
+}
+
+main {
+  grid-area: main;
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+  flex-direction: column;
+  // flex-wrap: wrap;
+}
+
+
+}
