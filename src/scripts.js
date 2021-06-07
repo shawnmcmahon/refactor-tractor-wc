@@ -156,7 +156,6 @@ function amIOnTheHomePage() {
   }
 }
 
-//should hide filter by tag and search bar when on cooking page
 function findCheckedTags() {
   let tagCheckboxes = document.querySelectorAll('.checked-tag');
   let allTags = Array.from(tagCheckboxes)
