@@ -78,7 +78,6 @@ let domUpdates = {
           <h4>${recipe.tags[0]}</h4>
           <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
           <img src='../images/apple-logo-outline.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon'>
-          <img src='../images/apple-logo.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon filled-apple-icon hidden'>
         </div>`;
       allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
     });
@@ -101,12 +100,9 @@ let domUpdates = {
           <h4>${recipe.tags[0]}</h4>
           <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
           <img src='../images/apple-logo-outline.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon'>
-          <img src='/images/apple-logo.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon filled-apple-icon hidden'>
         </div>`;
       allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
     });
-    // domUpdates.show(filledApple);
-    // domUpdates.hide(emptyApple);
   },
 
   shortenNames(recipe) {
@@ -233,10 +229,7 @@ let domUpdates = {
         overlay.remove();
       }
     }
-  },
-
-
-
+  }
 
 };
 
