@@ -72,26 +72,26 @@ describe('User', function() {
 
   it('should be able to filter recipes by type', function() {
     user.saveRecipe(recipe);
-    const breakfastRecipes = user.filterRecipes('breakfast');
+    const breakfastRecipes = user.filterRecipes(['breakfast']);
     expect(breakfastRecipes).to.deep.equal([recipe]);
   });
 
   it('should be able to search recipes by name', function() {
     user.saveRecipe(recipe);
-    const recipeSearch = user.searchForRecipe('Egg', 'Rice');
+    const recipeSearch = user.searchForRecipe(['Egg', 'Rice']);
     expect(recipeSearch).to.deep.equal([recipe]);
   });
 
   //Sad path testing
   it('Should not filter recipes that are missing a name', () => {
     const brokenRecipe = new Recipe(testRecipes[3], testIngredients)
-    user.searchForRecipe("banana")
+    user.searchForRecipe(["banana"])
     expect(user.favoriteRecipes).to.deep.equal([])
   })
 
   it('Should not filter recipes that are missing an id', () => {
     const brokenRecipe = new Recipe(testRecipes[3], testIngredients)
-    user.searchForRecipe("banana")
+    user.searchForRecipe(["banana"])
     expect(user.favoriteRecipes).to.deep.equal([])
   })
 

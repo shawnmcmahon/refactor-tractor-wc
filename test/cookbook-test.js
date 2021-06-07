@@ -38,33 +38,33 @@ describe('Cookbook', () => {
   });
 
   it('Should have a method that retrieves recipes by a tag', () => {
-    testCookbook.filterByTag('snack');
+    testCookbook.filterByTag(['snack']);
     expect(testCookbook.filteredByTag).to.deep.equal(allRecipes)
   });
 
   it('Should be able to retrieve recipes by a different tag', () => {
-    testCookbook.filterByTag('morning meal');
+    testCookbook.filterByTag(['morning meal']);
     expect(testCookbook.filteredByTag).to.deep.equal([recipe1, recipe3]);
   });
 
   it('Should have a method that retrieves recipes by multiple tags', () => {
-    testCookbook.filterByTag('snack', 'appetizer');
+    testCookbook.filterByTag(['snack', 'appetizer']);
     expect(testCookbook.filteredByTag).to.deep.equal(allRecipes);
   });
 
   it('Should be able to retrieve recipes by different tags', () => {
-    testCookbook.filterByTag('morning meal', 'breakfast');
+    testCookbook.filterByTag(['morning meal', 'breakfast']);
     expect(testCookbook.filteredByTag).to.deep.equal([recipe1, recipe3]);
   });
 
   it('Should be able to retrieve recipes by name', () => {
-    const eggRecipe = testCookbook.filterByNameOrIngredient('Tomatillo');
+    const eggRecipe = testCookbook.filterByNameOrIngredient(['Tomatillo']);
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([recipe2])
   })
 
 
   it('Should be able to filter recipes by ingredient', () => {
-    testCookbook.filterByNameOrIngredient('egg', 'pineapple');
+    testCookbook.filterByNameOrIngredient(['egg', 'pineapple']);
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([
       recipe1,
       recipe3
@@ -72,14 +72,14 @@ describe('Cookbook', () => {
   });
 
   it('Should be able to filter recipes by a different ingredient', () => {
-    testCookbook.filterByNameOrIngredient('cilantro');
+    testCookbook.filterByNameOrIngredient(['cilantro']);
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([
       recipe2
     ]);
   });
 
   it('Should be able to filter recipes by a different ingredient', () => {
-    testCookbook.filterByNameOrIngredient('rice');
+    testCookbook.filterByNameOrIngredient(['rice']);
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([
       recipe1,
       recipe3
@@ -87,17 +87,17 @@ describe('Cookbook', () => {
   });
 
   it('Should be able to filter recipes by name', () => {
-    testCookbook.filterByNameOrIngredient('salsa');
+    testCookbook.filterByNameOrIngredient(['salsa']);
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([recipe2]);
   });
 
   it('Should be able to filter recipes by a different name', () => {
-    testCookbook.filterByNameOrIngredient('Tamagoyaki');
+    testCookbook.filterByNameOrIngredient(['Tamagoyaki']);
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([recipe3]);
   });
 
   it('Should be able to filter recipes by a different name', () => {
-    testCookbook.filterByNameOrIngredient('fried');
+    testCookbook.filterByNameOrIngredient(['fried']);
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([
       recipe1
     ]);
@@ -106,13 +106,13 @@ describe('Cookbook', () => {
   //Sad Path Testing
   it('Should not filter recipes that are missing a name', () => {
     const brokenRecipe = new Recipe(testRecipes[3], testIngredients)
-    testCookbook.filterByNameOrIngredient("banana")
+    testCookbook.filterByNameOrIngredient(["banana"])
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([])
   })
 
   it('Should not filter recipes that are missing an id', () => {
     const brokenRecipe = new Recipe(testRecipes[3], testIngredients)
-    testCookbook.filterByNameOrIngredient("banana")
+    testCookbook.filterByNameOrIngredient(["banana"])
     expect(testCookbook.filteredByNameOrIngredient).to.deep.equal([])
   })
 
