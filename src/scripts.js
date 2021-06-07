@@ -22,29 +22,31 @@ import './images/remove-from-cook-queue.png'
 import './images/home.png'
 
 // query selectors
+let allRecipeCards = document.getElementById('allRecipeCards');
+let filterRecipesBtn = document.getElementById('filterRecipesButton');
+let recipesToCookBtn = document.getElementById('myRecipesToCookButton');
+let homeBtn = document.getElementById('myHomeButton');
 let pantryBtn = document.getElementById('myPantryButton');
-let savedRecipesBtn = document.getElementById('myFavRecipesButton');
+let favRecipesBtn = document.getElementById('myFavRecipesButton');
 let searchBtn = document.getElementById('searchButton');
 let searchInput = document.getElementById('searchInput');
 let searchForm = document.getElementById('searchBar');
-let filterRecipesBtn = document.getElementById('filterRecipesButton')
-let homeBtn = document.getElementById('myHomeButton')
-let allRecipeCards = document.getElementById('allRecipeCards');
-let emptyApple = document.querySelector('.card-apple-icon');
-let filledApple = document.querySelector('.filled-apple-icon ');
 
 // variables
 let user, cookbook, pantry;
 
 //event listeners
 window.onload = startUp()
+favRecipesBtn.addEventListener('click', () => domUpdates.updateBanner(event));
+recipesToCookBtn.addEventListener('click', () => domUpdates.updateBanner(event));
 filterRecipesBtn.addEventListener('click', findCheckedTags);
 pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
-savedRecipesBtn.addEventListener('click', findFavoriteRecipes);
+favRecipesBtn.addEventListener('click', findFavoriteRecipes);
 window.addEventListener('click', () => clickRecipeCard(event));
 searchForm.addEventListener('submit', () =>  pressEnterSearch(event));
 searchBtn.addEventListener('click', searchRecipes);
 homeBtn.addEventListener('click', () => domUpdates.renderRecipeCards(cookbook, user))
+homeBtn.addEventListener('click', () => domUpdates.updateWelcomeMessage(user));
 allRecipeCards.addEventListener('click', domUpdates.exitRecipe);
 
 function startUp() {
