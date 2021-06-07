@@ -117,19 +117,26 @@ function pressEnterSearch(event) {
   searchRecipes();
 }
 
-function searchRecipes() {
-  let input = searchInput.value
-  let results = cookbook.filterByNameOrIngredient(input);
-  domUpdates.renderSearchResults(results)
-  searchInput.value = ''
-}
-
 function amIOnTheHomePage() {
   if (myRecipesBanner.classList.contains('hidden')) {
-    return true
+    return true;
   } else {
-    return false
+    return false;
   }
+}
+
+function searchRecipes() {
+  let input = [searchInput.value]
+  searchInput.value = ''
+  let homePage = amIOnTheHomePage();
+
+  if (homePage) {
+    let results = cookbook.filterByNameOrIngredient(input);
+    domUpdates.renderSearchResults(results)
+  } else if (!homePage) {
+    let results = user.searchForRecipe(input)
+    domUpdates.renderSearchResults(results)
+  }  
 }
 
 function findCheckedTags() {
@@ -154,8 +161,6 @@ function findCheckedTags() {
   } else if (homePage && selectedTags.includes('show all')) {
     domUpdates.renderRecipeCards(cookbook, user);
   }
-
-
 }
 
 

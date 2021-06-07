@@ -22,7 +22,7 @@ class Cookbook {
     return results
   }
 
-  filterByNameOrIngredient(...keywords) {
+  filterByNameOrIngredient(keywords) {
     const separatedKeywords = keywords.map(keyword => {
       return keyword.split(' ');
     }).flat();

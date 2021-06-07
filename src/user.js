@@ -29,14 +29,14 @@ class User {
     this.recipesToCook.splice(index, 1);
   }
 
-  filterRecipes(...tag) {
+  filterRecipes(tag) {
     let favoriteRecipes = new Cookbook(this.favoriteRecipes, this.ingredientsData);
-    return favoriteRecipes.filterByTag(...tag);
+    return favoriteRecipes.filterByTag(tag);
   }
 
-  searchForRecipe(ingredientsData, ...keyword) {
+  searchForRecipe(keyword) {
     let favoriteRecipes = new Cookbook(this.favoriteRecipes, this.ingredientsData);
-    return favoriteRecipes.filterByNameOrIngredient(...keyword);
+    return favoriteRecipes.filterByNameOrIngredient(keyword);
   }
 
   viewFavorites() {
