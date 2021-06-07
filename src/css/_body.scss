@@ -42,12 +42,12 @@ main {
   justify-content: center;
   align-content: flex-start;
   flex-direction: row;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
 }
 
 .wrap {
   background-color: white;
-  height: 100vh;
+  // height: 100vh;
   padding: 10px;
   position: relative;
   width: 200px;
@@ -113,6 +113,12 @@ main {
   color: #000000;
   padding-left: 15px;
   text-align: left;
+}
+
+.all-recipe-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 //body
