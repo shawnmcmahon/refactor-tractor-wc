@@ -21,6 +21,10 @@ span {
   font-weight: 400;
 }
 
+nav {
+  display: flex;
+}
+
 .header-apple-icon {
   height: 40px;
   margin-left: 5px;
@@ -88,17 +92,18 @@ span {
 }
 
 .nav-btn {
-  background: $blueish-gray no-repeat;
+  background: $blueish-gray;
   border: none;
   cursor: pointer;
   font-size: 0px;
   font-weight: 700;
-  margin: 0%;
+  margin-left: 10px;
+  margin-right: 10px;
   outline: none;
   overflow: hidden;
   text-align: center;
   transition: .4s ease;
-  width: 15%;
+  width: 75px;
   @include flex-center();
   @include flex-column();
 }
@@ -116,9 +121,9 @@ span {
   padding: 2px 0px;
 }
 
-.saved-ingredients-btn {
-  border-left: 3px solid $yellow;
-}
+// .saved-ingredients-btn {
+//   border-left: 3px solid $yellow;
+// }
 
 .ing-pan-btn {
   margin: 1% 0%;
@@ -151,4 +156,34 @@ span {
 
 .welcome-msg {
   margin-top: 50px;
+}
+
+@media screen and (max-width: 550px) {
+
+  h1 {
+    align-self: center;
+    color: white;
+    font-family: "Sulphur Point", sans-serif;
+    font-size: 50px;
+    // margin: 0%;
+    // padding: 0.5% 0.7% 0%;
+    width: 100px;
+    display: none;
+  }
+
+  div > h1 {
+    align-self: center;
+    color: white;
+    font-family: "Sulphur Point", sans-serif;
+    font-size: 50px;
+    // margin: 0%;
+    // padding: 0.5% 0.7% 0%;
+    width: 100px;
+    display: contents;
+  }
+
+  nav {
+    display: flex;
+  }
+
 }

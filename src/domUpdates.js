@@ -13,7 +13,7 @@ let domUpdates = {
  hideMany(elements) {
     elements.forEach(element => element.classList.add('hidden'));
   },
-  
+
   showMany(elements) {
     elements.forEach(element => element.classList.remove('hidden'))
   },
@@ -97,6 +97,7 @@ let domUpdates = {
         allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
     });
   },
+
 
   renderSearchResults(results) {
     let allRecipeCards = document.getElementById('allRecipeCards');
