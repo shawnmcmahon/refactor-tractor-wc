@@ -113,8 +113,9 @@ function clickRecipeCard(event) {
     );
     if(!user.favoriteRecipes.includes(foundRecipe)) {
       user.saveRecipe(foundRecipe);
+      eventAppleTarget.src = "../images/apple-logo.png";
       console.log("saved", user.favoriteRecipes)
-      domUpdates.hideOrFillApple(eventAppleTarget);
+      console.log("book", cookbook)
     }
   } else if (eventSilverwareTarget) {
     let silverWareId = parseInt(eventSilverwareTarget.id);

@@ -10,6 +10,14 @@ let domUpdates = {
     element.classList.add('hidden')
   },
 
+ hideMany(elements) {
+    elements.forEach(element => element.classList.add('hidden'));
+  },
+  
+  showMany(elements) {
+    elements.forEach(element => element.classList.remove('hidden'))
+  },
+
   updateWelcomeMessage(user) {
     let welcomeMessage = document.getElementById('welcomeMessage');
     let myRecipesBanner = document.getElementById('myRecipesBanner');
@@ -219,33 +227,6 @@ let domUpdates = {
       }
     }
   },
-
-  hideOrFillApple(event) {
-    let emptyApple = document.querySelector('.card-apple-icon');
-    let filledApple = document.querySelector('.filled-apple-icon ');
-    // event.preventDefault();
-    if(emptyApple) {
-      domUpdates.show(filledApple);
-      domUpdates.hide(emptyApple);
-    } else if(filledApple) {
-      domUpdates.hide(filledApple);
-      domUpdates.show(emptyApple);
-    }
-  }
-
-//  favoriteRecipe(event) {
-//     event.preventDefault();
-//     if (event.target.classList.contains('unfilled-heart')) {
-//       show([filledHeart]);
-//       hide([emptyHeart]);
-//       const targetID = event.target.parentNode.parentNode.id;
-//       const allRecipes = newRepository.recipesData;
-//       const foundRecipe = allRecipes.find(
-//         recipe => recipe.id === parseInt(targetID)
-//       );
-//       user.addToFavorites(foundRecipe);
-//     }
-//   }
 
 
 
