@@ -112,7 +112,7 @@ function clickRecipeCard(event) {
     const foundRecipe = cookbook.cookbook.find(
       recipe => recipeId === recipe.id
     );
-    if(!user.favoriteRecipes.includes(foundRecipe)) {
+    if (!user.favoriteRecipes.includes(foundRecipe)) {
       user.saveRecipe(foundRecipe);
     }
   } else if (eventSilverwareTarget) {
@@ -156,26 +156,30 @@ function amIOnTheHomePage() {
   }
 }
 
-// need to clear checked tags on submit
 //should hide filter by tag and search bar when on cooking page
-
 function findCheckedTags() {
   let tagCheckboxes = document.querySelectorAll('.checked-tag');
   let allTags = Array.from(tagCheckboxes)
   let selectedTags = allTags.filter(box => {
     return box.checked;
   }).map(checked => checked.id)
+  
+  allTags.forEach(box => box.checked = false)
 
   let homePage = amIOnTheHomePage();
-
-  if (!homePage) {
-    let results = user.filterRecipes(selectedTags)
-    console.log('fav', results)
-    domUpdates.renderSearchResults(results)
-  } else {
+  
+  if (!homePage && !selectedTags.includes('show all')) {
+    let results = user.filterRecipes(selectedTags);
+    domUpdates.renderSearchResults(results);
+  } else if (homePage && !selectedTags.includes('show all')) {
     let results = cookbook.filterByTag(selectedTags);
-    console.log('main', results)
-    domUpdates.renderSearchResults(results)
+    domUpdates.renderSearchResults(results);
+  } else if (!homePage && selectedTags.includes('show all')) {
+    findFavoriteRecipes()
+  } else if (homePage && selectedTags.includes('show all')) {
+    domUpdates.renderRecipeCards(cookbook, user);
   }
 
+
 }
+

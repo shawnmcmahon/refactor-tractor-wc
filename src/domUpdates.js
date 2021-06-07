@@ -38,6 +38,7 @@ let domUpdates = {
   },
 
   listTags(allTags) {
+    allTags.push('show all')
     let tagList = document.getElementById('tagList');
     allTags.forEach(tag => {
       let tagHtml = `<li><input type='checkbox' class='checked-tag' id="${tag}">
