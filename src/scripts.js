@@ -31,10 +31,11 @@ let savedRecipesBtn = document.getElementById('myFavRecipesButton');
 let searchBtn = document.getElementById('searchButton');
 let searchInput = document.getElementById('searchInput');
 let allRecipesBtn = document.getElementById('showAllRecipesButton');
-let filterBtn = document.getElementById('filterRecipesButton');
 let showPantryRecipes = document.getElementById('whatCanIMake');
 let searchForm = document.getElementById('searchBar');
+let filterRecipesBtn = document.getElementById('filterRecipesButton')
 // let exitBtn = document.getElementById('exit-recipe-btn')
+let tagList = document.getElementById('tagList')
 let recipeSection = document.getElementById('fullRecipeInstructions')
 let homeBtn = document.getElementById('myHomeButton')
 let allRecipeCards = document.getElementById('allRecipeCards');
@@ -44,8 +45,8 @@ let globalIngredientsData = {};
 
 //event listeners
 window.onload = startUp()
-filterBtn.addEventListener('click', findCheckedBoxes);
-showPantryRecipes.addEventListener('click', domUpdates.findCheckedPantryBoxes);
+filterRecipesBtn.addEventListener('click', findCheckedTags);
+//showPantryRecipes.addEventListener('click', domUpdates.findCheckedPantryBoxes);
 pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
 savedRecipesBtn.addEventListener('click', domUpdates.toggleBannerText);
 window.addEventListener('click', () => clickRecipeCard(event));
@@ -174,16 +175,14 @@ function findRecipesWithCheckedIngredients(selected) {
   });
 }
 
-
-//Stay in scripts
-function findCheckedBoxes() {
+function findCheckedTags() {
   let tagCheckboxes = document.querySelectorAll('.checked-tag');
-  // pretty sure we can delete Array.from() since querySelectorAll returns an array
-  //let checkboxInfo = Array.from(tagCheckboxes)
-  let selectedTags = tagCheckboxes.filter(box => {
+  let allTags = Array.from(tagCheckboxes)
+  let selectedTags = allTags.filter(box => {
     return box.checked;
-  })
-  cookbook.filterByTag(selectedTags);
+  }).map(checked => checked.id)
+  let results = cookbook.filterByTag(selectedTags);
+  domUpdates.renderSearchResults(results)
 }
 
 
