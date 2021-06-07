@@ -1,8 +1,8 @@
 body {
   background-color: $blueish-gray;
-  display: grid;
+  // display: grid;
   font-family: "Quicksand", sans-serif;
-  grid-template-columns: 1fr 5fr;
+  // grid-template-columns: 1fr 5fr;
   grid-template-areas:
     "header header"
     "image image"
