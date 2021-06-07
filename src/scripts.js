@@ -32,6 +32,10 @@ let searchBtn = document.getElementById('searchButton');
 let searchInput = document.getElementById('searchInput');
 let searchForm = document.getElementById('searchBar');
 
+let welcomeMessage = document.getElementById('welcomeMessage');
+let myRecipesBanner = document.getElementById('myRecipesBanner');
+let bannerText = document.getElementById('bannerText');
+
 // variables
 let user, cookbook, pantry;
 
@@ -144,12 +148,34 @@ function searchRecipes() {
   searchInput.value = ''
 }
 
+function amIOnTheHomePage() {
+  if (myRecipesBanner.classList.contains('hidden')) {
+    return true
+  } else {
+    return false
+  }
+}
+
+// need to clear checked tags on submit
+//should hide filter by tag and search bar when on cooking page
+
 function findCheckedTags() {
   let tagCheckboxes = document.querySelectorAll('.checked-tag');
   let allTags = Array.from(tagCheckboxes)
   let selectedTags = allTags.filter(box => {
     return box.checked;
   }).map(checked => checked.id)
-  let results = cookbook.filterByTag(selectedTags);
-  domUpdates.renderSearchResults(results)
+
+  let homePage = amIOnTheHomePage();
+
+  if (!homePage) {
+    let results = user.filterRecipes(selectedTags)
+    console.log('fav', results)
+    domUpdates.renderSearchResults(results)
+  } else {
+    let results = cookbook.filterByTag(selectedTags);
+    console.log('main', results)
+    domUpdates.renderSearchResults(results)
+  }
+
 }

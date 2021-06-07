@@ -24,7 +24,7 @@ let domUpdates = {
   updateBanner(event) {
     let welcomeMessage = document.getElementById('welcomeMessage');
     let myRecipesBanner = document.getElementById('myRecipesBanner');
-    let bannerText = document.getElementById('bannerText')
+    let bannerText = document.getElementById('bannerText');
     domUpdates.hide(welcomeMessage)
     domUpdates.show(myRecipesBanner)
 
