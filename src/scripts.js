@@ -109,12 +109,32 @@ function getTagsFromRecipeData() {
 
 function clickRecipeCard(event) {
   let eventTarget = event.target.closest('.card-photo-preview');
+  let eventAppleTarget = event.target.closest('.card-apple-icon');
+  let eventSilverwareTarget = event.target.closest('.card-silverware-icon')
   if (eventTarget) {
     const targetId = parseInt(eventTarget.id);
     const foundRecipe = cookbook.cookbook.find(
       recipe => targetId === recipe.id
     );
     domUpdates.openRecipeInfo(foundRecipe)
+  } else if (eventAppleTarget) {
+    let recipeId = parseInt(eventAppleTarget.id);
+    const foundRecipe = cookbook.cookbook.find(
+      recipe => recipeId === recipe.id
+    );
+      if(!user.favoriteRecipes.includes(foundRecipe)) {
+        user.saveRecipe(foundRecipe);
+        console.log("Faves", user.favoriteRecipes)
+      }
+  } else if(eventSilverwareTarget) {
+    let silverWareId = parseInt(eventSilverwareTarget.id);
+    const foundRecipe = cookbook.cookbook.find(
+      recipe => silverWareId === recipe.id
+    );
+    if(!user.recipesToCook.includes(foundRecipe)) {
+      user.decideToCook(foundRecipe);
+      console.log("toCook", user.recipesToCook)
+    }
   }
 }
 
