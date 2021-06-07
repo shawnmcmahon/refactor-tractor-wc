@@ -31,12 +31,12 @@ class User {
 
   filterRecipes(tag) {
     let favoriteRecipes = new Cookbook(this.favoriteRecipes, this.ingredientsData);
-    return favoriteRecipes.filterByTag(tag);
+    return favoriteRecipes.filterByTag([tag]);
   }
 
   searchForRecipe(keyword) {
     let favoriteRecipes = new Cookbook(this.favoriteRecipes, this.ingredientsData);
-    return favoriteRecipes.filterByNameOrIngredient(keyword);
+    return favoriteRecipes.filterByNameOrIngredient([keyword]);
   }
 
   viewFavorites() {
