@@ -132,7 +132,7 @@ main {
   display: none;
 }
 
-@media screen and (min-width: 550px) {
+@media screen and (max-width: 550px) {
 
 aside {
   background-color: white;
@@ -143,7 +143,7 @@ aside {
 }
 
 main {
-  grid-area: main;
+  // grid-area: main;
   display: flex;
   justify-content: center;
   align-content: flex-start;
@@ -151,5 +151,27 @@ main {
   // flex-wrap: wrap;
 }
 
+
+.all-recipe-cards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // flex-wrap: wrap;
+}
+
+.drop-menu {
+  align-items: center;
+  background-color: #DAE4EE;
+  display: none;
+  height: 600px;
+  // margin-left: 81%;
+  // margin-top: 92px;
+  overflow: scroll;
+  padding: 12px;
+  // position: absolute;
+  text-align: center;
+  width: 250px;
+  z-index: 3;
+}
 
 }
