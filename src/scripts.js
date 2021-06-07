@@ -42,6 +42,7 @@ let user, cookbook, pantry;
 window.onload = startUp()
 favRecipesBtn.addEventListener('click', () => domUpdates.updateBanner(event));
 recipesToCookBtn.addEventListener('click', () => domUpdates.updateBanner(event));
+recipesToCookBtn.addEventListener('click', findCookList)
 filterRecipesBtn.addEventListener('click', findCheckedTags);
 pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
 favRecipesBtn.addEventListener('click', findFavoriteRecipes);
@@ -129,7 +130,11 @@ function clickRecipeCard(event) {
 function findFavoriteRecipes() {
   let favorites = user.favoriteRecipes
   domUpdates.renderSearchResults(favorites)
-  //need to get banner text to show when you are viewing favorites
+}
+
+function findCookList() {
+  let cookList = user.recipesToCook;
+  domUpdates.renderSearchResults(cookList)
 }
 
 function pressEnterSearch(event) {
