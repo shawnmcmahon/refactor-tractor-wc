@@ -32,6 +32,10 @@ let searchBtn = document.getElementById('searchButton');
 let searchInput = document.getElementById('searchInput');
 let searchForm = document.getElementById('searchBar');
 
+let welcomeMessage = document.getElementById('welcomeMessage');
+let myRecipesBanner = document.getElementById('myRecipesBanner');
+let bannerText = document.getElementById('bannerText');
+
 // variables
 let user, cookbook, pantry;
 
@@ -108,7 +112,7 @@ function clickRecipeCard(event) {
     const foundRecipe = cookbook.cookbook.find(
       recipe => recipeId === recipe.id
     );
-    if(!user.favoriteRecipes.includes(foundRecipe)) {
+    if (!user.favoriteRecipes.includes(foundRecipe)) {
       user.saveRecipe(foundRecipe);
     }
   } else if (eventSilverwareTarget) {
@@ -144,12 +148,37 @@ function searchRecipes() {
   searchInput.value = ''
 }
 
+function amIOnTheHomePage() {
+  if (myRecipesBanner.classList.contains('hidden')) {
+    return true
+  } else {
+    return false
+  }
+}
+
 function findCheckedTags() {
   let tagCheckboxes = document.querySelectorAll('.checked-tag');
   let allTags = Array.from(tagCheckboxes)
   let selectedTags = allTags.filter(box => {
     return box.checked;
   }).map(checked => checked.id)
-  let results = cookbook.filterByTag(selectedTags);
-  domUpdates.renderSearchResults(results)
+  
+  allTags.forEach(box => box.checked = false)
+
+  let homePage = amIOnTheHomePage();
+  
+  if (!homePage && !selectedTags.includes('show all')) {
+    let results = user.filterRecipes(selectedTags);
+    domUpdates.renderSearchResults(results);
+  } else if (homePage && !selectedTags.includes('show all')) {
+    let results = cookbook.filterByTag(selectedTags);
+    domUpdates.renderSearchResults(results);
+  } else if (!homePage && selectedTags.includes('show all')) {
+    findFavoriteRecipes()
+  } else if (homePage && selectedTags.includes('show all')) {
+    domUpdates.renderRecipeCards(cookbook, user);
+  }
+
+
 }
+

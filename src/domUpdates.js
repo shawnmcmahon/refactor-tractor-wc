@@ -13,8 +13,10 @@ let domUpdates = {
   updateWelcomeMessage(user) {
     let welcomeMessage = document.getElementById('welcomeMessage');
     let myRecipesBanner = document.getElementById('myRecipesBanner');
-    domUpdates.hide(myRecipesBanner);
-    domUpdates.show(welcomeMessage);
+    let aside = document.querySelector('aside');
+    this.hide(myRecipesBanner);
+    this.show(welcomeMessage);
+    this.show(aside)
     let firstName = user.name.split(' ')[0];
     welcomeMessage.innerHTML = `
         <h1>Welcome ${firstName}!</h1>
@@ -24,20 +26,25 @@ let domUpdates = {
   updateBanner(event) {
     let welcomeMessage = document.getElementById('welcomeMessage');
     let myRecipesBanner = document.getElementById('myRecipesBanner');
-    let bannerText = document.getElementById('bannerText')
-    domUpdates.hide(welcomeMessage)
-    domUpdates.show(myRecipesBanner)
+    let bannerText = document.getElementById('bannerText');
+    let aside = document.querySelector('aside')
+    this.hide(welcomeMessage)
+    this.show(myRecipesBanner)
 
     let target = event.target.closest('button').id
 
     if (target.includes('Fav')) {
       bannerText.innerText = 'My Favorite Recipes'
+      this.show(aside)
     } else if (target.includes('Cook')) {
       bannerText.innerText = 'My Cooking Queue';
+      this.hide(aside)
+      // hide search bar
     }
   },
 
   listTags(allTags) {
+    allTags.push('show all')
     let tagList = document.getElementById('tagList');
     allTags.forEach(tag => {
       let tagHtml = `<li><input type='checkbox' class='checked-tag' id="${tag}">
