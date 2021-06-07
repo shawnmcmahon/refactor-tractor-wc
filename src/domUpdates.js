@@ -2,12 +2,39 @@
 let fullRecipeInfo;
 
 let domUpdates = {
+  show(element) {
+    element.classList.remove('hidden')
+  },
+
+  hide(element) {
+    element.classList.add('hidden')
+  },
+
   updateWelcomeMessage(user) {
-    let welcomeDiv = document.querySelector('.welcome-msg');
+    let welcomeMessage = document.getElementById('welcomeMessage');
+    let myRecipesBanner = document.getElementById('myRecipesBanner');
+    domUpdates.hide(myRecipesBanner);
+    domUpdates.show(welcomeMessage);
     let firstName = user.name.split(' ')[0];
-    welcomeDiv.innerHTML = `
+    welcomeMessage.innerHTML = `
         <h1>Welcome ${firstName}!</h1>
     `;
+  },
+
+  updateBanner(event) {
+    let welcomeMessage = document.getElementById('welcomeMessage');
+    let myRecipesBanner = document.getElementById('myRecipesBanner');
+    let bannerText = document.getElementById('bannerText')
+    domUpdates.hide(welcomeMessage)
+    domUpdates.show(myRecipesBanner)
+
+    let target = event.target.closest('button').id
+
+    if (target.includes('Fav')) {
+      bannerText.innerText = 'My Favorite Recipes'
+    } else if (target.includes('Cook')) {
+      bannerText.innerText = 'My Cooking Queue';
+    }
   },
 
   listTags(allTags) {
@@ -101,17 +128,6 @@ let domUpdates = {
         domUpdates.findCheckedPantryBoxes('click');
       });
     });
-  },
-
-  // change this modify it????
-  // every time you click home you want to run domUpdates.updateWelcomeMessage(user)
-  //every time you click hat you want to see my favorites
-  // every time you click cook you want to see my cook list
-  toggleBannerText() {
-    let welcomeMessage = document.getElementById('welcomeMessage');
-    let myRecipesBanner = document.getElementById('myRecipesBanner');
-    welcomeMessage.classList.toggle('hidden');
-    myRecipesBanner.classList.toggle('block');
   },
 
   openRecipeInfo(recipe) {
