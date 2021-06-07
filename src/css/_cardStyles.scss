@@ -75,6 +75,7 @@ h4 {
   height: 130px;
   @include flex-center();
   position: relative;
+  @include flex-center();
 }
 
 .text {
@@ -169,4 +170,31 @@ h4 {
   top:0;
   width:100%;
   z-index:100;
+}
+
+@media screen and (max-width: 550px) {
+
+.recipe-card {
+  background-color: white;
+  border: 2px solid $yellow;
+  border-radius: 7px;
+  cursor: pointer;
+  height: 350px;
+  margin: 20px;
+  padding: 15px;
+  width: 270px;
+}
+
+.card-photo-preview {
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 7px;
+  cursor: pointer;
+  height: 130px;
+  transition: .8s ease;
+  width: 100%;
+}
+
+
 }

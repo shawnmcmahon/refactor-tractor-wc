@@ -1,8 +1,8 @@
 body {
   background-color: $blueish-gray;
-  display: grid;
+  // display: grid;
   font-family: "Quicksand", sans-serif;
-  grid-template-columns: 1fr 5fr;
+  // grid-template-columns: 1fr 5fr;
   grid-template-areas:
     "header header"
     "image image"
@@ -42,12 +42,12 @@ main {
   justify-content: center;
   align-content: flex-start;
   flex-direction: row;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
 }
 
 .wrap {
   background-color: white;
-  height: 100vh;
+  // height: 100vh;
   padding: 10px;
   position: relative;
   width: 200px;
@@ -115,6 +115,12 @@ main {
   text-align: left;
 }
 
+.all-recipe-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 //body
 .block {
   display: block;
@@ -124,4 +130,48 @@ main {
 //body
 .hidden {
   display: none;
+}
+
+@media screen and (max-width: 550px) {
+
+aside {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  height: 525px;
+  text-align: center;
+}
+
+main {
+  // grid-area: main;
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+  flex-direction: column;
+  // flex-wrap: wrap;
+}
+
+
+.all-recipe-cards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // flex-wrap: wrap;
+}
+
+.drop-menu {
+  align-items: center;
+  background-color: #DAE4EE;
+  display: none;
+  // height: 600px;
+  // margin-left: 81%;
+  // margin-top: 92px;
+  overflow: scroll;
+  padding: 12px;
+  // position: absolute;
+  text-align: center;
+  width: 250px;
+  z-index: 3;
+}
+
 }

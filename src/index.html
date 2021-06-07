@@ -9,6 +9,7 @@
   </head>
   <body>
     <header>
+      <nav>
       <h1><span>fresh</span>Picks<img src="../images/apple-logo.png" alt="apple icon" class="header-apple-icon"></h1>
       <form id="searchBar" role="search">
         <input id="searchInput" type="text" autocomplete="off" placeholder="Search Recipes..."></input>
@@ -21,19 +22,22 @@
         <button id="myRecipesToCookButton" class="nav-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/spoon.png" alt="">Recipes to Cook</button>
         <button id="myPantryButton" aria-expanded="false" class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/seasoning.png" alt="my pantry button">My Pantry</button>
       <!-- </nav> -->
+      </nav>
     </header>
-    <main>
-      <section class="banner-image">
-        <div class="welcome-msg" id="welcomeMessage">
-        </div>
-        <div class="my-recipes-banner hidden" id="myRecipesBanner">
-          <h1 id="bannerText">My Recipes</h1>
-        </div>
-      </section>
-      <div class="drop-menu">
-        <h2>My Pantry</h2>
-        <ul class="pantry-list"></ul>
+    <section class="banner-image">
+      <div class="welcome-msg" id="welcomeMessage">
       </div>
+      <div class="my-recipes-banner hidden" id="myRecipesBanner">
+        <h1 id="bannerText">My Recipes</h1>
+      </div>
+    </section>
+    <main>
+      <aside>
+        <div class="drop-menu">
+          <h2>My Pantry</h2>
+          <button id="whatCanIMake" class="show-pantry-recipes-btn">What Can I Make?</button>
+          <ul class="pantry-list"></ul>
+        </div>
       <aside id="tagAside">
         <div class="wrap">
           <h2>Recipe Type</h2>

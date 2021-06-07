@@ -51,13 +51,14 @@ recipesToCookBtn.addEventListener('click', findCookList)
 filterRecipesBtn.addEventListener('click', findCheckedTags);
 pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
 favRecipesBtn.addEventListener('click', findFavoriteRecipes);
-window.addEventListener('click', () => clickRecipeCard(event));
 searchForm.addEventListener('submit', () =>  pressEnterSearch(event));
 searchBtn.addEventListener('click', searchRecipes);
 homeBtn.addEventListener('click', () => domUpdates.renderRecipeCards(cookbook, user))
 homeBtn.addEventListener('click', () => domUpdates.updateWelcomeMessage(user));
 allRecipeCards.addEventListener('click', domUpdates.exitRecipe);
 allRecipeCards.addEventListener('click', () => findIngredientsInPantry(event));
+window.addEventListener('click', () => addToMyRecipes(event));
+// window.addEventListener('click', () => clickRecipeCard(event));
 
 function startUp() {
   apiCalls.retrieveData()
@@ -100,36 +101,6 @@ function getTagsFromRecipeData() {
     return allTags.sort();
   }, []);
   domUpdates.listTags(tags);
-}
-
-function clickRecipeCard(event) {
-  let eventTarget = event.target.closest('.card-photo-preview');
-  let eventAppleTarget = event.target.closest('.card-apple-icon');
-  let eventSilverwareTarget = event.target.closest('.card-silverware-icon')
-  if (eventTarget) {
-    const targetId = parseInt(eventTarget.id);
-    const foundRecipe = cookbook.cookbook.find(
-      recipe => targetId === recipe.id
-    );
-    domUpdates.openRecipeInfo(foundRecipe)
-  } else if (eventAppleTarget) {
-    let recipeId = parseInt(eventAppleTarget.id);
-    const foundRecipe = cookbook.cookbook.find(
-      recipe => recipeId === recipe.id
-    );
-    if (!user.favoriteRecipes.includes(foundRecipe)) {
-      user.saveRecipe(foundRecipe);
-      eventAppleTarget.src = "../images/apple-logo.png";
-    }
-  } else if (eventSilverwareTarget) {
-    let silverWareId = parseInt(eventSilverwareTarget.id);
-    const foundRecipe = cookbook.cookbook.find(
-      recipe => silverWareId === recipe.id
-    );
-    if (!user.recipesToCook.includes(foundRecipe)) {
-      user.decideToCook(foundRecipe);
-    }
-  }
 }
 
 function findFavoriteRecipes() {
@@ -203,13 +174,54 @@ function findIngredientsInPantry(event) {
 
     let results = pantry.canICookRecipe(matchedRecipe);
     domUpdates.displayCanICookResults(results, pantry)
-
   }
 
-  //domUpdates.updatePantryAside()
+function addToMyRecipes(event) {
+let eventTarget = event.target.closest('.card-photo-preview');
+let eventAppleTarget = event.target.closest('.card-apple-icon');
+let eventSilverwareTarget = event.target.closest('.card-silverware-icon')
 
-  //render to the DOM!!!
-  // let howMuch = hasIngs.map(ing => {
-  //   return `Sorry, you need ${ing.quantity.amount} ${ing.quantity.unit} of ${ing.name}.`;
-  // });
+if(eventTarget) {
+  const targetId = parseInt(eventTarget.id);
+  const foundRecipe = cookbook.cookbook.find(
+    recipe => targetId === recipe.id
+  );
+  domUpdates.openRecipeInfo(foundRecipe)
+} else if (eventAppleTarget) {
+  let recipeId = parseInt(eventAppleTarget.id);
+  const foundRecipe = cookbook.cookbook.find(
+    recipe => recipeId === recipe.id
+  );
+
+  let cardId = parseInt(eventAppleTarget.id)
+    if (!user.favoriteRecipes.includes(foundRecipe)) {
+      const foundRecipe = cookbook.cookbook.find(
+        recipe => cardId === recipe.id
+      );
+      event.target.src = "../images/apple-logo.png";
+      user.saveRecipe(foundRecipe);
+    } else {
+      event.target.src = "../images/apple-logo-outline.png";
+      const foundRecipe = cookbook.cookbook.find(
+        recipe => cardId === recipe.id
+      );
+      user.removeRecipe(foundRecipe);
+    }
+  } else if (event.target.closest('.card-photo-preview')) {
+      const targetId = parseInt(eventTarget.id);
+      const foundRecipe = cookbook.cookbook.find(
+        recipe => targetId === recipe.id
+      );
+      domUpdates.openRecipeInfo(foundRecipe)
+ } else if (eventSilverwareTarget) {
+    let silverWareId = parseInt(eventSilverwareTarget.id);
+    const foundRecipe = cookbook.cookbook.find(
+      recipe => silverWareId === recipe.id
+    );
+    if (!user.recipesToCook.includes(foundRecipe)) {
+      user.decideToCook(foundRecipe);
+    } else {
+      user.removeFromRecipesToCook(foundRecipe)
+    }
+  }
 }
