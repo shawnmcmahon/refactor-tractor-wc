@@ -1,64 +1,43 @@
 /* eslint-disable max-len */
 let fullRecipeInfo;
+let welcomeMessage = document.getElementById('welcomeMessage');
+let myRecipesBanner = document.getElementById('myRecipesBanner');
+let tagAside = document.getElementById('tagAside');
+let pantryAside = document.getElementById('pantryAside');
+let searchBar = document.getElementById('searchBar');
 
 let domUpdates = {
-  show(element) {
-    element.classList.remove('hidden');
-  },
-
-  hide(element) {
-    element.classList.add('hidden');
-  },
-
-  hideMany(elements) {
+  hide(elements) {
     elements.forEach(element => element.classList.add('hidden'));
   },
 
-  showMany(elements) {
+  show(elements) {
     elements.forEach(element => element.classList.remove('hidden'));
   },
 
   updateWelcomeMessage(user) {
-    let welcomeMessage = document.getElementById('welcomeMessage');
-    let myRecipesBanner = document.getElementById('myRecipesBanner');
-    let tagAside = document.getElementById('tagAside');
-    let pantryAside = document.getElementById('pantryAside');
-    let searchBar = document.getElementById('searchBar');
-
-    this.hide(myRecipesBanner);
-    this.show(welcomeMessage);
-    this.show(tagAside);
-    this.hide(pantryAside);
-    this.show(searchBar);
+    this.hide([myRecipesBanner, pantryAside]);
+    this.show([welcomeMessage, tagAside, searchBar]);
     let firstName = user.name.split(' ')[0];
     welcomeMessage.innerHTML = `
-        <h1>Welcome ${firstName}!</h1>
+      <h1>Welcome ${firstName}!</h1>
     `;
   },
 
   updateBanner(event) {
-    let welcomeMessage = document.getElementById('welcomeMessage');
-    let myRecipesBanner = document.getElementById('myRecipesBanner');
     let bannerText = document.getElementById('bannerText');
-    let tagAside = document.getElementById('tagAside');
-    let pantryAside = document.getElementById('pantryAside');
-    let searchBar = document.getElementById('searchBar');
-
-    this.hide(welcomeMessage);
-    this.show(myRecipesBanner);
-
+    this.hide([welcomeMessage]);
+    this.show([myRecipesBanner]);
     let target = event.target.closest('button').id;
 
     if (target.includes('Fav')) {
       bannerText.innerText = 'My Favorite Recipes';
-      this.show(tagAside);
-      this.hide(pantryAside);
-      this.show(searchBar);
+      this.show([tagAside, searchBar]);
+      this.hide([pantryAside]);
     } else if (target.includes('Cook')) {
       bannerText.innerText = 'My Cooking Queue';
-      this.hide(tagAside);
-      this.show(pantryAside);
-      this.hide(searchBar);
+      this.hide([tagAside, searchBar]);
+      this.show([pantryAside]);
     }
   },
 
@@ -86,14 +65,14 @@ let domUpdates = {
   renderRecipeCards(cookbook, user) {
     user.viewHome();
     let allRecipeCards = document.getElementById('allRecipeCards');
+    allRecipeCards.innerHTML = '';
     let cardHtml;
     let recipes = cookbook.cookbook;
-    allRecipeCards.innerHTML = '';
     recipes.forEach(recipe => {
       let name = domUpdates.shortenNames(recipe);
 
-      if(user.favoriteRecipes.includes(recipe)) {
-         cardHtml = `
+      if(user.favoriteRecipes.includes(recipe) && recipe.tags.length > 0) {
+        cardHtml = `
         <div class='recipe-card' id=${recipe.id}>
           <h3>${name}</h3>
           <div class='card-photo-container'>
@@ -103,34 +82,41 @@ let domUpdates = {
           <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
           <img src='../images/apple-logo.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon filled-apple-icon '>
         </div>`;
+      } else if (recipe.tags.length === 0) {
+        cardHtml = `
+          <div class='recipe-card' id=${recipe.id}>
+            <h3>${name}</h3>
+            <div class='card-photo-container'>
+              <img src=${recipe.image} id=${recipe.id} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
+            </div>
+            <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
+            <img src='../images/apple-logo-outline.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon'>
+          </div>`;
       } else {
-
-       cardHtml = `
-        <div class='recipe-card' id=${recipe.id}>
-          <h3>${name}</h3>
-          <div class='card-photo-container'>
-            <img src=${recipe.image} id=${recipe.id} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
-          </div>
-          <h4>${recipe.tags[0]}</h4>
-          <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
-          <img src='../images/apple-logo-outline.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon'>
-        </div>`;
-    }
-        allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
+        cardHtml = `
+          <div class='recipe-card' id=${recipe.id}>
+            <h3>${name}</h3>
+            <div class='card-photo-container'>
+              <img src=${recipe.image} id=${recipe.id} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
+            </div>
+            <h4>${recipe.tags[0]}</h4>
+            <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
+            <img src='../images/apple-logo-outline.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon'>
+          </div>`;
+      }
+      allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
     });
   },
 
-
-  renderSearchResults(results) {
+  renderSearchResults(results, user) {
     let allRecipeCards = document.getElementById('allRecipeCards');
     let recipes = results;
-    allRecipeCards.innerHTML = '';
     let cardHtml;
+    allRecipeCards.innerHTML = '';
 
     recipes.forEach(recipe => {
       let name = domUpdates.shortenNames(recipe);
-
-      let cardHtml = `
+      cardHtml = `
         <div class='recipe-card' id=${recipe.id}>
           <h3>${name}</h3>
           <div class='card-photo-container'>
@@ -143,6 +129,27 @@ let domUpdates = {
         </div>`;
       allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
     });
+  },
+
+  renderFavorites(favorites, user) {
+    let allRecipeCards = document.getElementById('allRecipeCards');
+    let cardHtml;
+    allRecipeCards.innerHTML = '';
+
+    favorites.forEach(recipe => {
+      let name = domUpdates.shortenNames(recipe);
+      cardHtml = `
+        <div class='recipe-card' id=${recipe.id}>
+          <h3>${name}</h3>
+          <div class='card-photo-container'>
+            <img src='${recipe.image}' id=${recipe.id} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
+          </div>
+          <h4>${recipe.tags[0]}</h4>
+          <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
+          <img src='/images/apple-logo.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon filled-apple-icon'>
+        </div>`;
+      allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
+    })
   },
 
   shortenNames(recipe) {
@@ -187,14 +194,6 @@ let domUpdates = {
         .querySelector('.pantry-list')
         .insertAdjacentHTML('beforeend', ingredientHtml);
     });
-
-    // this can be modified into the post request
-    // let pantryCheckboxes = document.querySelectorAll('.pantry-checkbox');
-    // pantryCheckboxes.forEach(checkbox => {
-    //   checkbox.addEventListener('click', () => {
-    //     domUpdates.findCheckedPantryBoxes('click');
-    //   });
-    // });
   },
 
   openRecipeInfo(recipe) {
