@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import './css/index.scss';
-
 import domUpdates from './domUpdates';
 import apiCalls from './apiCalls'
 import User from './user';
@@ -28,14 +27,11 @@ let favRecipesBtn = document.getElementById('myFavRecipesButton');
 let homeBtn = document.getElementById('myHomeButton');
 let myRecipesBanner = document.getElementById('myRecipesBanner');
 let pantryBtn = document.getElementById('myPantryButton');
+let pantryList = document.querySelector('.pantry-list')
 let recipesToCookBtn = document.getElementById('myRecipesToCookButton');
 let searchBtn = document.getElementById('searchButton');
 let searchInput = document.getElementById('searchInput');
 let searchForm = document.getElementById('searchBar');
-
-let addIngredientBtn = document.getElementById('add-ingredient');
-let removeIngredientBtn = document.getElementById('remove-ingredient');
-let pantryList = document.querySelector('.pantry-list')
 
 // variables
 let user, cookbook, pantry;
@@ -48,6 +44,7 @@ favRecipesBtn.addEventListener('click', findFavoriteRecipes);
 filterRecipesBtn.addEventListener('click', findCheckedTags);
 homeBtn.addEventListener('click', () => domUpdates.renderRecipeCards(cookbook, user))
 homeBtn.addEventListener('click', () => domUpdates.updateWelcomeMessage(user));
+pantryList.addEventListener('click', () => modifyIngredient(event, user))
 pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
 recipesToCookBtn.addEventListener('click', () => domUpdates.updateBanner(event));
 recipesToCookBtn.addEventListener('click', findCookList)
@@ -55,9 +52,6 @@ searchForm.addEventListener('submit', () => pressEnterSearch(event));
 searchBtn.addEventListener('click', searchRecipes);
 window.addEventListener('click', () => clickRecipeCard(event));
 window.onload = startUp();
-
-
-pantryList.addEventListener('click', () => modifyIngredient(event, user))
 
 function startUp() {
   apiCalls.retrieveData()

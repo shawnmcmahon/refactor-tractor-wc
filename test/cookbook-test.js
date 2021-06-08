@@ -1,23 +1,21 @@
 import { expect } from 'chai';
 import Cookbook from '../src/cookbook'
 import Recipe from '../src/recipe'
-// import { testIngredients, testRecipes, testUserData } from '../test/test-data';
 import testIngredients from './sampleIngredientsData'
 import testRecipes from './sampleRecipesData'
-import testUserData from './sampleUserData'
 
 
 describe('Cookbook', () => {
   let recipe1, recipe2, recipe3, testCookbook, allRecipes;
 
-    beforeEach(() => {
-      recipe1 = new Recipe(testRecipes[0], testIngredients);
-      recipe2 = new Recipe(testRecipes[1], testIngredients);
-      recipe3 = new Recipe(testRecipes[2], testIngredients);
+  beforeEach(() => {
+    recipe1 = new Recipe(testRecipes[0], testIngredients);
+    recipe2 = new Recipe(testRecipes[1], testIngredients);
+    recipe3 = new Recipe(testRecipes[2], testIngredients);
 
-      allRecipes = [recipe1, recipe2, recipe3];
-      testCookbook = new Cookbook(allRecipes, testIngredients);
-    });
+    allRecipes = [recipe1, recipe2, recipe3];
+    testCookbook = new Cookbook(allRecipes, testIngredients);
+  });
 
   it('Should be a function', () => {
     expect(Cookbook).to.be.a('function');
@@ -103,7 +101,6 @@ describe('Cookbook', () => {
     ]);
   });
 
-  //Sad Path Testing
   it('Should not filter recipes that are missing a name', () => {
     const brokenRecipe = new Recipe(testRecipes[3], testIngredients)
     testCookbook.filterByNameOrIngredient(["banana"])
