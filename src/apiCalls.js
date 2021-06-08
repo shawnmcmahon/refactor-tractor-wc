@@ -1,3 +1,5 @@
+// import modifyPantry from './scripts'
+
 const fetchUserData = () => {
   return fetch('http://localhost:3001/api/v1/users')
     .then(response => checkForError(response))
@@ -24,8 +26,24 @@ const checkForError = (response) => {
   }
 }
 
+function addOrRemoveIngredient(userID, ingredientID, ingredientMod) {
+  return fetch("http://localhost:3001/api/v1/users", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userID: userID,
+      ingredientID: ingredientID,
+      ingredientModification: ingredientMod
+    }),
+  })
+    .then(response => checkForError(response))
+    .catch(err => console.log(`POST Request Error: ${err.message}`))
+}
+
 function retrieveData() {
   return Promise.all([fetchUserData(), fetchRecipeData(), fetchIngredientsData()])
 }
 
-export default {fetchUserData, fetchRecipeData, fetchIngredientsData, retrieveData}
+export default {fetchUserData, fetchRecipeData, fetchIngredientsData, retrieveData, addOrRemoveIngredient}
