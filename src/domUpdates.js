@@ -86,14 +86,14 @@ let domUpdates = {
   renderRecipeCards(cookbook, user) {
     user.viewHome();
     let allRecipeCards = document.getElementById('allRecipeCards');
-    let cardHtml;
-    let recipes = cookbook.cookbook;
     allRecipeCards.innerHTML = '';
+    let cardHtml; 
+    let recipes = cookbook.cookbook;
     recipes.forEach(recipe => {
       let name = domUpdates.shortenNames(recipe);
 
-      if(user.favoriteRecipes.includes(recipe)) {
-         cardHtml = `
+      if(user.favoriteRecipes.includes(recipe) && recipe.tags.length > 0) {
+        cardHtml = `
         <div class='recipe-card' id=${recipe.id}>
           <h3>${name}</h3>
           <div class='card-photo-container'>
@@ -103,29 +103,36 @@ let domUpdates = {
           <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
           <img src='../images/apple-logo.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon filled-apple-icon '>
         </div>`;
+      } else if (recipe.tags.length === 0) {
+        cardHtml = `
+          <div class='recipe-card' id=${recipe.id}>
+            <h3>${name}</h3>
+            <div class='card-photo-container'>
+              <img src=${recipe.image} id=${recipe.id} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
+            </div>
+            <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
+            <img src='../images/apple-logo-outline.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon'>
+          </div>`;
       } else {
-
-       cardHtml = `
-        <div class='recipe-card' id=${recipe.id}>
-          <h3>${name}</h3>
-          <div class='card-photo-container'>
-            <img src=${recipe.image} id=${recipe.id} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
-          </div>
-          <h4>${recipe.tags[0]}</h4>
-          <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
-          <img src='../images/apple-logo-outline.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon'>
-        </div>`;
-    }
-        allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
+        cardHtml = `
+          <div class='recipe-card' id=${recipe.id}>
+            <h3>${name}</h3>
+            <div class='card-photo-container'>
+              <img src=${recipe.image} id=${recipe.id} class='card-photo-preview' alt='${recipe.name} recipe' title='${recipe.name} recipe'>
+            </div>
+            <h4>${recipe.tags[0]}</h4>
+            <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
+            <img src='../images/apple-logo-outline.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon'>
+          </div>`;
+      }
+      allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
     });
   },
-
 
   renderSearchResults(results) {
     let allRecipeCards = document.getElementById('allRecipeCards');
     let recipes = results;
     allRecipeCards.innerHTML = '';
-    let cardHtml;
 
     recipes.forEach(recipe => {
       let name = domUpdates.shortenNames(recipe);
