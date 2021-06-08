@@ -64,3 +64,39 @@ Demonstration of the app:
 * Ensuring that we created small, actionanable steps in order to approach this large project. 
 
 
+#### Future Features
+* Ability to add any missing ingredients to a grocery list. 
+* Add a log-in screen. 
+* add a seven day calendar to the cooking queue page.
+
+
+## Credits
+#### Authors
+<table>
+    <tr>
+        <td> Lourdes Mendoza <a href="https://github.com/mendozalourdes">GH</td>
+    </tr>
+    </tr>
+    <td><img src="https://avatars.githubusercontent.com/u/78240633?v=4" alt="Lourdes GH img"
+ width="150" height="auto" /></td>
+    <tr>
+          <td> Claire Fields <a href="https://github.com/clairefields15">GH</td>
+    </tr>
+    </tr>
+ <td><img src="https://avatars.githubusercontent.com/u/79113236?v=4" alt="Claire GH img"
+width="150" height="auto" /></td>
+     <tr>
+          <td> Shawn  <a href="https://github.com/shawnmcmahon">GH</td>
+      </tr>
+      </tr>
+<td><img src="https://avatars.githubusercontent.com/u/73731359?v=4" alt="Shawn GH img"
+width="150" height="auto" /></td>
+    </tr>
+</table>
+
+
+**************************************************************************
+###### This project was created for [Turing School of Software and Design](https://turing.io/)
+###### 2021/06/08
+**[Back to top](#table-of-contents)**
+
