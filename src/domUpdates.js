@@ -175,7 +175,7 @@ let domUpdates = {
 
     updatePantryIngs.forEach(ingredient => {
       let ingredientHtml = `
-      <li><input type='checkbox' class='pantry-checkbox' id='${ingredient.name}'>
+      <li><p id='${ingredient.name}'>
           <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.amount}</label></li>
           <button data-id='${ingredient.id}' id='${ingredient.id} add-ingredient' class='add-ingredient nav-button'>
             +

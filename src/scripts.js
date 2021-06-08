@@ -42,6 +42,7 @@ let bannerText = document.getElementById('bannerText');
 
 let addIngredientBtn = document.getElementById('add-ingredient');
 let removeIngredientBtn = document.getElementById('remove-ingredient');
+let pantryList = 
 
 // variables
 let user, cookbook, pantry;
