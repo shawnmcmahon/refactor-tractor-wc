@@ -259,6 +259,7 @@ export default function updatePantry(userID, ingredientID, ingredientMod, user) 
   //console.log(user.pantry)
   user.pantry[specificIngredient].amount += ingredientMod;
 
+
   //console.log("i'm here", user.pantry.contents[specificIngredient].amount )
   // domUpdates.displayPantry(user, globalIngredientsData);
 }
