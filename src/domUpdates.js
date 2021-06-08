@@ -174,12 +174,9 @@ let domUpdates = {
   },
 
   displayPantryInfo(pantry) {
-    // let addIngredientBtn = document.getElementById('add-ingredient');
-    // let removeIngredientBtn = document.getElementById('remove-ingredient');
-
-
+    let list = document.querySelector('.pantry-list')
     let updatePantryIngs = pantry.returnPantryIngredients();
-
+    list.innerHTML = ' ';
     updatePantryIngs.forEach(ingredient => {
       let ingredientHtml = `
       <li><p id='${ingredient.name}'>
@@ -190,9 +187,8 @@ let domUpdates = {
             <button data-id='${ingredient.id}' id='remove-ingredient' class='remove-ingredient nav-button'>
             -
             </button>`;
-      document
-        .querySelector('.pantry-list')
-        .insertAdjacentHTML('beforeend', ingredientHtml);
+
+        list.insertAdjacentHTML('beforeend', ingredientHtml);
     });
   },
 
