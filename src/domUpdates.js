@@ -167,23 +167,34 @@ let domUpdates = {
   },
 
   displayPantryInfo(pantry) {
+    // let addIngredientBtn = document.getElementById('add-ingredient');
+    // let removeIngredientBtn = document.getElementById('remove-ingredient');
+
+
     let updatePantryIngs = pantry.returnPantryIngredients();
 
     updatePantryIngs.forEach(ingredient => {
-      let ingredientHtml = `<li><input type='checkbox' class='pantry-checkbox' id='${ingredient.name}'>
-          <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.amount}</label></li>`;
+      let ingredientHtml = `
+      <li><input type='checkbox' class='pantry-checkbox' id='${ingredient.name}'>
+          <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.amount}</label></li>
+          <button data-id='${ingredient.id}' id='${ingredient.id} add-ingredient' class='add-ingredient nav-button'>
+            +
+            </button>
+            <button data-id='${ingredient.id}' id='${ingredient.id} remove-ingredient' class='remove-ingredient nav-button'>
+            -
+            </button>`;
       document
         .querySelector('.pantry-list')
         .insertAdjacentHTML('beforeend', ingredientHtml);
     });
 
     // this can be modified into the post request
-    let pantryCheckboxes = document.querySelectorAll('.pantry-checkbox');
-    pantryCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('click', () => {
-        domUpdates.findCheckedPantryBoxes('click');
-      });
-    });
+    // let pantryCheckboxes = document.querySelectorAll('.pantry-checkbox');
+    // pantryCheckboxes.forEach(checkbox => {
+    //   checkbox.addEventListener('click', () => {
+    //     domUpdates.findCheckedPantryBoxes('click');
+    //   });
+    // });
   },
 
   openRecipeInfo(recipe) {

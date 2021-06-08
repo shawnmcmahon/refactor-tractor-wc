@@ -40,6 +40,9 @@ let welcomeMessage = document.getElementById('welcomeMessage');
 let myRecipesBanner = document.getElementById('myRecipesBanner');
 let bannerText = document.getElementById('bannerText');
 
+let addIngredientBtn = document.getElementById('add-ingredient');
+let removeIngredientBtn = document.getElementById('remove-ingredient');
+
 // variables
 let user, cookbook, pantry;
 
@@ -60,7 +63,11 @@ allRecipeCards.addEventListener('click', () => findIngredientsInPantry(event));
 window.addEventListener('click', () => addToMyRecipes(event));
 // window.addEventListener('click', () => clickRecipeCard(event));
 
+
+addIngredientBtn.addEventListener('click', () => modifyIngredient(event))
+
 function startUp() {
+  console.log(addIngredientBtn)
   apiCalls.retrieveData()
     .then((promise) => {
       makeUserInstance(promise[0].usersData, promise[2].ingredientsData);
@@ -137,7 +144,7 @@ function searchRecipes() {
   } else if (!homePage) {
     let results = user.searchForRecipe(input)
     domUpdates.renderSearchResults(results)
-  }  
+  }
 }
 
 function findCheckedTags() {
@@ -146,11 +153,11 @@ function findCheckedTags() {
   let selectedTags = allTags.filter(box => {
     return box.checked;
   }).map(checked => checked.id)
-  
+
   allTags.forEach(box => box.checked = false)
 
   let homePage = amIOnTheHomePage();
-  
+
   if (!homePage && !selectedTags.includes('show all')) {
     let results = user.filterRecipes(selectedTags);
     domUpdates.renderSearchResults(results);
@@ -225,4 +232,29 @@ function addToMyRecipes(event) {
       user.removeFromRecipesToCook(foundRecipe)
     }
   }
+}
+
+function modifyIngredient(event) {
+  if (event.target.closest('add-ingredient')) {
+    apiCalls.addOrRemoveIngredient(user.id, event.target.dataset.id, 1)
+      // .then(response => checkForError(response))
+      .then(response => updatePantry(userID, ingredientID, ingredientMod))
+      // .catch(err => console.log(`POST Request Error: ${err.message}`))
+  } else if (event.target.closest('remove-ingredient')) {
+    apiCalls.addOrRemoveIngredient(user.id, event.target.dataset.id, -1)
+    // .then(response => checkForError(response))
+    .then(response => updatePantry(userID, ingredientID, ingredientMod))
+    // .catch(err => console.log(`POST Request Error: ${err.message}`))
+  }
+}
+
+export default function updatePantry(userID, ingredientID, ingredientMod) {
+  let specificIngredient = user.pantry.contents.findIndex(ingredient => {
+    if (Number(ingredient.ingredient) === Number(ingredientID)) {
+      return true
+    }
+  });
+  console.log(user.pantry.contents[specificIngredient].amount)
+  user.pantry.contents[specificIngredient].amount += ingredientMod;
+  // domUpdates.displayPantry(user, globalIngredientsData);
 }
