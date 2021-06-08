@@ -62,9 +62,9 @@ pantryList.addEventListener('click', () => modifyIngredient(event, user))
 function startUp() {
   apiCalls.retrieveData()
     .then((promise) => {
-      makeUserAndPantry(promise[0].usersData, promise[2].ingredientsData);
-      const allRecipes = makeRecipeInstances(promise[1].recipeData, promise[2].ingredientsData);
-      cookbook = new Cookbook(allRecipes, promise[2].ingredientsData);
+      makeUserAndPantry(promise[0], promise[2]);
+      const allRecipes = makeRecipeInstances(promise[1], promise[2]);
+      cookbook = new Cookbook(allRecipes, promise[2]);
       domUpdates.updateWelcomeMessage(user);
       getTagsFromRecipeData()
       domUpdates.renderRecipeCards(cookbook, user)
@@ -247,7 +247,7 @@ function modifyIngredient(event, user) {
 }
 
 export default function updatePantry(userID, ingredientID, ingredientMod, user) {
-  console.log('before', user.pantry)
+  console.log('user', user)
 
   let specificIngredient = user.pantry.findIndex(ingredient => {
     if (Number(ingredient.ingredient) === Number(ingredientID)) {

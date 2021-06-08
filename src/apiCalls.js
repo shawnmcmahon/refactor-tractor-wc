@@ -3,7 +3,7 @@
 const fetchUserData = () => {
   return fetch('http://localhost:3001/api/v1/users')
     .then(response => checkForError(response))
-    .catch(error => console.error(`User API Error: ${error.message}`));
+    // .catch(error => console.error(`User API Error: ${error.message}`));
 }
 
 const fetchRecipeData = () => {
@@ -19,6 +19,7 @@ const fetchIngredientsData = () => {
 }
 
 const checkForError = (response) => {
+  console.log(response)
   if (!response.ok) {
     throw new Error('Something went wrong, please try again,')
   } else {
@@ -49,7 +50,7 @@ function addOrRemoveIngredient(userID, ingredientID, ingredientMod, user) {
       ingredientModification: ingredientMod
     }),
   })
-    .then(response => checkForError(response))
+    .then(checkForError)
     .catch(err => console.log(`POST Request Error: ${err.message}`))
 }
 
