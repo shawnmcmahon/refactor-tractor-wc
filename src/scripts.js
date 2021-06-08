@@ -229,38 +229,26 @@ function clickApple(event) {
 }
 
 function modifyIngredient(event, user) {
-  console.log(event.target.dataset.id)
   let addButton = event.target.closest('.add-ingredient')
   let removeButton = event.target.closest('.remove-ingredient')
 
   if (addButton) {
     apiCalls.addOrRemoveIngredient(user.id, event.target.dataset.id, 1, user)
-      // .then(response => checkForError(response))
       .then(response => updatePantry(user.id, event.target.dataset.id, 1, user))
-      // .catch(err => console.log(`POST Request Error: ${err.message}`))
   } else if (removeButton) {
     apiCalls.addOrRemoveIngredient(user.id, event.target.dataset.id, -1, user)
-    // .then(response => checkForError(response))
     .then(response => updatePantry(user.id, event.target.dataset.id, -1, user))
-    // .catch(err => console.log(`POST Request Error: ${err.message}`))
   }
 }
 
 
 export default function updatePantry(userID, ingredientID, ingredientMod, user) {
-  console.log('user', user)
 
   let specificIngredient = user.pantry.findIndex(ingredient => {
     if (Number(ingredient.ingredient) === Number(ingredientID)) {
       return true
     }
   });
-  console.log('specific ingredient', user.pantry[specificIngredient].amount )
-  //console.log('ingredient mod', ingredientMod)
-  //console.log(user.pantry)
   user.pantry[specificIngredient].amount += ingredientMod;
-
-
-  //console.log("i'm here", user.pantry.contents[specificIngredient].amount )
-  // domUpdates.displayPantry(user, globalIngredientsData);
+  domUpdates.displayPantryInfo(pantry)
 }
