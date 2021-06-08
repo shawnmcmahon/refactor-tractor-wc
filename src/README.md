@@ -35,3 +35,32 @@ To solidify and demonstrate the understanding of:
 
 
 
+## How does this work?
+Demonstration of the app:
+
+![What's Cookin' View 1]( )
+
+**[Back to top](#table-of-contents)**
+
+## Technologies Used
+<p align="left">
+  <img src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="javascript" />
+  <img src="https://img.shields.io/badge/html5%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white" alt="html5"/>
+  <img src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white" alt="CSS3"/>
+  <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="Github" />
+  <p>Webpack</p>
+  <p>API</p>
+  <p>SCSS</p>
+  <p>Testing Frameworks Mocha & Chai</p>
+</p>
+
+## Project Reflection
+
+##### Wins
+* Successfully applying TDD in order to confirm our logic using a smaller dataset before implementing the functionality to the page and using a larger dataset.
+* Applying a divide and conquer approach as a group in order to strengthen our individual and shared learning goals. 
+
+##### Challenges
+* Ensuring that we created small, actionanable steps in order to approach this large project. 
+
+
