@@ -23,22 +23,18 @@ import './images/home.png'
 
 // query selectors
 let allRecipeCards = document.getElementById('allRecipeCards');
+let bannerText = document.getElementById('bannerText');
 let filterRecipesBtn = document.getElementById('filterRecipesButton');
-let recipesToCookBtn = document.getElementById('myRecipesToCookButton');
-let homeBtn = document.getElementById('myHomeButton');
-let pantryBtn = document.getElementById('myPantryButton');
 let favRecipesBtn = document.getElementById('myFavRecipesButton');
+let homeBtn = document.getElementById('myHomeButton');
+let myRecipesBanner = document.getElementById('myRecipesBanner');
+let pantryBtn = document.getElementById('myPantryButton');
+let recipesToCookBtn = document.getElementById('myRecipesToCookButton');
 let searchBtn = document.getElementById('searchButton');
 let searchInput = document.getElementById('searchInput');
 let searchForm = document.getElementById('searchBar');
 let whatCanIMakeBtn = document.getElementById('whatCanIMake');
-// let emptyApple = document.querySelector('.card-apple-icon');
-// let filledApple = document.querySelector('.filled-apple-icon ');
-
-
 let welcomeMessage = document.getElementById('welcomeMessage');
-let myRecipesBanner = document.getElementById('myRecipesBanner');
-let bannerText = document.getElementById('bannerText');
 
 // variables
 let user, cookbook, pantry;
@@ -57,13 +53,12 @@ homeBtn.addEventListener('click', () => domUpdates.renderRecipeCards(cookbook, u
 homeBtn.addEventListener('click', () => domUpdates.updateWelcomeMessage(user));
 allRecipeCards.addEventListener('click', domUpdates.exitRecipe);
 allRecipeCards.addEventListener('click', () => findIngredientsInPantry(event));
-window.addEventListener('click', () => addToMyRecipes(event));
-// window.addEventListener('click', () => clickRecipeCard(event));
+window.addEventListener('click', () => clickRecipeCard(event));
 
 function startUp() {
   apiCalls.retrieveData()
     .then((promise) => {
-      makeUserInstance(promise[0].usersData, promise[2].ingredientsData);
+      makeUserAndPantry(promise[0].usersData, promise[2].ingredientsData);
       const allRecipes = makeRecipeInstances(promise[1].recipeData, promise[2].ingredientsData);
       cookbook = new Cookbook(allRecipes, promise[2].ingredientsData);
       domUpdates.updateWelcomeMessage(user);
@@ -71,16 +66,11 @@ function startUp() {
       domUpdates.renderRecipeCards(cookbook, user)
       domUpdates.displayPantryInfo(pantry)
     })
-}
-
-function makeUserInstance(apiUserData, apiIngredientData) {
+  }
+  
+function makeUserAndPantry(apiUserData, apiIngredientData) {
   let randomNumber = Math.floor(Math.random() * apiUserData.length);
   user = new User(apiUserData[randomNumber], apiIngredientData);
-
-  makePantryInstance(user, apiIngredientData)
-}
-
-function makePantryInstance(user, apiIngredientData) {
   pantry = new Pantry(user, apiIngredientData)
 }
 
@@ -105,12 +95,12 @@ function getTagsFromRecipeData() {
 
 function findFavoriteRecipes() {
   let favorites = user.favoriteRecipes
-  domUpdates.renderSearchResults(favorites)
+  domUpdates.renderFavorites(favorites, user)
 }
 
 function findCookList() {
   let cookList = user.recipesToCook;
-  domUpdates.renderSearchResults(cookList)
+  domUpdates.renderSearchResults(cookList, user)
 }
 
 function pressEnterSearch(event) {
@@ -133,10 +123,10 @@ function searchRecipes() {
 
   if (homePage) {
     let results = cookbook.filterByNameOrIngredient(input);
-    domUpdates.renderSearchResults(results)
+    domUpdates.renderSearchResults(results, user)
   } else if (!homePage) {
     let results = user.searchForRecipe(input)
-    domUpdates.renderSearchResults(results)
+    domUpdates.renderSearchResults(results, user)
   }  
 }
 
@@ -153,10 +143,10 @@ function findCheckedTags() {
   
   if (!homePage && !selectedTags.includes('show all')) {
     let results = user.filterRecipes(selectedTags);
-    domUpdates.renderSearchResults(results);
+    domUpdates.renderSearchResults(results, user);
   } else if (homePage && !selectedTags.includes('show all')) {
     let results = cookbook.filterByTag(selectedTags);
-    domUpdates.renderSearchResults(results);
+    domUpdates.renderSearchResults(results,user);
   } else if (!homePage && selectedTags.includes('show all')) {
     findFavoriteRecipes()
   } else if (homePage && selectedTags.includes('show all')) {
@@ -177,18 +167,42 @@ function findIngredientsInPantry(event) {
   }
 }
 
-function addToMyRecipes(event) {
-  let eventTarget = event.target.closest('.card-photo-preview');
-  let eventAppleTarget = event.target.closest('.card-apple-icon');
-  let eventSilverwareTarget = event.target.closest('.card-silverware-icon')
+function clickRecipeCard(event) {
+  clickApple(event);
+  clickSilverware(event);
+  getRecipeInfo(event);
+}
 
-  if (eventTarget) {
+function getRecipeInfo(event) {
+  let eventTarget = event.target.closest('.card-photo-preview');
+  if (event.target.closest('.card-photo-preview')) {
     const targetId = parseInt(eventTarget.id);
     const foundRecipe = cookbook.cookbook.find(
       recipe => targetId === recipe.id
     );
     domUpdates.openRecipeInfo(foundRecipe)
-  } else if (eventAppleTarget) {
+}
+}
+
+function clickSilverware(event) {
+  let eventSilverwareTarget = event.target.closest('.card-silverware-icon')
+  if (eventSilverwareTarget) {
+    let silverWareId = parseInt(eventSilverwareTarget.id);
+    const foundRecipe = cookbook.cookbook.find(
+      recipe => silverWareId === recipe.id
+    );
+    if (!user.recipesToCook.includes(foundRecipe)) {
+      user.decideToCook(foundRecipe);
+    } else {
+      user.removeFromRecipesToCook(foundRecipe)
+    }
+  }
+}
+
+function clickApple(event) {
+  let eventTarget = event.target.closest('.card-photo-preview');
+  let eventAppleTarget = event.target.closest('.card-apple-icon');
+ if (eventAppleTarget) {
     let recipeId = parseInt(eventAppleTarget.id);
     const foundRecipe = cookbook.cookbook.find(
       recipe => recipeId === recipe.id
@@ -207,22 +221,6 @@ function addToMyRecipes(event) {
         recipe => cardId === recipe.id
       );
       user.removeRecipe(foundRecipe);
-    }
-  } else if (event.target.closest('.card-photo-preview')) {
-    const targetId = parseInt(eventTarget.id);
-    const foundRecipe = cookbook.cookbook.find(
-      recipe => targetId === recipe.id
-    );
-    domUpdates.openRecipeInfo(foundRecipe)
-  } else if (eventSilverwareTarget) {
-    let silverWareId = parseInt(eventSilverwareTarget.id);
-    const foundRecipe = cookbook.cookbook.find(
-      recipe => silverWareId === recipe.id
-    );
-    if (!user.recipesToCook.includes(foundRecipe)) {
-      user.decideToCook(foundRecipe);
-    } else {
-      user.removeFromRecipesToCook(foundRecipe)
     }
   }
 }
