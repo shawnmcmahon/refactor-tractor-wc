@@ -1,5 +1,10 @@
 /* eslint-disable max-len */
 let fullRecipeInfo;
+let welcomeMessage = document.getElementById('welcomeMessage');
+let myRecipesBanner = document.getElementById('myRecipesBanner');
+let tagAside = document.getElementById('tagAside');
+let pantryAside = document.getElementById('pantryAside');
+let searchBar = document.getElementById('searchBar');
 
 let domUpdates = {
   hide(elements) {
@@ -11,12 +16,6 @@ let domUpdates = {
   },
 
   updateWelcomeMessage(user) {
-    let welcomeMessage = document.getElementById('welcomeMessage');
-    let myRecipesBanner = document.getElementById('myRecipesBanner');
-    let tagAside = document.getElementById('tagAside');
-    let pantryAside = document.getElementById('pantryAside');
-    let searchBar = document.getElementById('searchBar');
-
     this.hide([myRecipesBanner, pantryAside]);
     this.show([welcomeMessage, tagAside, searchBar]);
     let firstName = user.name.split(' ')[0];
@@ -26,16 +25,9 @@ let domUpdates = {
   },
 
   updateBanner(event) {
-    let welcomeMessage = document.getElementById('welcomeMessage');
-    let myRecipesBanner = document.getElementById('myRecipesBanner');
-    let tagAside = document.getElementById('tagAside');
-    let pantryAside = document.getElementById('pantryAside');
-    let searchBar = document.getElementById('searchBar');
     let bannerText = document.getElementById('bannerText');
-    
     this.hide([welcomeMessage]);
     this.show([myRecipesBanner]);
-
     let target = event.target.closest('button').id;
 
     if (target.includes('Fav')) {
@@ -135,7 +127,7 @@ let domUpdates = {
           <img src='../images/apple-logo-outline.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon'>
           <img src='/images/apple-logo.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon filled-apple-icon hidden'>
         </div>`;
-        allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
+      allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
     });
   },
 
@@ -156,8 +148,8 @@ let domUpdates = {
           <img src='../images/add-to-cook-queue-2.png' id=${recipe.id} alt="add to cook queue icon" class='card-silverware-icon'>
           <img src='/images/apple-logo.png' id=${recipe.id} alt='unfilled apple icon' class='card-apple-icon filled-apple-icon'>
         </div>`;
-        allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
-      })
+      allRecipeCards.insertAdjacentHTML('beforeend', cardHtml);
+    })
   },
 
   shortenNames(recipe) {
@@ -190,14 +182,6 @@ let domUpdates = {
       document
         .querySelector('.pantry-list')
         .insertAdjacentHTML('beforeend', ingredientHtml);
-    });
-
-    // this can be modified into the post request
-    let pantryCheckboxes = document.querySelectorAll('.pantry-checkbox');
-    pantryCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('click', () => {
-        domUpdates.findCheckedPantryBoxes('click');
-      });
     });
   },
 

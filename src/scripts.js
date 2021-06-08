@@ -23,7 +23,6 @@ import './images/home.png'
 
 // query selectors
 let allRecipeCards = document.getElementById('allRecipeCards');
-let bannerText = document.getElementById('bannerText');
 let filterRecipesBtn = document.getElementById('filterRecipesButton');
 let favRecipesBtn = document.getElementById('myFavRecipesButton');
 let homeBtn = document.getElementById('myHomeButton');
@@ -33,27 +32,25 @@ let recipesToCookBtn = document.getElementById('myRecipesToCookButton');
 let searchBtn = document.getElementById('searchButton');
 let searchInput = document.getElementById('searchInput');
 let searchForm = document.getElementById('searchBar');
-let whatCanIMakeBtn = document.getElementById('whatCanIMake');
-let welcomeMessage = document.getElementById('welcomeMessage');
 
 // variables
 let user, cookbook, pantry;
 
 //event listeners
-window.onload = startUp();
-favRecipesBtn.addEventListener('click', () => domUpdates.updateBanner(event));
-recipesToCookBtn.addEventListener('click', () => domUpdates.updateBanner(event));
-recipesToCookBtn.addEventListener('click', findCookList)
-filterRecipesBtn.addEventListener('click', findCheckedTags);
-pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
-favRecipesBtn.addEventListener('click', findFavoriteRecipes);
-searchForm.addEventListener('submit', () =>  pressEnterSearch(event));
-searchBtn.addEventListener('click', searchRecipes);
-homeBtn.addEventListener('click', () => domUpdates.renderRecipeCards(cookbook, user))
-homeBtn.addEventListener('click', () => domUpdates.updateWelcomeMessage(user));
 allRecipeCards.addEventListener('click', domUpdates.exitRecipe);
 allRecipeCards.addEventListener('click', () => findIngredientsInPantry(event));
+favRecipesBtn.addEventListener('click', () => domUpdates.updateBanner(event));
+favRecipesBtn.addEventListener('click', findFavoriteRecipes);
+filterRecipesBtn.addEventListener('click', findCheckedTags);
+homeBtn.addEventListener('click', () => domUpdates.renderRecipeCards(cookbook, user))
+homeBtn.addEventListener('click', () => domUpdates.updateWelcomeMessage(user));
+pantryBtn.addEventListener('click', domUpdates.togglePantryMenu);
+recipesToCookBtn.addEventListener('click', () => domUpdates.updateBanner(event));
+recipesToCookBtn.addEventListener('click', findCookList)
+searchForm.addEventListener('submit', () => pressEnterSearch(event));
+searchBtn.addEventListener('click', searchRecipes);
 window.addEventListener('click', () => clickRecipeCard(event));
+window.onload = startUp();
 
 function startUp() {
   apiCalls.retrieveData()
@@ -66,7 +63,7 @@ function startUp() {
       domUpdates.renderRecipeCards(cookbook, user)
       domUpdates.displayPantryInfo(pantry)
     })
-  }
+}
   
 function makeUserAndPantry(apiUserData, apiIngredientData) {
   let randomNumber = Math.floor(Math.random() * apiUserData.length);
@@ -181,7 +178,7 @@ function getRecipeInfo(event) {
       recipe => targetId === recipe.id
     );
     domUpdates.openRecipeInfo(foundRecipe)
-}
+  }
 }
 
 function clickSilverware(event) {
@@ -200,9 +197,8 @@ function clickSilverware(event) {
 }
 
 function clickApple(event) {
-  let eventTarget = event.target.closest('.card-photo-preview');
   let eventAppleTarget = event.target.closest('.card-apple-icon');
- if (eventAppleTarget) {
+  if (eventAppleTarget) {
     let recipeId = parseInt(eventAppleTarget.id);
     const foundRecipe = cookbook.cookbook.find(
       recipe => recipeId === recipe.id
