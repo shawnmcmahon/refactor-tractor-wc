@@ -35,7 +35,7 @@ let searchForm = document.getElementById('searchBar');
 
 let addIngredientBtn = document.getElementById('add-ingredient');
 let removeIngredientBtn = document.getElementById('remove-ingredient');
-let pantryList =
+let pantryList = document.querySelector('.pantry-list')
 
 // variables
 let user, cookbook, pantry;
@@ -57,10 +57,9 @@ window.addEventListener('click', () => clickRecipeCard(event));
 window.onload = startUp();
 
 
-addIngredientBtn.addEventListener('click', () => modifyIngredient(event))
+pantryList.addEventListener('click', () => modifyIngredient(event, user))
 
 function startUp() {
-  console.log(addIngredientBtn)
   apiCalls.retrieveData()
     .then((promise) => {
       makeUserAndPantry(promise[0].usersData, promise[2].ingredientsData);
@@ -229,27 +228,37 @@ function clickApple(event) {
   }
 }
 
-function modifyIngredient(event) {
-  if (event.target.closest('add-ingredient')) {
-    apiCalls.addOrRemoveIngredient(user.id, event.target.dataset.id, 1)
+function modifyIngredient(event, user) {
+  console.log(event.target.dataset.id)
+  let addButton = event.target.closest('.add-ingredient')
+  let removeButton = event.target.closest('.remove-ingredient')
+
+  if (addButton) {
+    apiCalls.addOrRemoveIngredient(user.id, event.target.dataset.id, 1, user)
       // .then(response => checkForError(response))
-      .then(response => updatePantry(userID, ingredientID, ingredientMod))
+      .then(response => updatePantry(user.id, event.target.dataset.id, 1, user))
       // .catch(err => console.log(`POST Request Error: ${err.message}`))
-  } else if (event.target.closest('remove-ingredient')) {
-    apiCalls.addOrRemoveIngredient(user.id, event.target.dataset.id, -1)
+  } else if (removeButton) {
+    apiCalls.addOrRemoveIngredient(user.id, event.target.dataset.id, -1, user)
     // .then(response => checkForError(response))
-    .then(response => updatePantry(userID, ingredientID, ingredientMod))
+    .then(response => updatePantry(user.id, event.target.dataset.id, -1, user))
     // .catch(err => console.log(`POST Request Error: ${err.message}`))
   }
 }
 
-export default function updatePantry(userID, ingredientID, ingredientMod) {
-  let specificIngredient = user.pantry.contents.findIndex(ingredient => {
+export default function updatePantry(userID, ingredientID, ingredientMod, user) {
+  console.log('before', user.pantry)
+
+  let specificIngredient = user.pantry.findIndex(ingredient => {
     if (Number(ingredient.ingredient) === Number(ingredientID)) {
       return true
     }
   });
-  console.log(user.pantry.contents[specificIngredient].amount)
-  user.pantry.contents[specificIngredient].amount += ingredientMod;
+  console.log('specific ingredient', user.pantry[specificIngredient].amount )
+  //console.log('ingredient mod', ingredientMod)
+  //console.log(user.pantry)
+  user.pantry[specificIngredient].amount += ingredientMod;
+
+  //console.log("i'm here", user.pantry.contents[specificIngredient].amount )
   // domUpdates.displayPantry(user, globalIngredientsData);
 }

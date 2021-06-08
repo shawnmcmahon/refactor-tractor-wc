@@ -184,10 +184,10 @@ let domUpdates = {
       let ingredientHtml = `
       <li><p id='${ingredient.name}'>
           <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.amount}</label></li>
-          <button data-id='${ingredient.id}' id='${ingredient.id} add-ingredient' class='add-ingredient nav-button'>
+          <button data-id='${ingredient.id}' id='add-ingredient' class='add-ingredient nav-button'>
             +
             </button>
-            <button data-id='${ingredient.id}' id='${ingredient.id} remove-ingredient' class='remove-ingredient nav-button'>
+            <button data-id='${ingredient.id}' id='remove-ingredient' class='remove-ingredient nav-button'>
             -
             </button>`;
       document
