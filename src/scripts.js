@@ -246,6 +246,7 @@ function modifyIngredient(event, user) {
   }
 }
 
+
 export default function updatePantry(userID, ingredientID, ingredientMod, user) {
   console.log('user', user)
 
