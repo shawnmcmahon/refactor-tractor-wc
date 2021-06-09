@@ -69,6 +69,9 @@ Demonstration of the app:
 * Add a log-in screen. 
 * add a seven day calendar to the cooking queue page.
 
+#### Accessibility Score: 98
+* Tested with Lighthouse
+
 
 ## Credits
 #### Authors
