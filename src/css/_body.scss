@@ -1,16 +1,28 @@
 body {
   background-color: $blueish-gray;
-  // display: grid;
   font-family: "Quicksand", sans-serif;
-  // grid-template-columns: 1fr 5fr;
   grid-template-areas:
     "header header"
     "image image"
     "aside main";
-  height: 100vh;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: auto;
+}
+
+main {
+  background-color: $blueish-gray;
+  grid-area: main;
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+  flex-direction: row;
+}
+
+.all-recipe-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 h2 {
@@ -21,41 +33,27 @@ h2 {
 aside {
   background-color: white;
   display: flex;
-  justify-content: center;
   height: auto;
   text-align: center;
 }
 
-ul {
-  list-style-type: none;
-  text-align: left;
-  padding-left: 35px;
-}
-
-li {
-  margin: 2px;
-}
-
-main {
-  grid-area: main;
-  display: flex;
-  justify-content: center;
-  align-content: flex-start;
-  flex-direction: row;
-  // flex-wrap: wrap;
-}
-
 .wrap {
-  background-color: white;
-  // height: 100vh;
   padding: 10px;
   position: relative;
   width: 200px;
 }
 
+ul {
+  list-style-type: none;
+  text-align: left;
+  column-count: 1;
+}
 
-.show-pantry-recipes-btn,
-.show-all-btn,
+li {
+  display: flex;
+  margin: 2px;
+}
+
 .filter-btn {
   background-color: $green;
   border: 0;
@@ -66,111 +64,74 @@ main {
   font-size: 12pt;
   font-weight: bold;
   padding: 5px 10px 5px 10px;
-}
 
-.show-pantry-recipes-btn {
-  margin-top: 10px;
+  &:hover {
+    background-color: $light-green;
+  }
 }
-
-
-// body
-.show-all-btn {
-  height: 40px;
-  margin-top: 20px;
-  width: 200px;
-}
-// body
-.filter-btn:hover {
-  background-color: $light-green;
-}
-
 
 /* PANTRY LIST */
 // body
 .drop-menu {
-  align-items: center;
   background-color: #DAE4EE;
-  display: none;
-  height: 600px;
-  margin-left: 81%;
-  margin-top: 92px;
+  height: 70vh;
   overflow: scroll;
-  padding: 12px;
+  padding: 10px;
   position: absolute;
-  text-align: center;
+  right: 2%;
   width: 250px;
   z-index: 3;
-}
-
-// body
-.drop-menu h2 {
+  @include flex-column(); 
+  
+  & h2 {
   color: $green;
   margin: 0px;
+  }
 }
 
-// body
 .pantry-list {
   color: #000000;
   padding-left: 15px;
   text-align: left;
 }
 
-.all-recipe-cards {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
+@media screen and (max-width: 550px) {
+  
+  aside {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
 
-//body
-.block {
-  display: block;
-}
+  .wrap {
+    display: flex;
+    flex-direction: column;
+  }
 
+  ul {
+    column-count: 2;
+    column-gap: 10em;
+    column-width: auto;
+    
+  }
+  
+  main {
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    flex-direction: column;
+  }
+  
+  .all-recipe-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+}
 
 //body
 .hidden {
   display: none;
-}
-
-@media screen and (max-width: 550px) {
-
-aside {
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  height: 525px;
-  text-align: center;
-}
-
-main {
-  // grid-area: main;
-  display: flex;
-  justify-content: center;
-  align-content: flex-start;
-  flex-direction: column;
-  // flex-wrap: wrap;
-}
-
-
-.all-recipe-cards {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  // flex-wrap: wrap;
-}
-
-.drop-menu {
-  align-items: center;
-  background-color: #DAE4EE;
-  display: none;
-  // height: 600px;
-  // margin-left: 81%;
-  // margin-top: 92px;
-  overflow: scroll;
-  padding: 12px;
-  text-align: center;
-  width: 250px;
-  z-index: 3;
-}
-
 }

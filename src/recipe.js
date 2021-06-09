@@ -1,8 +1,4 @@
-import {
-  ingredientsData
-} from './data/ingredient-data';
-
-
+import { ingredientsData } from './data/ingredient-data';
 class Recipe {
   constructor(recipe, ingredientsData) {
     this.id = recipe.id;
@@ -12,7 +8,6 @@ class Recipe {
     this.tags = recipe.tags;
     this.instructions = recipe.instructions;
     this.ingredientsData = ingredientsData
-
   }
 
   updateIngredientData() {
@@ -64,44 +59,5 @@ class Recipe {
 
 
 }
-
-
-
-// A Recipe represents one recipe object.
-//
-// It should hold on to all its information (provided in the data file).
-// It should have methods to:
-// Determine the names of ingredients needed
-// Get the cost of its ingredients
-// Return its directions / instructions
-
-
-//   calculateIngredientsCost() {
-//     // return this.ingredients.map(i => {
-//     //   ingredientData.find(ingredient => ingredient === i);
-//     // });
-//   }
-//
-//   //this should go in Recipe.js (returnIngredients)
-//   generateIngredients(recipe) {
-//     return recipe && recipe.ingredients.map(i => {
-//       return `${capitalize(i.name)} (${i.quantity.amount} ${i.quantity.unit})`
-//     }).join(", ");
-//   }
-//
-//   generateInstructions(recipe) {
-//     let instructionsList = "";
-//     let instructions = recipe.instructions.map(i => {
-//       return i.instruction
-//     });
-//     instructions.forEach(i => {
-//       instructionsList += `<li>${i}</li>`
-//     });
-//     fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
-//     fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
-//   }
-//
-// }
-
 
 export default Recipe;

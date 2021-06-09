@@ -2,8 +2,6 @@ import { expect } from 'chai';
 
 import User from '../src/user';
 import Recipe from '../src/recipe'
-import data from '../src/data/users-data';
-//import { testIngredients, testRecipes, testUserData} from './test-data'
 import testUserData from './sampleUserData';
 import testRecipes from './sampleRecipesData'
 import testIngredients from './sampleIngredientsData';
@@ -82,7 +80,6 @@ describe('User', function() {
     expect(recipeSearch).to.deep.equal([recipe]);
   });
 
-  //Sad path testing
   it('Should not filter recipes that are missing a name', () => {
     const brokenRecipe = new Recipe(testRecipes[3], testIngredients)
     user.searchForRecipe(["banana"])

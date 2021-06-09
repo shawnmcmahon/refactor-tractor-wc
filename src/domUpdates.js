@@ -3,7 +3,6 @@ let fullRecipeInfo;
 let welcomeMessage = document.getElementById('welcomeMessage');
 let myRecipesBanner = document.getElementById('myRecipesBanner');
 let tagAside = document.getElementById('tagAside');
-let pantryAside = document.getElementById('pantryAside');
 let searchBar = document.getElementById('searchBar');
 
 let domUpdates = {
@@ -16,7 +15,7 @@ let domUpdates = {
   },
 
   updateWelcomeMessage(user) {
-    this.hide([myRecipesBanner, pantryAside]);
+    this.hide([myRecipesBanner]);
     this.show([welcomeMessage, tagAside, searchBar]);
     let firstName = user.name.split(' ')[0];
     welcomeMessage.innerHTML = `
@@ -33,23 +32,10 @@ let domUpdates = {
     if (target.includes('Fav')) {
       bannerText.innerText = 'My Favorite Recipes';
       this.show([tagAside, searchBar]);
-      this.hide([pantryAside]);
     } else if (target.includes('Cook')) {
       bannerText.innerText = 'My Cooking Queue';
       this.hide([tagAside, searchBar]);
-      this.show([pantryAside]);
     }
-  },
-
-  updatePantryAside() {
-    let pantrySearchResults = document.getElementById('pantrySearchResults');
-
-    pantrySearchResults.innerHTML = `
-    <h3>With your current pantry you can make: </h3>
-    <ul>Pork Chops</ul>
-    <h3>You need a few more things from the store to make these:</h3>
-    <ul>Cookies- 2 eggs</ul>
-    `;
   },
 
   listTags(allTags) {
@@ -57,13 +43,12 @@ let domUpdates = {
     let tagList = document.getElementById('tagList');
     allTags.forEach(tag => {
       let tagHtml = `<li><input type='checkbox' class='checked-tag' id="${tag}">
-        <label for='${tag}'>${tag.toUpperCase()}</label></li>`;
+        <label for="${tag}">${tag.toUpperCase()}</label></li>`;
       tagList.insertAdjacentHTML('beforeend', tagHtml);
     });
   },
 
   renderRecipeCards(cookbook, user) {
-    user.viewHome();
     let allRecipeCards = document.getElementById('allRecipeCards');
     allRecipeCards.innerHTML = '';
     let cardHtml;
@@ -71,7 +56,7 @@ let domUpdates = {
     recipes.forEach(recipe => {
       let name = domUpdates.shortenNames(recipe);
 
-      if(user.favoriteRecipes.includes(recipe) && recipe.tags.length > 0) {
+      if (user.favoriteRecipes.includes(recipe) && recipe.tags.length > 0) {
         cardHtml = `
         <div class='recipe-card' id=${recipe.id}>
           <h3>${name}</h3>
@@ -166,10 +151,10 @@ let domUpdates = {
     let attr = pantryBtn.getAttribute('aria-expanded');
     if (attr === 'true') {
       pantryBtn.setAttribute('aria-expanded', false);
-      menuDropdown.style.display = 'block';
+      domUpdates.show([menuDropdown])
     } else {
       pantryBtn.setAttribute('aria-expanded', true);
-      menuDropdown.style.display = 'none';
+      domUpdates.hide([menuDropdown]);
     }
   },
 
@@ -180,19 +165,22 @@ let domUpdates = {
     updatePantryIngs.forEach(ingredient => {
       let ingredientHtml = `
       <li><p id='${ingredient.name}'>
-          <label for='${ingredient.name}'>${ingredient.name}, ${ingredient.amount}</label></li>
-          <button data-id='${ingredient.id}' id='add-ingredient' class='add-ingredient nav-button'>
-            +
-            </button>
-            <button data-id='${ingredient.id}' id='remove-ingredient' class='remove-ingredient nav-button'>
-            -
-            </button>`;
+      <label for='${ingredient.name}'>${ingredient.name} </label></li>
+      <button data-id='${ingredient.id}' id='remove-ingredient' class='remove-ingredient nav-button'>
+      -
+      </button>
+      ${ingredient.amount}
+      <button data-id='${ingredient.id}' id='add-ingredient' class='add-ingredient nav-button'>
+        +
+        </button>
+      `;
 
-        list.insertAdjacentHTML('beforeend', ingredientHtml);
+      list.insertAdjacentHTML('beforeend', ingredientHtml);
     });
   },
 
   openRecipeInfo(recipe) {
+    let allRecipeCards = document.getElementById('allRecipeCards');
     allRecipeCards.innerHTML += `
     <div class="recipe-instructions" id="fullRecipeInstructions">
     `;
@@ -268,9 +256,8 @@ let domUpdates = {
   },
 
   addRecipeImage(recipe) {
-    document.getElementById(
-      'recipe-title'
-    ).style.backgroundImage = `url(${recipe.image})`;
+    let recipeTitle = document.getElementById('recipe-title')
+    recipeTitle.style.backgroundImage = `url(${recipe.image})`;
   },
 
   generateInstructions(recipe) {

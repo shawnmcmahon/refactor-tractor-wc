@@ -24,23 +24,23 @@ h4 {
   margin: 20px;
   padding: 15px;
   width: 250px;
-}
 
-.recipe-card:hover .card-photo-preview {
-  opacity: 50%;
-  transition: .8s ease;
-}
+  &:hover .card-photo-preview {
+    opacity: 50%;
+    transition: .8s ease;
+  }
 
-.recipe-card:hover .text {
-  font-size: 20px;
-  opacity: 100%;
-  transition: .5s ease;
-  width: 100%;
-}
+  &:hover .text {
+    font-size: 20px;
+    opacity: 100%;
+    transition: .5s ease;
+    width: 100%;
+  }
 
-.recipe-card:hover h3 {
-  text-shadow: 0px 0px 4px $yellow;
-  transition: .8s ease;
+  &:hover h3 {
+    text-shadow: 0px 0px 4px $yellow;
+    transition: .8s ease;
+  }
 }
 
 .card-apple-icon {
@@ -49,6 +49,11 @@ h4 {
   height: 50px;
   padding-bottom: 10px;
   width: 45px;
+
+  &:hover {
+    height: 55px;
+    width: 55px;
+  }
 }
 
 .card-silverware-icon {
@@ -57,6 +62,11 @@ h4 {
   height: 50px;
   padding-bottom: 10px;
   width: 45px;
+  
+  &:hover {
+    height: 55px;
+    width: 55px;
+  }
 }
 
 .card-photo-preview {
@@ -71,11 +81,9 @@ h4 {
 }
 
 .card-photo-container {
-  display: flex;
   height: 130px;
   @include flex-center();
   position: relative;
-  @include flex-center();
 }
 
 .text {
@@ -110,6 +118,22 @@ h4 {
   z-index: 1000;
 }
 
+.show-pantry-recipes-btn {
+  background-color: $green;
+  border: 0;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  font-family: "Quicksand", sans-serif;
+  font-size: 12pt;
+  font-weight: bold;
+  padding: 5px 10px 5px 10px;
+
+  &:hover {
+    background-color: $light-green;
+  }
+}
+
 // card
 #exit-recipe-btn {
   background: white;
@@ -122,12 +146,11 @@ h4 {
   margin: -4% -3% 2% -1%;
   position: fixed;
   transition: .3s ease;
-}
 
-// card
-#exit-recipe-btn:hover {
+  &:hover {
   background: $yellow;
   transition: .3s ease;
+  }
 }
 
 // card

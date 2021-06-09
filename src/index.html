@@ -9,21 +9,34 @@
   </head>
   <body>
     <header>
-      <nav>
       <h1><span>fresh</span>Picks<img src="../images/apple-logo.png" alt="apple icon" class="header-apple-icon"></h1>
       <form id="searchBar" role="search">
-        <input id="searchInput" type="text" autocomplete="off" placeholder="Search Recipes..."></input>
-        <label for="search-input" class="search-label">Search</label>
-        <button id="searchButton" class="nav-btn search-btn" type="button" name="button"><img src="../images/search.png" alt="search button"></button>
+        <div class="search-container">
+          <input id="searchInput" class="search" type="text" autocomplete="off" placeholder="Search Recipes..."></input>
+          <label for="searchInput" class="hidden">Search</label>
+          <button id="searchButton" class="nav-btn search-btn" type="button" name="button"><img src="../images/search.png" alt="search button"></button>
+        </div>
       </form>
-      <!-- <nav> -->
-        <button id="myHomeButton" class="nav-btn ing-pan-btn saved-recipes-btn" type="button" name="button"><img src="../images/home.png" alt="my home button">Home</button>
-        <button id="myFavRecipesButton" class="nav-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/cookbook.png" alt="my recipes button">My Recipes</button>
-        <button id="myRecipesToCookButton" class="nav-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/spoon.png" alt="">Recipes to Cook</button>
-        <button id="myPantryButton" aria-expanded="false" class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/seasoning.png" alt="my pantry button">My Pantry</button>
-      <!-- </nav> -->
+      <nav>
+        <div class="nav-container">
+          <button id="myHomeButton" class="nav-btn" type="button" name="button"><img
+              src="../images/home.png" alt="my home button">Home</button>
+          <button id="myFavRecipesButton" class="nav-btn" type="button" name="button"><img
+              src="../images/cookbook.png" alt="my recipes button">My Recipes</button>
+          <button id="myRecipesToCookButton" class="nav-btn" type="button" name="button"><img
+              src="../images/spoon.png" alt="">Recipes to Cook</button>
+          <button id="myPantryButton" aria-expanded="false" class="nav-btn"
+            type="button" name="button"><img src="../images/seasoning.png" alt="my pantry button" id="myPantryButton">My
+            Pantry</button>
+          </div>
       </nav>
     </header>
+    <aside>
+      <div class="drop-menu hidden">
+        <h2>My Pantry</h2>
+        <ul class="pantry-list"></ul>
+      </div>
+    </aside>
     <section class="banner-image">
       <div class="welcome-msg" id="welcomeMessage">
       </div>
@@ -32,22 +45,12 @@
       </div>
     </section>
     <main>
-      <aside>
-        <div class="drop-menu">
-          <h2>My Pantry</h2>
-          <ul class="pantry-list"></ul>
-        </div>
       <aside id="tagAside">
         <div class="wrap">
           <h2>Recipe Type</h2>
           <ul class="tag-list" id="tagList">
           </ul>
           <button class="filter-btn" id="filterRecipesButton">Filter Recipes</button>
-        </div>
-      </aside>
-      <aside id="pantryAside" class="pantry-aside hidden">
-        <div class="wrap">
-          <h2>Pantry</h2>
         </div>
       </aside>
       <section class="all-recipe-cards" id="allRecipeCards">

@@ -38,28 +38,6 @@ class User {
     let favoriteRecipes = new Cookbook(this.favoriteRecipes, this.ingredientsData);
     return favoriteRecipes.filterByNameOrIngredient(keyword);
   }
-
-  viewFavorites() {
-    this.isViewingFavorites = true;
-    this.isViewingRecipesToCook = false;
-  }
-
-  viewCookBook() {
-    this.isViewingFavorites = false;
-    this.isViewingRecipesToCook = true;
-  }
-
-  viewHome() {
-    this.isViewingFavorites = false;
-    this.isViewingRecipesToCook = false;
-  }
-
-
-
-
-
-
-
 }
 
 export default User;
