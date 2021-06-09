@@ -54,6 +54,9 @@ Demonstration of the app:
   <p>Testing Frameworks Mocha & Chai</p>
 </p>
 
+## Accessibility Score: 98
+* Tested with Lighthouse
+
 ## Project Reflection
 
 ##### Wins
@@ -68,10 +71,6 @@ Demonstration of the app:
 * Ability to add any missing ingredients to a grocery list. 
 * Add a log-in screen. 
 * add a seven day calendar to the cooking queue page.
-
-## Accessibility Score: 98
-* Tested with Lighthouse
-
 
 ## Credits
 #### Authors
