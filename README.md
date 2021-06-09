@@ -38,7 +38,10 @@ To solidify and demonstrate the understanding of:
 ## How does this work?
 Demonstration of the app:
 
-![What's Cookin' View 1]( )
+![What's Cookin' View 1](https://user-images.githubusercontent.com/73731359/121281955-08030f80-c896-11eb-9cc0-c28da64a1124.gif)
+![What's Cookin' View 2](https://user-images.githubusercontent.com/73731359/121282036-2b2dbf00-c896-11eb-85af-4f0b63d9ec50.gif)
+
+
 
 **[Back to top](#table-of-contents)**
 
