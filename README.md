@@ -38,9 +38,9 @@ To solidify and demonstrate the understanding of:
 ## How does this work?
 Demonstration of the app:
 ##### Favorite Recipes, Recipes to Cook, and Pantry View
-![What's Cookin' View 1](https://user-images.githubusercontent.com/73731359/121281955-08030f80-c896-11eb-9cc0-c28da64a1124.gif)
-##### Recipe Details, Recipe & Favorite Recipe Search, and Filter by Tag
-![What's Cookin' View 2](https://user-images.githubusercontent.com/73731359/121282036-2b2dbf00-c896-11eb-85af-4f0b63d9ec50.gif)
+![]()
+##### 
+![]()
 
 
 
@@ -58,43 +58,26 @@ Demonstration of the app:
   <p>Testing Frameworks Mocha & Chai</p>
 </p>
 
-## Accessibility Score: 98
+## Accessibility Score: 90
 * Tested with Lighthouse
 
 ## Project Reflection
 
 ##### Wins
-* Successfully applying TDD in order to confirm our logic using a smaller dataset before implementing the functionality to the page and using a larger dataset.
-* Applying a divide and conquer approach as a group in order to strengthen our individual and shared learning goals. 
 
 ##### Challenges
-* Ensuring that we created small, actionanable steps in order to approach this large project. 
+
 
 
 #### Future Features
-* Ability to add any missing ingredients to a grocery list. 
-* Add a log-in screen. 
-* add a seven day calendar to the cooking queue page.
+* Add more scss diversity between desktop, tablet, and mobile view 
+* Display a message to the user when there are no available rooms for a given day 
+* Add feature to delete a future booking from the customer's reservation history
 
 ## Credits
 #### Authors
 <table>
     <tr>
-        <td> Lourdes Mendoza <a href="https://github.com/mendozalourdes">GH</td>
-    </tr>
-    </tr>
-    <td><img src="https://avatars.githubusercontent.com/u/78240633?v=4" alt="Lourdes GH img"
- width="150" height="auto" /></td>
-    <tr>
-          <td> Claire Fields <a href="https://github.com/clairefields15">GH</td>
-    </tr>
-    </tr>
- <td><img src="https://avatars.githubusercontent.com/u/79113236?v=4" alt="Claire GH img"
-width="150" height="auto" /></td>
-     <tr>
-          <td> Shawn  <a href="https://github.com/shawnmcmahon">GH</td>
-      </tr>
-      </tr>
 <td><img src="https://avatars.githubusercontent.com/u/73731359?v=4" alt="Shawn GH img"
 width="150" height="auto" /></td>
     </tr>
@@ -103,6 +86,6 @@ width="150" height="auto" /></td>
 
 **************************************************************************
 ###### This project was created for [Turing School of Software and Design](https://turing.io/)
-###### 2021/06/08
+###### 2021/06/016
 **[Back to top](#table-of-contents)**
 
